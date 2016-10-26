@@ -1,0 +1,13 @@
+*.pdf
+*.swp
+
+*.aux
+*.bbl
+*.blg
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.toc

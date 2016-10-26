@@ -1,0 +1,105 @@
+\documentclass[12pt,a4paper,fleqn]{article}
+\usepackage[]{amsmath}
+\usepackage{fullpage}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\conj}[1]{\overline{#1}}
+\renewcommand{\i}{\mathrm{i}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Modified Schwarz Problem Solver}
+\author{E.~Kropf}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Describe the problem. Define things.
+
+\section{Discretization}
+Given the vector $x$ of unknown Fourier coefficients, the global relations define a system of equations
+\begin{equation}
+  L
+  \begin{pmatrix}
+    x \\
+    \conj{x}
+  \end{pmatrix}
+  = r
+  \label{eq:base_linear_system}
+\end{equation}
+
+\section{Matrix construction}
+\begin{figure}[htbp]
+  \centering
+  \caption{Matrix $L$ with entries colored by phase, and relative magnitude by color saturation value. White indicates zero entries of the matrix. The colorbar for phase is on the right, giving the range $[-\pi,\pi]$. The domain has connectivity of 3, $m = 2$, with $N = 8$.}
+  \label{fig:L_matrix}
+\end{figure}
+
+\paragraph{Block $L_{0,0}$} is given by
+\begin{equation}
+  L_{0,0}(\phi_0,k) = \i2\pi \,\conj{a_{0,-k}},
+  \label{eq:block_L00}
+\end{equation}
+from which we can easily see the block is diagonal, consisting only of the constant $\i2\pi$ and belongs to the right column half of $L$ due to its interaction with the conjugated unknown values. The resulting block is $N\times N$ in size. This block is represented by the diagonal sub-matrix on the first block-row in Figure~\ref{fig:L_matrix}.
+
+\paragraph{Block $L_{0,j}$} is determined by the formula
+\begin{equation}
+  L_{0,j}(\phi_j,k) = -\i2\pi \sum_{n=1}^{-k} \binom{-k-1}{n-1} q_j^n \delta_j^{-k-n} \,\conj{a_{j,n}}.
+  \label{eq:block_L0j}
+\end{equation}
+Here we let $k$ take the values in $\{-1, \dots, -N\}$ where $\phi_j$ has $N+1$ unknowns (ignoring again the conjugate values for this count). The resulting matrix will be $N\times N + 1$ in size, and careful inspection reveals its first column will be all zeros, while the remaining $N$ columns determine a lower-triangular sub-matrix. Construction of this submatrix is described in Algorithm~\ref{alg:L_0j} where we take advantage of the fact that
+\begin{equation}
+  \binom{k+1}{n+1} = \binom{k}{n} \frac{k+1}{n+1}.
+\end{equation}
+This is done to add numerical stability to the construction process; we never need to calculate a binomial coefficient directly. This sub-matrix can be visualised in Figure~\ref{fig:L_matrix} as the last two block columns in the first block row.
+
+\begin{algorithm}
+  \caption{Constructing the block $L_{0,j}$.}
+  \label{alg:L_0j}
+  \begin{algorithmic}[1]
+    \REQUIRE $p = 0$ and $j > 0$
+    \IF{$\delta_j = 0$}
+      \STATE $L_{0,j} \leftarrow -\i2\pi \begin{bmatrix} \mathtt{zeros}(N, 1), & \mathtt{diag}(\delta_j^{1:N}) \end{bmatrix}$
+    \ELSE[$\delta_j \ne 0$]
+      \STATE $L_{0,j}(:,1) \leftarrow 0$
+      \STATE $L_{0,j}(:,2) \leftarrow q_j \delta_j^{0:N-1}$
+      \FOR{$n = 3:N+1$}
+        \STATE $L_{0,j}(n-1:N, n) \leftarrow L_{0,j}(n-2:N-1,n-1) \,q_j \dfrac{(n-2:N-1)^T}{n-2}$
+      \ENDFOR
+    \ENDIF
+  \end{algorithmic}
+\end{algorithm}
+
+\paragraph{Block $L_{p,0}$} is determined by the equation
+\begin{equation}
+  L_{p,0}(\phi_0,k) = \i2\pi q_p^{-k} \sum_{n\ge\max\{1,-k-1\}} \binom{k}{k+1=n} (-\delta_p)^{k+1+n} \,a_{0,n.}
+  \label{eq:block_Lp0}
+\end{equation}
+The index $k$ will run from -1 to $-N+1$, while there will be only $N$ columns since we are dealign with the $j=0$ set of coefficients; the sub-matrix will thus have dimnsion $N+1\times N$. To construct the matrix we use the binomial property
+\begin{equation}
+  \binom{k-1}{n} = \binom{k}{n} \frac{k-n}{k}.
+\end{equation}
+This submatrix can be seen in Figure~\ref{fig:L_matrix} as the last two block rows int he first block column. Construction is given in Algorithm~\ref{alg:L_p0}.
+
+\begin{algorithm}
+  \caption{Constructing the block $L_p0$.}
+  \label{alg:L_p0}
+  \begin{algorithmic}
+    \REQUIRE $p > 0$ and $j = 0$
+    \IF{$\delta_p = 0$}
+      \STATE $L_{p,0} \leftarrow \i2\pi \begin{bmatrix} \mathtt{zeros}(1,N); & \mathtt{diag}(q_p^{2:N+1}) \end{bmatrix}$
+    \ELSE[$\delta_p > 0$]
+      \STATE $L_{p,0}(1,:) \leftarrow \i2\pi q_p \delta_p^{1:N}$
+      \STATE $L_{p,0}(2,1) \leftarrow \i2\pi q_p^2$
+      \FOR{$n = 2:N$}
+        \STATE $L_{p,0}(2:n+1,n) \leftarrow L_{p,0}(1:n,n-1) \,q_p \frac{-n}{(-1:-n)^T}$
+      \ENDFOR
+    \ENDIF
+  \end{algorithmic}
+\end{algorithm}
+
+\end{document}
