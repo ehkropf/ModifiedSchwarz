@@ -76,7 +76,7 @@ This is done to add numerical stability to the construction process; we never ne
 
 \paragraph{Block $L_{p,0}$} is determined by the equation
 \begin{equation}
-  L_{p,0}(\phi_0,k) = \i2\pi q_p^{-k} \sum_{n\ge\max\{1,-k-1\}} \binom{k}{k+1=n} (-\delta_p)^{k+1+n} \,a_{0,n.}
+  L_{p,0}(\phi_0,k) = \i2\pi q_p^{-k} \sum_{n\ge\max\{1,-k-1\}} \binom{k}{k+1+n} (-\delta_p)^{k+1+n} \,a_{0,n.}
   \label{eq:block_Lp0}
 \end{equation}
 The index $k$ will run from -1 to $-N+1$, while there will be only $N$ columns since we are dealign with the $j=0$ set of coefficients; the sub-matrix will thus have dimnsion $N+1\times N$. To construct the matrix we use the binomial property
@@ -101,5 +101,35 @@ This submatrix can be seen in Figure~\ref{fig:L_matrix} as the last two block ro
     \ENDIF
   \end{algorithmic}
 \end{algorithm}
+
+\paragraph{Block $L_{p,j}$} is defined by the equation
+\begin{equation}
+  L_{p,j}(\phi_j,k) = -\i2\pi q_p^{-k} \sum_{n\ge 1} \binom{k}{n-1} q_j^n(\delta_j - \delta_p)^{k+1-n} \,\conj{a_{j,n}}.
+  \label{eq:block_Lpj}
+\end{equation}
+It represents a dense block, and has dimension $N+1\times N+1$ since $k\in \{-N-1, \dots, -1\}$ and $j>0$ (we also use the coefficient $a_{j,0}$). For numerical stability we again use a binomial relation, this one being
+\begin{equation}
+  \binom{k}{n+1} = \binom{k}{n} \frac{k-n}{n+1}.
+\end{equation}
+This block is represented by the full blocks in Figure~\ref{fig:L_matrix}, on the lower right-hand side. Construction is described in Algorithm~?.
+
+\begin{algorithm}
+  \caption{Constructing the block $L_{p,j}$.}
+  \label{alg:L_pj}
+  \begin{algorithmic}
+    \REQUIRE $p > 0$, $j>0$ and $j\ne p$
+    \STATE $L_{p,j}(:,2) \leftarrow q_p^{(1:N+1)^T} q_j(\delta_j - \delta_p)^{(-1:-N-1)^T}$
+    \FOR{$n = 3:N+1$}
+    \STATE $L_{p,j}(:,n) \leftarrow L_{p,j}(:,n-1) \frac{q_j}{\delta_j - \delta_p} \frac{(-1:-N-1)^T - n+2}{(-1:-N-1)^T}$
+    \ENDFOR
+  \end{algorithmic}
+\end{algorithm}
+
+\paragraph{Block $L_{p,p}$} is governed by the equation
+\begin{equation}
+  L_{p,p}(\phi_p,k) = -\i2\pi q_p \,a_{p,-k-1}.
+  \label{eq:block_Lpp}
+\end{equation}
+This block is clearly diagonal and is seen as the blue diagonal block on the lower left-hand side of Figure~\ref{fig:L_matrix}.
 
 \end{document}
