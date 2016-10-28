@@ -2,6 +2,7 @@
 #define MODIFIED_SCHWARZ_HPP
 
 #include <complex>
+#include <cmath>
 #include <armadillo>
 
 namespace ModifiedSchwarz
@@ -9,8 +10,11 @@ namespace ModifiedSchwarz
 
 typedef std::complex<double> complexd;
 
+typedef arma::Mat<complexd> cmatd;
 typedef arma::Col<complexd> cvecd;
 typedef arma::Col<double> vecd;
+
+const complexd i2pi(0.0, 2.0*arma::datum::pi);
 
 class FundamentalDomain
 {
@@ -23,6 +27,9 @@ class FundamentalDomain
 
         const cvecd &getCenters() const { return _centers; }
         const vecd &getRadii() const { return _radii; }
+
+        unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
+        unsigned m() const { return unsigned(_centers.n_elem); }
 };
 
 };
