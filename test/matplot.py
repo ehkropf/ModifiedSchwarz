@@ -6,11 +6,12 @@ import matplotlib.pyplot as plt
 import os
 import sys
 
-if __name__ == "__main__":
-    # Plot script.
+def readMatrixFromFile(fname):
+    '''
+    Read matrix from file fname.
+    '''
 
-    matname = sys.argv[1]
-    f = open(matname, 'r')
+    f = open(fname, 'r')
 
     line = f.readline()
     if not line.startswith('ARMA_MAT_TXT'):
@@ -29,6 +30,15 @@ if __name__ == "__main__":
         i += 1
 
     f.close()
+
+    return L
+
+
+if __name__ == "__main__":
+    # Plot script.
+
+    matname = sys.argv[1]
+    L = readMatrixFromFile(matname)
 
     LL = np.abs(L)
     LL[LL == 0] = np.nan
