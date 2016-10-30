@@ -49,6 +49,6 @@ UnitCircleDomain domainExample3()
     return UnitCircleDomain(centers, radii);
 }
 
-};
+}; // namespace ModifiedSchwarz
 
 #endif // MODIFIED_SCHWARZ_HPP
