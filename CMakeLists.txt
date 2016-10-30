@@ -20,8 +20,10 @@ target_link_libraries(first ${ARMADILLO_LIBRARIES})
 # set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 # add_test(NAME runtrap COMMAND trapode)
 # add_test(NAME readdata COMMAND ${TESTDIR}/trapplot.py)
+set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 
 add_test(NAME run COMMAND first)
+add_test(matrixView COMMAND ${TESTDIR}/matplot.py Lmatrix.dat)
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
                   DEPENDS first)
