@@ -40,13 +40,19 @@ if __name__ == "__main__":
     matname = sys.argv[1]
     L = readMatrixFromFile(matname)
 
-    LL = np.abs(L)
-    LL[LL == 0] = np.nan
+    Lno = np.abs(L) < np.spacing(1.)
+    La = (np.angle(-L) + np.pi)/(2*np.pi)
+    La[Lno] = np.nan
 
     fig = plt.figure()
     ax = fig.gca()
-    ax.imshow(LL, aspect='equal')
+    ax.imshow(La,
+              aspect='equal',
+              cmap = 'hsv',
+              interpolation='none',
+              vmin = 0.,
+              vmax = 1.)
 
-    matplotpdf = "matplot.pdf"
-    fig.savefig(matplotpdf, format="pdf", bbox_inches="tight")
-    os.system("open " + matplotpdf)
+    matplotimg = "matplot.pdf"
+    fig.savefig(matplotimg, format="pdf", bbox_inches="tight")
+    os.system("open " + matplotimg)
