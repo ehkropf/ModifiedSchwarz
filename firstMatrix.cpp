@@ -9,7 +9,7 @@ int main()
     using namespace ModifiedSchwarz;
 
     // Sample domain.
-    FundamentalDomain domain(ExampleDomain3::centers, ExampleDomain3::radii);
+    UnitCircleDomain domain(ExampleDomain3::centers, ExampleDomain3::radii);
     unsigned m = domain.m();
     cvecd dv = domain.getCenters();
     vecd qv = domain.getRadii();

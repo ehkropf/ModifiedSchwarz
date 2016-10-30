@@ -16,7 +16,7 @@ using namespace ModifiedSchwarz;
 cvecd centers{ complexd(0.0, 0.0), complexd(-0.2517, 0.3129), complexd(0.2307, -0.4667) };
 vecd radii{ 1.0, 0.2377, 0.1557 };
 
-// FundamentalDomain exampleDomain = FundamentalDomain(centers, radii);
+// UnitCircleDomain exampleDomain = UnitCircleDomain(centers, radii);
 
 };
 

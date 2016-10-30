@@ -16,13 +16,13 @@ typedef arma::Col<double> vecd;
 
 const complexd i2pi(0.0, 2.0*arma::datum::pi);
 
-class FundamentalDomain
+class UnitCircleDomain
 {
     cvecd _centers;
     vecd _radii;
 
     public:
-        FundamentalDomain(const cvecd &centers, const vecd &radii)
+        UnitCircleDomain(const cvecd &centers, const vecd &radii)
             : _centers(centers), _radii(radii) {}
 
         const cvecd &getCenters() const { return _centers; }
