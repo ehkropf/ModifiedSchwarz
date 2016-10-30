@@ -2,14 +2,13 @@
 #include <cmath>
 
 #include "ModifiedSchwarz.hpp"
-#include "exampleDomain3.hpp"
 
 int main()
 {
     using namespace ModifiedSchwarz;
 
     // Sample domain.
-    UnitCircleDomain domain(ExampleDomain3::centers, ExampleDomain3::radii);
+    UnitCircleDomain domain = domainExample3();
     unsigned m = domain.m();
     cvecd dv = domain.getCenters();
     vecd qv = domain.getRadii();

@@ -32,6 +32,23 @@ class UnitCircleDomain
         unsigned m() const { return unsigned(_centers.n_elem); }
 };
 
+/*
+ * Example domain defined in matlab code (it's cannon at this point):
+ *
+ *   D = circleRegion(...
+ *              circle(0, 1), ...
+ *              circle(-0.2517+0.3129i, 0.2377), ...
+ *              circle(0.2307-0.4667i, 0.1557));
+ *
+ */
+UnitCircleDomain domainExample3()
+{
+    cvecd centers{ complexd(0.0, 0.0), complexd(-0.2517, 0.3129), complexd(0.2307, -0.4667) };
+    vecd radii{ 1.0, 0.2377, 0.1557 };
+
+    return UnitCircleDomain(centers, radii);
+}
+
 };
 
 #endif // MODIFIED_SCHWARZ_HPP
