@@ -30,21 +30,39 @@ int main()
     }
 
     // Blocks L_{0,j}.
-    for (uint j = 0; j < m; ++j)
+    for (uint j = 1; j <= m; ++j)
     {
-        if (dv(j) == 0.0)
+        uint c0 = Q + j*N + (j-1);
+
+        if (dv(j-1) == 0.)
         {
-            std::cout << "Block L_{0," << j+1 << "} has dv_" << j+1 << " = 0." << std::endl;
-//            cvecd tmp(N);
-//            complexd logdvj = std::log(dv(j));
-//            for (uint i = 0; i < N; ++i)
-//            {
-//                tmp(i) = double(i+1)*logdvj;
-//            }
-//
-//            uint c0 = Q-1 + j*N;
-//            uint c1 = c0 + N-1; //Q-1 + j*N - 1;
-//            L(arma::span(0, N-1), arma::span(c0, c1)) = -i2pi*arma::diagmat(arma::exp(tmp));
+            cvecd tmp(N);
+            complexd logqvj = std::log(qv(j-1));
+            for (uint i = 0; i < N; ++i)
+            {
+                tmp(i) = double(i+1)*logqvj;
+            }
+
+            uint c1 = c0 + N;
+            L(arma::span(0, N-1), arma::span(c0+1, c1)) = -i2pi*arma::diagmat(arma::exp(tmp));
+        }
+        else
+        {
+            cvecd tmp(N);
+            complexd logdvj = std::log(dv(j-1));
+            for (uint i = 0; i < N; ++i)
+            {
+                tmp(i) = double(i)*logdvj;
+            }
+            L(arma::span(0, N-1), c0+1) = -i2pi*qv(j-1)*arma::exp(tmp);
+
+            for (uint n = 3; n <= N+1; ++n)
+            {
+                L(arma::span(n-2, N-1), c0+n-1)
+                    = qv(j-1)*L(arma::span(n-3, N-2), c0+n-2)%arma::regspace(n-2, N-1)/(n-2);
+            }
+        }
+    }
         }
         else
         {
