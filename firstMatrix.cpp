@@ -8,10 +8,15 @@ int main()
     using namespace ModifiedSchwarz;
 
     // Sample domain.
-    UnitCircleDomain domain = domainExample3();
-    unsigned m = domain.m();
-    cvecd dv = domain.getCenters();
-    vecd qv = domain.getRadii();
+    unsigned m;
+    cvecd dv;
+    vecd qv;
+    {
+        UnitCircleDomain domain = domainExample3();
+        m = domain.m();
+        dv = domain.getCenters();
+        qv = domain.getRadii();
+    }
 
     // Series truncation level.
     unsigned N = 8;
