@@ -40,7 +40,7 @@ if __name__ == "__main__":
     matname = sys.argv[1]
     L = readMatrixFromFile(matname)
 
-    Lno = np.abs(L) < np.spacing(1.)
+    Lno = np.abs(L) == 0. #< np.spacing(1.)
     La = (np.angle(-L) + np.pi)/(2*np.pi)
     La[Lno] = np.nan
 
