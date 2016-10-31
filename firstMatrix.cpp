@@ -6,6 +6,7 @@
 int main()
 {
     using namespace ModifiedSchwarz;
+    using namespace arma;
 
     // Sample domain.
     unsigned m;
@@ -25,13 +26,13 @@ int main()
     unsigned Q = m*(N + 1) + N;
 
     // L matrix.
-    cmatd L(Q, 2*Q, arma::fill::zeros);
+    cmatd L(Q, 2*Q, fill::zeros);
 
     // Block L_{0,0}.
     {
         cvecd tmp(N);
         tmp.fill(i2pi);
-        L(arma::span(0, N-1), arma::span(Q, Q+N-1)) = arma::diagmat(tmp);
+        L(span(0, N-1), span(Q, Q+N-1)) = diagmat(tmp);
     }
 
     // Blocks L_{0,j}.
@@ -49,7 +50,7 @@ int main()
             }
 
             uint c1 = c0 + N;
-            L(arma::span(0, N-1), arma::span(c0+1, c1)) = -i2pi*arma::diagmat(arma::exp(tmp));
+            L(span(0, N-1), span(c0+1, c1)) = -i2pi*diagmat(exp(tmp));
         }
         else
         {
@@ -59,12 +60,12 @@ int main()
             {
                 tmp(i) = double(i)*logdvj;
             }
-            L(arma::span(0, N-1), c0+1) = -i2pi*qv(j-1)*arma::exp(tmp);
+            L(span(0, N-1), c0+1) = -i2pi*qv(j-1)*exp(tmp);
 
             for (uint n = 3; n <= N+1; ++n)
             {
-                L(arma::span(n-2, N-1), c0+n-1)
-                    = qv(j-1)*L(arma::span(n-3, N-2), c0+n-2)%arma::regspace(n-2, N-1)/(n-2);
+                L(span(n-2, N-1), c0+n-1)
+                    = qv(j-1)*L(span(n-3, N-2), c0+n-2)%regspace(double(n-2), double(N-1))/double(n-2);
             }
         }
     }
@@ -72,7 +73,6 @@ int main()
     // Blocks L_{p,0}.
     for (uint p = 1; p <= m; ++p)
     {
-        std::cout << "Block L_{" << p << ",0}" << std::endl;
         uint r0 = p*N + (p-1);
 
         if (dv(p-1) == 0.)
@@ -83,7 +83,7 @@ int main()
             {
                 tmp(i) = qv(p-1)*tmp(i-1);
             }
-            L(arma::span(r0+1, r0+N), arma::span(0, N-1)) = arma::diagmat(i2pi*qv(p-1)*tmp);
+            L(span(r0+1, r0+N), span(0, N-1)) = diagmat(i2pi*qv(p-1)*tmp);
         }
         else
         {
@@ -93,16 +93,13 @@ int main()
             {
                 tmp(i) = dv(p-1)*tmp(i-1);
             }
-            std::cout << "  fill first row." << std::endl;
-            L(r0, arma::span(0, N-1)) = i2pi*qv(p-1)*tmp.t();
+            L(r0, span(0, N-1)) = i2pi*qv(p-1)*tmp.t();
 
             L(r0+1, 0) = i2pi*qv(p-1)*qv(p-1);
             for (uint n = 2; n <= N; ++n)
             {
-                std::cout << "  column index " << n-1 << std::endl;
-                // std::cout << "  regspace is" << arma::regspace(-1., -double(n));
-                L(arma::span(r0+1, r0+n), n-1)
-                   = -n*qv(p-1)*L(arma::span(r0, r0+n-1), n-2)/arma::regspace(-1., -double(n));
+                L(span(r0+1, r0+n), n-1)
+                   = -n*qv(p-1)*L(span(r0, r0+n-1), n-2)/regspace(-1., -double(n));
             }
         }
     }
@@ -114,10 +111,10 @@ int main()
         tmp.fill(-i2pi);
         uint r0 = p*N + (p-1);
         uint r1 = r0 + N;
-        L(arma::span(r0, r1), arma::span(r0, r1)) = arma::diagmat(tmp);
+        L(span(r0, r1), span(r0, r1)) = diagmat(tmp);
     }
 
-    L.save("Lmatrix.dat", arma::arma_ascii);
+    L.save("Lmatrix.dat", arma_ascii);
 
     return 0;
 }
