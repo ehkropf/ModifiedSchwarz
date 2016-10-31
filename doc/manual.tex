@@ -127,9 +127,9 @@ This block is represented by the full blocks in Figure~\ref{fig:L_matrix}, on th
   \label{alg:L_pj}
   \begin{algorithmic}
     \REQUIRE $p > 0$, $j>0$ and $j\ne p$
-    \STATE $L_{p,j}(:,2) \leftarrow q_p^{(1:N+1)^T} q_j(\delta_j - \delta_p)^{(-1:-N-1)^T}$
+    \STATE $L_{p,j}(:,2) \leftarrow -\i2\pi q_p^{(1:N+1)^T} q_j(\delta_j - \delta_p)^{(-1:-N-1)^T}$
     \FOR{$n = 3:N+1$}
-    \STATE $L_{p,j}(:,n) \leftarrow L_{p,j}(:,n-1) \frac{q_j}{\delta_j - \delta_p} \frac{(-1:-N-1)^T - n+2}{(-1:-N-1)^T}$
+    \STATE $L_{p,j}(:,n) \leftarrow L_{p,j}(:,n-1) \frac{q_j}{\delta_j - \delta_p} \frac{(-1:-N-1)^T - n+3}{n-2}$
     \ENDFOR
   \end{algorithmic}
 \end{algorithm}
