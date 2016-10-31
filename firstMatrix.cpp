@@ -14,7 +14,7 @@ int main()
     vecd qv = domain.getRadii();
 
     // Series truncation level.
-    unsigned N = 16;
+    unsigned N = 8;
 
     // Number of unknowns.
     unsigned Q = (m + 1)*N - 1;
