@@ -72,10 +72,10 @@ This is done to add numerical stability to the construction process; we never ne
   \begin{algorithmic}[1]
     \REQUIRE $p = 0$ and $j > 0$
     \IF{$\delta_j = 0$}
-      \STATE $L_{0,j} \leftarrow -\i2\pi \begin{bmatrix} \mathtt{zeros}(N, 1), & \mathtt{diag}(\delta_j^{1:N}) \end{bmatrix}$
+      \STATE $L_{0,j} \leftarrow -\i2\pi \begin{bmatrix} \mathtt{zeros}(N, 1), & \mathtt{diag}(q_j^{1:N}) \end{bmatrix}$
     \ELSE[$\delta_j \ne 0$]
       \STATE $L_{0,j}(:,1) \leftarrow 0$
-      \STATE $L_{0,j}(:,2) \leftarrow q_j \delta_j^{0:N-1}$
+      \STATE $L_{0,j}(:,2) \leftarrow -\i2\pi q_j \delta_j^{0:N-1}$
       \FOR{$n = 3:N+1$}
         \STATE $L_{0,j}(n-1:N, n) \leftarrow L_{0,j}(n-2:N-1,n-1) \,q_j \dfrac{(n-2:N-1)^T}{n-2}$
       \ENDFOR
