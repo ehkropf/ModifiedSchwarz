@@ -53,6 +53,6 @@ if __name__ == "__main__":
               vmin = 0.,
               vmax = 1.)
 
-    matplotimg = "matplot.pdf"
-    fig.savefig(matplotimg, format="pdf", bbox_inches="tight")
+    matplotimg = "matplot.png"
+    fig.savefig(matplotimg, format="png", bbox_inches="tight")
     os.system("open " + matplotimg)
