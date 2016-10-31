@@ -68,25 +68,42 @@ int main()
             }
         }
     }
+
+    // Blocks L_{p,0}.
+    for (uint p = 1; p <= m; ++p)
+    {
+        std::cout << "Block L_{" << p << ",0}" << std::endl;
+        uint r0 = p*N + (p-1);
+
+        if (dv(p-1) == 0.)
+        {
+            cvecd tmp(N);
+            tmp(0) = qv(p-1);
+            for (uint i = 1; i < N; ++i)
+            {
+                tmp(i) = qv(p-1)*tmp(i-1);
+            }
+            L(arma::span(r0+1, r0+N), arma::span(0, N-1)) = arma::diagmat(i2pi*qv(p-1)*tmp);
         }
         else
         {
-            std::cout << "Block L_{0," << j+1 << "} is wrt non-zero center." << std::endl;
-//            uint c0 = Q-1 + j*N;
-//
-//            cvecd tmp(N);
-//            complexd logdvj = std::log(dv(j));
-//            for (uint i = 0; i < N; ++i)
-//            {
-//                tmp(i) = double(i)*logdvj;
-//            }
-//            L(arma::span(0, N-1), c0+1) = qv(j)*arma::exp(tmp);
-//
-//            for (uint n = 3; n <= N+1; ++n)
-//            {
-//                L(arma::span(n-2, N-1), c0+n-1)
-//                    = qv(j)*L(arma::span(n-3, N-2), c0+n-2)%arma::regspace(n-2, N-1)/(n-2);
-//            }
+            cvecd tmp(N);
+            tmp(0) = dv(p-1);
+            for (uint i = 1; i < N; ++i)
+            {
+                tmp(i) = dv(p-1)*tmp(i-1);
+            }
+            std::cout << "  fill first row." << std::endl;
+            L(r0, arma::span(0, N-1)) = i2pi*qv(p-1)*tmp.t();
+
+            L(r0+1, 0) = i2pi*qv(p-1)*qv(p-1);
+            for (uint n = 2; n <= N; ++n)
+            {
+                std::cout << "  column index " << n-1 << std::endl;
+                // std::cout << "  regspace is" << arma::regspace(-1., -double(n));
+                L(arma::span(r0+1, r0+n), n-1)
+                   = -n*qv(p-1)*L(arma::span(r0, r0+n-1), n-2)/arma::regspace(-1., -double(n));
+            }
         }
     }
 
