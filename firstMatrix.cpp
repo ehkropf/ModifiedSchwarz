@@ -131,7 +131,7 @@ int main()
                     for (uint i = 1; i < N+1; ++i)
                     {
                         qtmp(i) = qp*qtmp(i-1);
-                        dtmp(i) = dtmp(i-1)/(dj - dp);
+                        dtmp(i) = dtmp(i-1)/djp;
                     }
                     L(span(r0, r0+N), Q+c0+1) = -i2pi*qj*qtmp%dtmp;
 
