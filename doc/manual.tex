@@ -105,7 +105,7 @@ This submatrix can be seen in Figure~\ref{fig:L_matrix} as the last two block ro
       \STATE $L_{p,0}(1,:) \leftarrow \i2\pi q_p \delta_p^{1:N}$
       \STATE $L_{p,0}(2,1) \leftarrow \i2\pi q_p^2$
       \FOR{$n = 2:N$}
-        \STATE $L_{p,0}(2:n+1,n) \leftarrow L_{p,0}(1:n,n-1) \,q_p \frac{-n}{(-1:-n)^T}$
+        \STATE $L_{p,0}(2:n+1,n) \leftarrow L_{p,0}(1:n,n-1) \,q_p \dfrac{n}{(1:n)^T}$
       \ENDFOR
     \ENDIF
   \end{algorithmic}
@@ -129,7 +129,7 @@ This block is represented by the full blocks in Figure~\ref{fig:L_matrix}, on th
     \REQUIRE $p > 0$, $j>0$ and $j\ne p$
     \STATE $L_{p,j}(:,2) \leftarrow -\i2\pi q_p^{(1:N+1)^T} q_j(\delta_j - \delta_p)^{(-1:-N-1)^T}$
     \FOR{$n = 3:N+1$}
-    \STATE $L_{p,j}(:,n) \leftarrow L_{p,j}(:,n-1) \frac{q_j}{\delta_j - \delta_p} \frac{(-1:-N-1)^T - n+3}{n-2}$
+    \STATE $L_{p,j}(:,n) \leftarrow L_{p,j}(:,n-1) \dfrac{q_j}{\delta_j - \delta_p} \dfrac{(-1:-N-1)^T - n+3}{n-2}$
     \ENDFOR
   \end{algorithmic}
 \end{algorithm}
