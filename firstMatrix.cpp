@@ -107,40 +107,40 @@ int main()
     }
 
     // Blocks L_{p,j}.
-//    for (uint p = 1; p <= m; ++p)
-//    {
-//        complexd dp = dv(p-1);
-//        double qp = qv(p-1);
-//        uint r0 = p*N + (p-1);
-//
-//        for (uint j = 1; j <= m; ++j)
-//        {
-//            if (j == p) { continue; }
-//
-//            complexd dj = dv(j-1);
-//            double qj = qv(j-1);
-//            uint c0 = Q + j*N + (j-1);
-//
-//            cvecd qtmp(N+1);
-//            qtmp(0) = qp;
-//            cvecd dtmp(N+1);
-//            complexd djp = dj - dp;
-//            dtmp(0) = 1./djp;
-//            for (uint i = 1; i < N+1; ++i)
-//            {
-//                qtmp(i) = qp*qtmp(i-1);
-//                dtmp(i) = dtmp(i-1)/(dj - dp);
-//            }
-//            L(span(r0, r0+N), c0+1) = -i2pi*qj*qtmp%dtmp;
-//
-//            vecd ktmp = regspace(-1., -double(N+1));
-//            for (uint n = 3; n <= N+1; ++n)
-//            {
-//                L(span(r0, r0+N), c0+n-1)
-//                    = qj/djp*L(span(r0, r0+N), c0+n-2)%(ktmp - double(n-3))/(n-2);
-//            }
-//        }
-//    }
+    for (uint p = 1; p <= m; ++p)
+    {
+        uint r0 = p*N + (p-1);
+        complexd dp = dv(p-1);
+        double qp = qv(p-1);
+
+        for (uint j = 1; j <= m; ++j)
+        {
+            if (j == p) { continue; }
+
+            complexd dj = dv(j-1);
+            double qj = qv(j-1);
+            uint c0 = Q + j*N + (j-1);
+
+            cvecd qtmp(N+1);
+            qtmp(0) = qp;
+            cvecd dtmp(N+1);
+            complexd djp = dj - dp;
+            dtmp(0) = 1./djp;
+            for (uint i = 1; i < N+1; ++i)
+            {
+                qtmp(i) = qp*qtmp(i-1);
+                dtmp(i) = dtmp(i-1)/(dj - dp);
+            }
+            L(span(r0, r0+N), c0+1) = -i2pi*qj*qtmp%dtmp;
+
+            vecd ktmp = regspace(-1., -double(N+1));
+            for (uint n = 3; n <= N+1; ++n)
+            {
+                L(span(r0, r0+N), c0+n-1)
+                    = qj/djp*L(span(r0, r0+N), c0+n-2)%(ktmp - double(n-3))/(n-2);
+            }
+        }
+    }
 
     // Blocks L_{p,p}.
     for (uint p = 1; p <= m; ++p)
