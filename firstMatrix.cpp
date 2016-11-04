@@ -145,10 +145,9 @@ int main()
     for (uint p = 1; p <= m; ++p)
     {
         cvecd tmp(N+1);
-        tmp.fill(-i2pi);
+        tmp.fill(-i2pi*qv(p-1));
         uint r0 = p*N + (p-1);
-        uint r1 = r0 + N;
-        L(span(r0, r1), span(r0, r1)) = diagmat(tmp);
+        L(span(r0, r0+N), span(r0, r0+N)) = diagmat(tmp);
     }
 
     L.save("Lmatrix.dat", arma_ascii);
