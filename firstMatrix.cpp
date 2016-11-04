@@ -80,13 +80,11 @@ int main()
 
         if (dv(p-1) == 0.)
         {
-            cvecd tmp(N);
-            tmp(0) = qp;
+            L(r0+1, 0) = i2pi*qp*qp;
             for (uint i = 1; i < N; ++i)
             {
-                tmp(i) = qp*tmp(i-1);
+                L(r0+1+i, i) = qp*L(r0+i, i-1);
             }
-            L(span(r0+1, r0+N), span(0, N-1)) = diagmat(i2pi*qp*tmp);
         }
         else
         {
