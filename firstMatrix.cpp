@@ -43,23 +43,22 @@ int main()
         if (dv(j-1) == 0.)
         {
             cvecd tmp(N);
-            complexd logqvj = std::log(qj);
-            for (uint i = 0; i < N; ++i)
+            tmp(0) = -i2pi*qj;
+            for (uint i = 1; i < N; ++i)
             {
-                tmp(i) = double(i+1)*logqvj;
+                tmp(i) = qj*tmp(i-1);
             }
-
-            L(span(0, N-1), span(c0+1, c0+N)) = -i2pi*diagmat(exp(tmp));
+            L(span(0, N-1), span(c0+1, c0+N)).diag() = tmp;
         }
         else
         {
             cvecd tmp(N);
-            complexd logdvj = std::log(dj);
-            for (uint i = 0; i < N; ++i)
+            tmp(0) = -i2pi*qj;
+            for (uint i = 1; i < N; ++i)
             {
-                tmp(i) = double(i)*logdvj;
+                tmp(i) = dj*tmp(i-1);
             }
-            L(span(0, N-1), c0+1) = -i2pi*qj*exp(tmp);
+            L(span(0, N-1), c0+1).diag() = tmp;
 
             for (uint n = 3; n <= N+1; ++n)
             {
@@ -78,21 +77,23 @@ int main()
 
         if (dv(p-1) == 0.)
         {
-            L(r0+1, 0) = i2pi*qp*qp;
+            cvecd tmp(N);
+            tmp(0) = i2pi*qp*qp;
             for (uint i = 1; i < N; ++i)
             {
-                L(r0+1+i, i) = qp*L(r0+i, i-1);
+                tmp(i) = qp*tmp(i-1);
             }
+            L(span(r0+1, r0+N), span(0, N-1)).diag() = tmp;
         }
         else
         {
             cvecd tmp(N);
-            tmp(0) = dp;
+            tmp(0) = i2pi*qp*dp;
             for (uint i = 1; i < N; ++i)
             {
                 tmp(i) = dp*tmp(i-1);
             }
-            L(r0, span(0, N-1)) = i2pi*qp*tmp.st();
+            L(r0, span(0, N-1)) = tmp.st();
 
             L(r0+1, 0) = i2pi*qp*qp;
             for (uint n = 2; n <= N; ++n)
@@ -142,10 +143,8 @@ int main()
     // Blocks L_{p,p}.
     for (uint p = 1; p <= m; ++p)
     {
-        cvecd tmp(N+1);
-        tmp.fill(-i2pi*qv(p-1));
         uint r0 = p*N + (p-1);
-        L(span(r0, r0+N), span(r0, r0+N)) = diagmat(tmp);
+        L(span(r0, r0+N), span(r0, r0+N)).diag().fill(-i2pi*qv(p-1));
     }
 
     L.save("Lmatrix.dat", arma_ascii);
