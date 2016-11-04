@@ -74,6 +74,8 @@ int main()
     for (uint p = 1; p <= m; ++p)
     {
         uint r0 = p*N + (p-1);
+        complexd dp = dv(p-1);
+        double qp = qv(p-1);
 
         if (dv(p-1) == 0.)
         {
@@ -87,58 +89,59 @@ int main()
         }
         else
         {
-            cvecd tmp(N);
-            tmp(0) = dv(p-1);
+            // cvecd tmp(N);
+            Row<complexd> tmp(N);
+            tmp(0) = dp;
             for (uint i = 1; i < N; ++i)
             {
-                tmp(i) = dv(p-1)*tmp(i-1);
+                tmp(i) = dp*tmp(i-1);
             }
-            L(r0, span(0, N-1)) = i2pi*qv(p-1)*tmp.t();
+            L(r0, span(0, N-1)) = i2pi*qp*tmp;
 
-            L(r0+1, 0) = i2pi*qv(p-1)*qv(p-1);
+            L(r0+1, 0) = i2pi*qp*qp;
             for (uint n = 2; n <= N; ++n)
             {
                 L(span(r0+1, r0+n), n-1)
-                   = -n*qv(p-1)*L(span(r0, r0+n-1), n-2)/regspace(-1., -double(n));
+                   = -n*qp*L(span(r0, r0+n-1), n-2)/regspace(-1., -double(n));
             }
         }
     }
 
     // Blocks L_{p,j}.
-    for (uint p = 1; p <= m; ++p)
-    {
-        complexd dp = dv(p-1);
-        double qp = qv(p-1);
-        uint r0 = p*N + (p-1);
-
-        for (uint j = 1; j <= m; ++j)
-        {
-            if (j == p) { continue; }
-
-            complexd dj = dv(j-1);
-            double qj = qv(j-1);
-            uint c0 = Q + j*N + (j-1);
-
-            cvecd qtmp(N+1);
-            qtmp(0) = qp;
-            cvecd dtmp(N+1);
-            complexd djp = dj - dp;
-            dtmp(0) = 1./djp;
-            for (uint i = 1; i < N+1; ++i)
-            {
-                qtmp(i) = qp*qtmp(i-1);
-                dtmp(i) = dtmp(i-1)/(dj - dp);
-            }
-            L(span(r0, r0+N), c0+1) = -i2pi*qj*qtmp%dtmp;
-
-            vecd ktmp = regspace(-1., -double(N+1));
-            for (uint n = 3; n <= N+1; ++n)
-            {
-                L(span(r0, r0+N), c0+n-1)
-                    = qj/djp*L(span(r0, r0+N), n-2)%(ktmp - double(n-3))/(n-2);
-            }
-        }
-    }
+//    for (uint p = 1; p <= m; ++p)
+//    {
+//        complexd dp = dv(p-1);
+//        double qp = qv(p-1);
+//        uint r0 = p*N + (p-1);
+//
+//        for (uint j = 1; j <= m; ++j)
+//        {
+//            if (j == p) { continue; }
+//
+//            complexd dj = dv(j-1);
+//            double qj = qv(j-1);
+//            uint c0 = Q + j*N + (j-1);
+//
+//            cvecd qtmp(N+1);
+//            qtmp(0) = qp;
+//            cvecd dtmp(N+1);
+//            complexd djp = dj - dp;
+//            dtmp(0) = 1./djp;
+//            for (uint i = 1; i < N+1; ++i)
+//            {
+//                qtmp(i) = qp*qtmp(i-1);
+//                dtmp(i) = dtmp(i-1)/(dj - dp);
+//            }
+//            L(span(r0, r0+N), c0+1) = -i2pi*qj*qtmp%dtmp;
+//
+//            vecd ktmp = regspace(-1., -double(N+1));
+//            for (uint n = 3; n <= N+1; ++n)
+//            {
+//                L(span(r0, r0+N), c0+n-1)
+//                    = qj/djp*L(span(r0, r0+N), c0+n-2)%(ktmp - double(n-3))/(n-2);
+//            }
+//        }
+//    }
 
     // Blocks L_{p,p}.
     for (uint p = 1; p <= m; ++p)
