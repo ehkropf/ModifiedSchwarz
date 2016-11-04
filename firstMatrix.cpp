@@ -30,9 +30,7 @@ int main()
 
     // Block L_{0,0}.
     {
-        cvecd tmp(N);
-        tmp.fill(i2pi);
-        L(span(0, N-1), span(Q, Q+N-1)) = diagmat(tmp);
+        L(span(0, N-1), span(Q, Q+N-1)).diag().fill(i2pi);
     }
 
     // Blocks L_{0,j}.
