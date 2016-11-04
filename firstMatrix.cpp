@@ -111,6 +111,7 @@ int main()
         uint r0 = p*N + (p-1);
         complexd dp = dv(p-1);
         double qp = qv(p-1);
+        vecd ktmp = regspace(-1., -double(N+1));
 
         for (uint j = 1; j <= m; ++j)
         {
@@ -132,7 +133,6 @@ int main()
             }
             L(span(r0, r0+N), c0+1) = -i2pi*qj*qtmp%dtmp;
 
-            vecd ktmp = regspace(-1., -double(N+1));
             for (uint n = 3; n <= N+1; ++n)
             {
                 L(span(r0, r0+N), c0+n-1)
