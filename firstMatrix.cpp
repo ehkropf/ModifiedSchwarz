@@ -89,20 +89,19 @@ int main()
         }
         else
         {
-            // cvecd tmp(N);
-            Row<complexd> tmp(N);
+            cvecd tmp(N);
             tmp(0) = dp;
             for (uint i = 1; i < N; ++i)
             {
                 tmp(i) = dp*tmp(i-1);
             }
-            L(r0, span(0, N-1)) = i2pi*qp*tmp;
+            L(r0, span(0, N-1)) = i2pi*qp*tmp.st();
 
             L(r0+1, 0) = i2pi*qp*qp;
             for (uint n = 2; n <= N; ++n)
             {
                 L(span(r0+1, r0+n), n-1)
-                   = -n*qp*L(span(r0, r0+n-1), n-2)/regspace(-1., -double(n));
+                   = L(span(r0, r0+n-1), n-2)%(n*qp/regspace(1., double(n)));
             }
         }
     }
