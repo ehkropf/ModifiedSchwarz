@@ -39,33 +39,34 @@ int main()
     for (uint j = 1; j <= m; ++j)
     {
         uint c0 = Q + j*N + (j-1);
+        complexd dj = dv(j-1);
+        double qj = qv(j-1);
 
         if (dv(j-1) == 0.)
         {
             cvecd tmp(N);
-            complexd logqvj = std::log(qv(j-1));
+            complexd logqvj = std::log(qj);
             for (uint i = 0; i < N; ++i)
             {
                 tmp(i) = double(i+1)*logqvj;
             }
 
-            uint c1 = c0 + N;
-            L(span(0, N-1), span(c0+1, c1)) = -i2pi*diagmat(exp(tmp));
+            L(span(0, N-1), span(c0+1, c0+N)) = -i2pi*diagmat(exp(tmp));
         }
         else
         {
             cvecd tmp(N);
-            complexd logdvj = std::log(dv(j-1));
+            complexd logdvj = std::log(dj);
             for (uint i = 0; i < N; ++i)
             {
                 tmp(i) = double(i)*logdvj;
             }
-            L(span(0, N-1), c0+1) = -i2pi*qv(j-1)*exp(tmp);
+            L(span(0, N-1), c0+1) = -i2pi*qj*exp(tmp);
 
             for (uint n = 3; n <= N+1; ++n)
             {
                 L(span(n-2, N-1), c0+n-1)
-                    = qv(j-1)*L(span(n-3, N-2), c0+n-2)%regspace(double(n-2), double(N-1))/double(n-2);
+                    = qj*L(span(n-3, N-2), c0+n-2)%regspace(double(n-2), double(N-1))/double(n-2);
             }
         }
     }
@@ -80,12 +81,12 @@ int main()
         if (dv(p-1) == 0.)
         {
             cvecd tmp(N);
-            tmp(0) = qv(p-1);
+            tmp(0) = qp;
             for (uint i = 1; i < N; ++i)
             {
-                tmp(i) = qv(p-1)*tmp(i-1);
+                tmp(i) = qp*tmp(i-1);
             }
-            L(span(r0+1, r0+N), span(0, N-1)) = diagmat(i2pi*qv(p-1)*tmp);
+            L(span(r0+1, r0+N), span(0, N-1)) = diagmat(i2pi*qp*tmp);
         }
         else
         {
@@ -117,9 +118,9 @@ int main()
         {
             if (j == p) { continue; }
 
+            uint c0 = Q + j*N + (j-1);
             complexd dj = dv(j-1);
             double qj = qv(j-1);
-            uint c0 = Q + j*N + (j-1);
 
             cvecd qtmp(N+1);
             qtmp(0) = qp;
@@ -137,7 +138,7 @@ int main()
             for (uint n = 3; n <= N+1; ++n)
             {
                 L(span(r0, r0+N), c0+n-1)
-                    = qj/djp*L(span(r0, r0+N), c0+n-2)%(ktmp - double(n-3))/(n-2);
+                    = (qj/djp)*L(span(r0, r0+N), c0+n-2)%(ktmp - double(n-3))/(n-2);
             }
         }
     }
