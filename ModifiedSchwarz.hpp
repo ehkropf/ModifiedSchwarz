@@ -49,6 +49,19 @@ UnitCircleDomain domainExample3()
     return UnitCircleDomain(centers, radii);
 }
 
+class SpectralMatrix
+{
+    cmatd _theMatrix;
+
+    void constructMatrix(const UnitCircleDomain& domain, const uint truncation);
+
+public:
+    SpectralMatrix(const UnitCircleDomain& domain, const uint truncation)
+    { constructMatrix(domain, truncation); }
+
+    const cmatd& getMatrix() const { return _theMatrix; }
+};
+
 }; // namespace ModifiedSchwarz
 
 #endif // MODIFIED_SCHWARZ_HPP
