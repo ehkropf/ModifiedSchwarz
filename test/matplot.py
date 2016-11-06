@@ -7,9 +7,10 @@ import os
 import sys
 
 def readMatrixFromFile(fname):
-    '''
-    Read matrix from file fname.
-    '''
+    """Read matrix in ARMA ASCII format from file.
+
+    Reads complex matrix from fname expecting ARMA ASCII format.
+    """
 
     f = open(fname, 'r')
 
