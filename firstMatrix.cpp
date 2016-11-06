@@ -27,7 +27,7 @@ int main()
     unsigned Q = m*(N + 1) + N;
 
     // L matrix.
-    cmatd L(Q, 2*Q, fill::zeros);
+    cmatd L(2*Q, 2*Q, fill::zeros);
 
     // Double loop construction.
     for (uint p = 0; p <= m; ++p)
@@ -144,6 +144,9 @@ int main()
             }
         }
     }
+
+    L(span(Q, 2*Q-1), span(0, Q-1)) = conj(L(span(0, Q-1), span(Q, 2*Q-1)));
+    L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
 
     L.save("Lmatrix.dat", arma_ascii);
 
