@@ -21,15 +21,15 @@ class UnitCircleDomain
     cvecd _centers;
     vecd _radii;
 
-    public:
-        UnitCircleDomain(const cvecd &centers, const vecd &radii)
-            : _centers(centers), _radii(radii) {}
+public:
+    UnitCircleDomain(const cvecd &centers, const vecd &radii)
+        : _centers(centers), _radii(radii) {}
 
-        const cvecd &getCenters() const { return _centers; }
-        const vecd &getRadii() const { return _radii; }
+    const cvecd &getCenters() const { return _centers; }
+    const vecd &getRadii() const { return _radii; }
 
-        unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
-        unsigned m() const { return unsigned(_centers.n_elem); }
+    unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
+    unsigned m() const { return unsigned(_centers.n_elem); }
 };
 
 /*
