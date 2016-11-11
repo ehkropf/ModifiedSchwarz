@@ -43,6 +43,11 @@ public:
  */
 UnitCircleDomain domainExample3();
 
+/*
+ * SpectralMatrix
+ *
+ * Container class for the matrix used in the Schwarz problem spectral solver.
+ */
 class SpectralMatrix
 {
     cmatd _theMatrix;
