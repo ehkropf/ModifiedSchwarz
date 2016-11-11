@@ -41,18 +41,13 @@ public:
  *              circle(0.2307-0.4667i, 0.1557));
  *
  */
-UnitCircleDomain domainExample3()
-{
-    cvecd centers{ complexd(-0.2517, 0.3129), complexd(0.2307, -0.4667) };
-    vecd radii{ 0.2377, 0.1557 };
-
-    return UnitCircleDomain(centers, radii);
-}
+UnitCircleDomain domainExample3();
 
 class SpectralMatrix
 {
     cmatd _theMatrix;
 
+protected:
     void constructMatrix(const UnitCircleDomain& domain, const uint truncation);
 
 public:
