@@ -16,6 +16,10 @@ typedef arma::Col<double> vecd;
 
 const complexd i2pi(0.0, 2.0*arma::datum::pi);
 
+/*!
+ * Represents unit circle domain by holding vectors of center and radii of the
+ * inner circles.
+ */
 class UnitCircleDomain
 {
     cvecd _centers;
@@ -32,7 +36,7 @@ public:
     unsigned m() const { return unsigned(_centers.n_elem); }
 };
 
-/*
+/*!
  * Example domain defined in matlab code (it's cannon at this point):
  *
  *   D = circleRegion(...
@@ -43,9 +47,7 @@ public:
  */
 UnitCircleDomain domainExample3();
 
-/*
- * SpectralMatrix
- *
+/*!
  * Container class for the matrix used in the Schwarz problem spectral solver.
  */
 class SpectralMatrix
