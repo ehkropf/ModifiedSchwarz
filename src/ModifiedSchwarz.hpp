@@ -64,6 +64,51 @@ public:
     const cmatd& getMatrix() const { return _theMatrix; }
 };
 
+/*!
+ * Abstract representation of solution to the Schwarz problem.
+ */
+class SchwarzSolution
+{
+    cmatd _domainMatrix;
+
+public:
+    virtual cvecd eval(const cvecd& points) = 0;
+};
+
+/*!
+ * Solution to Schwarz problem using the spectral method.
+ */
+class SpectralSolution : public SchwarzSolution
+{
+    cmatd _coefficients;
+
+public:
+    SpectralSolution(const cmatd& coefficients)
+        : _coefficients(coefficients) {}
+};
+
+/*!
+ * Abstract representation of the Schwarz problem.
+ *
+ * Schwarz problem is stored as a matrix of boundary data where each column
+ * represents a boundary.
+ *
+ * Provides a solve() method which creates and returns a SchwarzSolution.
+ *
+ */
+class SchwarzProblem
+{
+    cmatd _problemData;
+
+public:
+    SchwarzProblem(const cmatd& boundaryData)
+        : _problemData(boundaryData) {}
+
+    virtual SchwarzSolution solve() = 0;
+
+    const cmatd& data() const { return _problemData; }
+};
+
 }; // namespace ModifiedSchwarz
 
 #endif // MODIFIED_SCHWARZ_HPP
