@@ -15,8 +15,14 @@ set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 ######################################################################
-add_executable(first firstMatrix.cpp ModifiedSchwarz.cpp)
-target_link_libraries(first ${ARMADILLO_LIBRARIES})
+set(SCHWARZ_SOURCE src/ModifiedSchwarz.hpp src/ModifiedSchwarz.cpp)
+add_library(schwarz SHARED ${SCHWARZ_SOURCE})
+target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
+
+######################################################################
+add_executable(first test/firstMatrix.cpp)
+target_include_directories(first PUBLIC ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(first schwarz)
 
 ######################################################################
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
