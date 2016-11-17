@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cmath>
-
 #include "ModifiedSchwarz.hpp"
 
 int main()
