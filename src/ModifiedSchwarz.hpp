@@ -8,13 +8,13 @@
 namespace ModifiedSchwarz
 {
 
-typedef std::complex<double> complexd;
+typedef std::complex<double> ComplexDouble;
 
-typedef arma::Mat<complexd> cmatd;
-typedef arma::Col<complexd> cvecd;
+typedef arma::Mat<ComplexDouble> cmatd;
+typedef arma::Col<ComplexDouble> cvecd;
 typedef arma::Col<double> vecd;
 
-const complexd i2pi(0.0, 2.0*arma::datum::pi);
+const ComplexDouble i2pi(0.0, 2.0*arma::datum::pi);
 
 /*!
  * Represents unit circle domain by holding vectors of center and radii of the

@@ -5,7 +5,7 @@ namespace ModifiedSchwarz
 
 UnitCircleDomain domainExample3()
 {
-    cvecd centers{ complexd(-0.2517, 0.3129), complexd(0.2307, -0.4667) };
+    cvecd centers{ ComplexDouble(-0.2517, 0.3129), ComplexDouble(0.2307, -0.4667) };
     vecd radii{ 0.2377, 0.1557 };
 
     return UnitCircleDomain(centers, radii);
@@ -35,13 +35,13 @@ SpectralMatrix::constructMatrix(const UnitCircleDomain& domain, const uint trunc
     for (uint p = 0; p <= m; ++p)
     {
         uint r0 = (p > 0) ? p*N + (p-1) : 0;
-        complexd dp = (p > 0) ? dv(p-1) : 0.;
+        ComplexDouble dp = (p > 0) ? dv(p-1) : 0.;
         double qp = (p > 0) ? qv(p-1) : 1.;
 
         for (uint j = 0; j <= m; ++j)
         {
             uint c0 = (j > 0) ? j*N + (j-1) : 0;
-            complexd dj = (j > 0) ? dv(j-1) : 0.;
+            ComplexDouble dj = (j > 0) ? dv(j-1) : 0.;
             double qj = (j > 0) ? qv(j-1) : 1.;
 
             if (j == 0)
@@ -128,7 +128,7 @@ SpectralMatrix::constructMatrix(const UnitCircleDomain& domain, const uint trunc
                     cvecd qtmp(N+1);
                     qtmp(0) = qp;
                     cvecd dtmp(N+1);
-                    complexd djp = dj - dp;
+                    ComplexDouble djp = dj - dp;
                     dtmp(0) = 1./djp;
                     for (uint i = 1; i < N+1; ++i)
                     {
