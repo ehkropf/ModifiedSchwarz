@@ -3,6 +3,7 @@
 namespace ModifiedSchwarz
 {
 
+////////////////////////////////////////////////////////////////////////
 UnitCircleDomain domainExample3()
 {
     cvecd centers{ ComplexDouble(-0.2517, 0.3129), ComplexDouble(0.2307, -0.4667) };
@@ -11,6 +12,7 @@ UnitCircleDomain domainExample3()
     return UnitCircleDomain(centers, radii);
 }
 
+////////////////////////////////////////////////////////////////////////
 void
 SpectralMatrix::constructMatrix(const UnitCircleDomain& domain, const uint truncation)
 {
