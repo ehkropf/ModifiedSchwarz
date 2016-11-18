@@ -89,6 +89,47 @@ class SpectralSolution : public SchwarzSolution
 public:
     SpectralSolution(const cmatd& coefficients)
         : _coefficients(coefficients) {}
+
+    virtual cvecd eval(const cvecd& points) { return cvecd(); }
+};
+
+////////////////////////////////////////////////////////////////////////
+// Forward declaration.
+class SchwarzProblem;
+
+////////////////////////////////////////////////////////////////////////
+/*!
+ * Abstract representation of method to solve Schwarz problem.
+ */
+class SchwarzSolver
+{
+public:
+    virtual ~SchwarzSolver() {}
+
+    virtual SchwarzSolution solve(const SchwarzProblem& problem) = 0;
+    virtual SchwarzSolution solve(const SchwarzProblem& problem, SchwarzSolution& previous) = 0;
+};
+
+////////////////////////////////////////////////////////////////////////
+/*!
+ * Spectral Schwarz solver.
+ */
+class SolverSpectral : public SchwarzSolver
+{
+    SpectralMatrix _domainMatrix;
+
+public:
+    SolverSpectral(const SolverSpectral& other) : _domainMatrix(other.getMatrix()) {}
+    virtual ~SolverSpectral() {}
+
+    const SpectralMatrix& getMatrix() const { return _domainMatrix; }
+
+    virtual SchwarzSolution solve(const SchwarzProblem& problem)
+    { return SpectralSolution(cmatd()); }
+
+    virtual SchwarzSolution solve(const SchwarzProblem& problem,
+            SchwarzSolution& previous)
+    { return SpectralSolution(cmatd()); }
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -105,11 +146,18 @@ class SchwarzProblem
 {
     cmatd _problemData;
 
+protected:
+    SchwarzSolver* _solver;
+
 public:
     SchwarzProblem(const cmatd& boundaryData)
-        : _problemData(boundaryData) {}
+        : _problemData(boundaryData), _solver(new SolverSpectral) {}
+//    SchwarzProblem(const SchwarzProblem& other)
+//        : _problemData(other.data()), _solver(new SolverSpectral) {}
 
-    virtual SchwarzSolution solve() = 0;
+    ~SchwarzProblem() { delete _solver; }
+
+    SchwarzSolution solve() { return _solver->solve(*this); }
 
     const cmatd& data() const { return _problemData; }
 };
