@@ -16,6 +16,7 @@ typedef arma::Col<double> vecd;
 
 const ComplexDouble i2pi(0.0, 2.0*arma::datum::pi);
 
+////////////////////////////////////////////////////////////////////////
 /*!
  * Represents unit circle domain by holding vectors of center and radii of the
  * inner circles.
@@ -47,6 +48,7 @@ public:
  */
 UnitCircleDomain domainExample3();
 
+////////////////////////////////////////////////////////////////////////
 /*!
  * Container class for the matrix used in the Schwarz problem spectral solver.
  */
@@ -64,6 +66,7 @@ public:
     const cmatd& getMatrix() const { return _theMatrix; }
 };
 
+////////////////////////////////////////////////////////////////////////
 /*!
  * Abstract representation of solution to the Schwarz problem.
  */
@@ -75,6 +78,7 @@ public:
     virtual cvecd eval(const cvecd& points) = 0;
 };
 
+////////////////////////////////////////////////////////////////////////
 /*!
  * Solution to Schwarz problem using the spectral method.
  */
@@ -87,6 +91,7 @@ public:
         : _coefficients(coefficients) {}
 };
 
+////////////////////////////////////////////////////////////////////////
 /*!
  * Abstract representation of the Schwarz problem.
  *
