@@ -10,15 +10,15 @@ namespace ModifiedSchwarz
 /*!
  * Abstract representation of solution to the Schwarz problem.
  */
-class SchwarzSolution
+class Solution
 {
 public:
-    virtual ~SchwarzSolution() = default;
+    virtual ~Solution() = default;
 
     virtual cvecd eval(const cvecd& points) = 0;
 };
 
-typedef std::unique_ptr<SchwarzSolution> SchwarzSolutionUPtr;
+typedef std::unique_ptr<Solution> SolutionUPtr;
 
 }; // namespace ModifiedSchwarz
 
