@@ -20,8 +20,8 @@ public:
 
     virtual Solver& newCopy() = 0;
 
-    virtual Solution solve(const Problem& problem) = 0;
-    virtual Solution solve(const Problem& problem, Solution& previous) = 0;
+    virtual SolutionUPtr solve(const Problem&) = 0;
+    virtual SolutionUPtr solve(const Problem&, Solution&) = 0;
 };
 
 typedef std::unique_ptr<Solver> SolverUPtr;

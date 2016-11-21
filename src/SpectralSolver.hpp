@@ -1,33 +1,27 @@
 #ifndef SPECTRALSOLVER_HPP
 #define SPECTRALSOLVER_HPP
 
-#include "SpectralMatrix.hpp"
-#include "SpectralSolution.hpp"
-#include "SchwarzSolver.hpp"
-#include "SchwarzTypes.hpp"
+#include "Solver.hpp"
+
+//#include "SpectralMatrix.hpp"
+//#include "SpectralSolution.hpp"
+//#include "SchwarzSolver.hpp"
+//#include "SchwarzTypes.hpp"
 
 namespace ModifiedSchwarz
 {
 
 /*!
- * Spectral Schwarz solver.
+ * Solves the modified Schwarz problem via the spectral method.
  */
-class SolverSpectral : public SchwarzSolver
+class SpectralSolver : public Solver
 {
-    SpectralMatrix _domainMatrix;
+    // Spectral domain matrix pointer goes here.
 
 public:
-    SolverSpectral(const SolverSpectral& other) : _domainMatrix(other.getMatrix()) {}
-    virtual ~SolverSpectral() {}
-
-    const SpectralMatrix& getMatrix() const { return _domainMatrix; }
-
-    virtual SchwarzSolution solve(const SchwarzProblem& problem)
-    { return SpectralSolution(cmatd()); }
-
-    virtual SchwarzSolution solve(const SchwarzProblem& problem,
-            SchwarzSolution& previous)
-    { return SpectralSolution(cmatd()); }
+    virtual Solver& newCopy() { return *(new SpectralSolver); }
+    virtual SolutionUPtr solve(const Problem&);
+    virtual SolutionUPtr solve(const Problem&, Solution&);
 };
 
 }; // namespace ModifiedSchwarz
