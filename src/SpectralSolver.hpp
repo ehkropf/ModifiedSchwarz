@@ -20,6 +20,7 @@ class SpectralSolver : public Solver
 
 public:
     virtual Solver& newCopy() { return *(new SpectralSolver); }
+
     virtual SolutionUPtr solve(const Problem&);
     virtual SolutionUPtr solve(const Problem&, Solution&);
 };
