@@ -1,12 +1,8 @@
 #ifndef SPECTRALSOLVER_HPP
 #define SPECTRALSOLVER_HPP
 
+#include "SpectralMatrix.hpp"
 #include "Solver.hpp"
-
-//#include "SpectralMatrix.hpp"
-//#include "SpectralSolution.hpp"
-//#include "SchwarzSolver.hpp"
-//#include "SchwarzTypes.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -16,7 +12,7 @@ namespace ModifiedSchwarz
  */
 class SpectralSolver : public Solver
 {
-    // Spectral domain matrix pointer goes here.
+    SpectralMatrixSPtr _domainData;
 
 public:
     virtual Solver& newCopy() { return *(new SpectralSolver); }

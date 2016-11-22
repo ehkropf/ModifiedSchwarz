@@ -1,6 +1,7 @@
 #ifndef SCHWARZPROBLEM_HPP
 #define SCHWARZPROBLEM_HPP
 
+#include "UnitCircleDomain.hpp"
 #include "Solution.hpp"
 #include "Solver.hpp"
 #include "SchwarzTypes.hpp"
@@ -24,14 +25,15 @@ class SpectralSolver : public Solver
  */
 class Problem
 {
+    UnitCircleDomain _domain;
     cmatd _boundaryData;
     SolverUPtr _solver;
 
-
 public:
-    Problem(const cmatd& boundaryData, Solver* solver = new SpectralSolver)
-        : _boundaryData(boundaryData), _solver(solver) {}
+    Problem(const UnitCircleDomain& domain, const cmatd& boundaryData, Solver* solver = new SpectralSolver)
+        : _domain(domain), _boundaryData(boundaryData), _solver(solver) {}
 
+    const UnitCircleDomain& domain() const { return _domain; }
     const cmatd& data() const { return _boundaryData; }
 
     Solution solve() { return _solver->solve(*this); }
