@@ -24,6 +24,11 @@ public:
 
     unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
     unsigned m() const { return unsigned(_centers.n_elem); }
+
+    friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)
+    {
+        return arma::all(a._centers == b._centers) & arma::all(a._radii && b._radii);
+    }
 };
 
 /*!
