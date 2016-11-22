@@ -1,4 +1,5 @@
-#include "ModifiedSchwarz.hpp"
+#include "UnitCircleDomain.hpp"
+#include "SpectralMatrix.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -14,24 +15,24 @@ UnitCircleDomain domainExample3()
 
 ////////////////////////////////////////////////////////////////////////
 void
-SpectralMatrix::constructMatrix(const UnitCircleDomain& domain, const uint truncation)
+SpectralMatrix::constructMatrix(const uint truncation)
 {
     using namespace arma;
 
-    uint m = domain.m();
-    cvecd dv = domain.getCenters();
-    vecd qv = domain.getRadii();
+    uint m = _domain.m();
+    cvecd dv = _domain.getCenters();
+    vecd qv = _domain.getRadii();
 
     // Series truncation level.
     uint N = truncation;
     vecd ktmp = -regspace(1., double(N+1));
 
     // Number of unknowns.
-    uint Q = m*(N + 1) + N;
+    uint Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
 
     // The matrix.
-    _theMatrix = cmatd(2*Q, 2*Q, fill::zeros);
-    cmatd& L = _theMatrix;
+    _domainMatrix = cmatd(2*Q, 2*Q, fill::zeros);
+    cmatd& L = _domainMatrix;
 
     // Double loop construction.
     for (uint p = 0; p <= m; ++p)
@@ -153,4 +154,4 @@ SpectralMatrix::constructMatrix(const UnitCircleDomain& domain, const uint trunc
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
 }
 
-};
+}; // namespace ModifiedSchwarz
