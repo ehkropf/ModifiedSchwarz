@@ -1,5 +1,7 @@
 #include "UnitCircleDomain.hpp"
 #include "SpectralMatrix.hpp"
+#include "SpectralSolution.hpp"
+#include "SpectralSolver.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -152,6 +154,15 @@ SpectralMatrix::constructMatrix(const uint truncation)
 
     L(span(Q, 2*Q-1), span(0, Q-1)) = conj(L(span(0, Q-1), span(Q, 2*Q-1)));
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
+}
+
+////////////////////////////////////////////////////////////////////////
+// Spectral solver definitions.
+SolutionUPtr
+SpectralSolver::solve(const Problem& problem)
+{
+    // Need to create domain matrix.
+    return SolutionUPtr(new SpectralSolution(cvecd()));
 }
 
 }; // namespace ModifiedSchwarz
