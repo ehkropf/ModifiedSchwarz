@@ -2,13 +2,13 @@
 #define SCHWARZSOLVER_HPP
 
 #include <memory>
-#include "Solution.hpp"
+
 #include "SchwarzTypes.hpp"
 
 namespace ModifiedSchwarz
 {
 
-class Problem; // Forward declaration.
+class Problem;
 
 /*!
  * Abstract representation of method to solve Schwarz problem.

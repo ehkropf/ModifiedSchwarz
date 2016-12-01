@@ -1,42 +1,39 @@
 #ifndef SCHWARZPROBLEM_HPP
 #define SCHWARZPROBLEM_HPP
 
+#include <memory>
+
 #include "UnitCircleDomain.hpp"
-#include "Solution.hpp"
-#include "Solver.hpp"
 #include "SchwarzTypes.hpp"
 
 namespace ModifiedSchwarz
 {
 
-class SpectralSolver : public Solver
-{
-};
-
 /*!
- * Abstract representation of the Schwarz problem.
- *
- * Schwarz problem is stored as a matrix of boundary data where each column
- * represents a boundary.
+ * Schwarz problem is represented by a domain and boundary data.
+ * The boundary data is stored as a matrix where each column represents
+ * a boundary.
  *
  * Provides a solve() method which creates and returns a Solution.
- *
- * Default solver is the SpectralSolver.
+ * A previous solution may be given to solve() for solution acceleration;
+ * this is highly dependent on the solver.
  */
+template<class Solver, class Solution>
 class Problem
 {
     UnitCircleDomain _domain;
     cmatd _boundaryData;
-    SolverUPtr _solver;
+    Solver _solver;
 
 public:
-    Problem(const UnitCircleDomain& domain, const cmatd& boundaryData, Solver* solver = new SpectralSolver)
+    Problem(UnitCircleDomain domain, cmatd boundaryData, Solver solver)
         : _domain(domain), _boundaryData(boundaryData), _solver(solver) {}
 
     const UnitCircleDomain& domain() const { return _domain; }
     const cmatd& data() const { return _boundaryData; }
+    const Solver solver() const { return _solver; }
 
-    Solution solve() { return _solver->solve(*this); }
+    Solution solve() { return _solver.solve(*this); }
 };
 
 }; // namespace ModifiedSchwarz
