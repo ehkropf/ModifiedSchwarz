@@ -17,6 +17,7 @@ namespace ModifiedSchwarz
  * Provides a solve() method which creates and returns a Solution.
  * A previous solution may be given to solve() for solution acceleration;
  * this is highly dependent on the solver.
+ * Of course this means we expect the Solver to conform to this interface.
  */
 template<class Solver, class Solution>
 class Problem
@@ -34,6 +35,7 @@ public:
     const Solver solver() const { return _solver; }
 
     Solution solve() { return _solver.solve(*this); }
+    Solution solve(const Solution& prevSolution) { return _solver.solve(*this, prevSolution); }
 };
 
 }; // namespace ModifiedSchwarz

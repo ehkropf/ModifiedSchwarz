@@ -1,8 +1,7 @@
 #ifndef SPECTRALSOLVER_HPP
 #define SPECTRALSOLVER_HPP
 
-#include "SpectralMatrix.hpp"
-#include "Solver.hpp"
+#include "SchwarzTypes.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -10,15 +9,10 @@ namespace ModifiedSchwarz
 /*!
  * Solves the modified Schwarz problem via the spectral method.
  */
-class SpectralSolver : public Solver
+class SpectralSolver
 {
-    SpectralMatrixSPtr _domainData;
 
 public:
-    virtual Solver& newCopy() { return *(new SpectralSolver); }
-
-    virtual SolutionUPtr solve(const Problem&);
-    virtual SolutionUPtr solve(const Problem&, Solution&);
 };
 
 }; // namespace ModifiedSchwarz

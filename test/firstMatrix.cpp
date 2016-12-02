@@ -1,4 +1,4 @@
-#include "ModifiedSchwarz.hpp"
+#include "SpectralData.hpp"
 
 int main()
 {
@@ -7,9 +7,9 @@ int main()
     // Spectral truncation level.
     unsigned N = 64;
 
-    SpectralMatrix smat(domainExample3(), N);
+    SpectralData smat(domainExample3(), N);
 
-    const cmatd& L = smat.getMatrix();
+    const cmatd& L = smat.matrix();
     L.save("Lmatrix.dat", arma::arma_ascii);
 
     return 0;

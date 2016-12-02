@@ -1,7 +1,5 @@
 #include "UnitCircleDomain.hpp"
-#include "SpectralMatrix.hpp"
-#include "SpectralSolution.hpp"
-#include "SpectralSolver.hpp"
+#include "SpectralData.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -16,8 +14,8 @@ UnitCircleDomain domainExample3()
 }
 
 ////////////////////////////////////////////////////////////////////////
-void
-SpectralMatrix::constructMatrix(const uint truncation)
+cmatd
+SpectralData::constructMatrix(uint truncation)
 {
     using namespace arma;
 
@@ -33,8 +31,9 @@ SpectralMatrix::constructMatrix(const uint truncation)
     uint Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
 
     // The matrix.
-    _domainMatrix = cmatd(2*Q, 2*Q, fill::zeros);
-    cmatd& L = _domainMatrix;
+//    _domainMatrix = cmatd(2*Q, 2*Q, fill::zeros);
+//    cmatd& L = _domainMatrix;
+    cmatd L = cmatd(2*Q, 2*Q, fill::zeros);
 
     // Double loop construction.
     for (uint p = 0; p <= m; ++p)
@@ -154,15 +153,18 @@ SpectralMatrix::constructMatrix(const uint truncation)
 
     L(span(Q, 2*Q-1), span(0, Q-1)) = conj(L(span(0, Q-1), span(Q, 2*Q-1)));
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
+
+    return L;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Spectral solver definitions.
-SolutionUPtr
-SpectralSolver::solve(const Problem& problem)
-{
-    // Need to create domain matrix.
-    return SolutionUPtr(new SpectralSolution(cvecd()));
-}
+//////////////////////////////////////////////////////////////////////////
+//// Spectral solver definitions.
+//SolutionUPtr
+//SpectralSolver::solve(const Problem& problem)
+//{
+//    // Need to create domain matrix.
+//    return SolutionUPtr(new SpectralSolution(cvecd()));
+//}
+//
 
 }; // namespace ModifiedSchwarz
