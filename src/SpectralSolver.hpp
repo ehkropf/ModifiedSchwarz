@@ -18,11 +18,13 @@ class SpectralSolver
 public:
     SpectralSolver() {}
 
-    SpectralSolution solve();
-    SpectralSolution solve(const SpectralSolution& prevSolution)
+    SpectralSolution solve(const Problem<SpectralSolver, SpectralSolution>&);
+    SpectralSolution solve(
+            const Problem<SpectralSolver, SpectralSolution>& problem,
+            const SpectralSolution& prevSolution)
     {
         _data = prevSolution.data();
-        return solve();
+        return solve(problem);
     }
 };
 
