@@ -4,6 +4,7 @@
 #include "SchwarzTypes.hpp"
 #include "SpectralData.hpp"
 #include "SpectralSolution.hpp"
+#include "Problem.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -26,6 +27,12 @@ public:
         _data = prevSolution.data();
         return solve(problem);
     }
+
+    static Problem<SpectralSolver, SpectralSolution>
+        problem(UnitCircleDomain domain, cmatd boundaryData)
+        {
+            return Problem<SpectralSolver, SpectralSolution>(domain, boundaryData, SpectralSolver());
+        }
 };
 
 }; // namespace ModifiedSchwarz
