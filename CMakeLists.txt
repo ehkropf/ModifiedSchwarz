@@ -11,7 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
 find_package(Armadillo REQUIRED)
 include_directories(${ARMADILLO_INCLUDE_DIRS})
-set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
+set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 ######################################################################
