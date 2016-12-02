@@ -2,6 +2,8 @@
 #define SPECTRALSOLVER_HPP
 
 #include "SchwarzTypes.hpp"
+#include "SpectralData.hpp"
+#include "SpectralSolution.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -11,8 +13,17 @@ namespace ModifiedSchwarz
  */
 class SpectralSolver
 {
+    SpectralDataSPtr _data;
 
 public:
+    SpectralSolver() {}
+
+    SpectralSolution solve();
+    SpectralSolution solve(const SpectralSolution& prevSolution)
+    {
+        _data = prevSolution.data();
+        return solve();
+    }
 };
 
 }; // namespace ModifiedSchwarz
