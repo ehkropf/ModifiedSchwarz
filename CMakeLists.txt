@@ -24,11 +24,16 @@ add_executable(first test/firstMatrix.cpp)
 target_include_directories(first PUBLIC ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(first schwarz)
 
+add_executable(shared test/sharedData.cpp)
+target_include_directories(shared PUBLIC ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(shared schwarz)
+
 ######################################################################
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 
-add_test(NAME run COMMAND first)
+add_test(NAME matrix COMMAND first)
 add_test(matrixView COMMAND ${TESTDIR}/matplot.py Lmatrix.dat)
+add_test(NAME shared COMMAND shared)
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
-                  DEPENDS first)
+                  DEPENDS first shared)
