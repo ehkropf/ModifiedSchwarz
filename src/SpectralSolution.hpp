@@ -1,9 +1,8 @@
 #ifndef SPECTRALSOLUTION_HPP
 #define SPECTRALSOLUTION_HPP
 
-#include "Solution.hpp"
-#include "SpectralMatrix.hpp"
 #include "SchwarzTypes.hpp"
+#include "SpectralData.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -11,20 +10,20 @@ namespace ModifiedSchwarz
 /*!
  * Solution to Schwarz problem using the spectral method.
  */
-class SpectralSolution : public Solution
+class SpectralSolution
 {
     cmatd _coefficients;
-    SpectralMatrixSPtr _domainData;
+    SpectralDataSPtr _domainData;
 
 public:
     SpectralSolution(const cmatd& coefficients) : _coefficients(coefficients) {}
-    SpectralSolution(const cmatd& coefficients, SpectralMatrixSPtr data)
+    SpectralSolution(const cmatd& coefficients, SpectralDataSPtr data)
         : _coefficients(coefficients), _domainData(data) {}
 
     const cmatd& coefficients() const { return _coefficients; }
-    SpectralMatrixSPtr data() { return _domainData; }
+    SpectralDataSPtr data() const { return _domainData; }
 
-    virtual cvecd eval(const cvecd&) { return cvecd(_coefficients.n_elem).zeros(); }
+    cvecd eval(const cvecd&) { return cvecd(_coefficients.n_elem).zeros(); }
 };
 
 }; // namespace ModifiedSchwarz
