@@ -25,6 +25,7 @@ public:
 
     const UnitCircleDomain& domain() const { return _domain; }
     const cmatd& matrix() const { return _spectralMatrix; }
+    uint truncation() const { return (_spectralMatrix.n_cols/2 - _domain.m())/(_domain.m() + 1); }
 
     friend bool operator==(const SpectralData& left, const SpectralData& right)
     {
