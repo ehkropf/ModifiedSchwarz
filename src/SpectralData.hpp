@@ -32,7 +32,7 @@ public:
     };
 };
 
-typedef std::shared_ptr<SpectralData> SpectralDataSPtr;
+typedef std::shared_ptr<const SpectralData> SpectralDataSPtr;
 
 }; // namespace ModifiedSchwarz
 
