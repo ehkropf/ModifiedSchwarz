@@ -5,7 +5,7 @@ if(NOT CMAKE_BUILD_TYPE)
     message(STATUS "Build type defaulting to '${CMAKE_BUILD_TYPE}'")
 endif()
 
-enable_testing()
+# enable_testing()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
@@ -20,20 +20,48 @@ add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
 
 ######################################################################
-add_executable(first test/firstMatrix.cpp)
-target_include_directories(first PUBLIC ${CMAKE_SOURCE_DIR}/src)
-target_link_libraries(first schwarz)
+# Testing.
 
-add_executable(shared test/sharedData.cpp)
-target_include_directories(shared PUBLIC ${CMAKE_SOURCE_DIR}/src)
-target_link_libraries(shared schwarz)
+# Because MacPorts does not install the cmake file needed to use find_package().
+if(NOT UNITTEST_LIBRARY)
+    find_library(UNITTEST_LIBRARY_DIR UnitTest++)
+    if(NOT UNITTEST_LIBRARY_DIR)
+        message(FATAL_ERROR "UnitTest++ library not found.")
+    else()
+        message(STATUS "Found UnitTest++ library: " ${UNITTEST_LIBRARY_DIR})
+    endif()
+
+    get_filename_component(UNITTEST_LIBRARY_DIR ${UNITTEST_LIBRARY_DIR} DIRECTORY)
+    get_filename_component(UNITTEST_INCLUDE_DIR ${UNITTEST_LIBRARY_DIR} DIRECTORY)
+    set(UNITTEST_INCLUDE_DIR "${UNITTEST_INCLUDE_DIR}/include")
+
+    set(UNITTEST_LIBRARY UnitTest++)
+endif()
+
+include_directories(${UNITTEST_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/src)
+link_directories(${UNITTEST_LIBRARY_DIR})
+
+# ######################################################################
+# add_executable(tProblem test/Problem.cpp)
+# target_link_libraries(tProblem schwarz)
+#
+# add_executable(tSpectralData test/SpectralData.cpp)
+# target_link_libraries(tSpectralData schwarz)
 
 ######################################################################
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
+set(TESTSRC test/testRunner.cpp test/Problem.cpp)
 
-add_test(NAME matrix COMMAND first)
-add_test(matrixView COMMAND ${TESTDIR}/matplot.py Lmatrix.dat)
-add_test(NAME shared COMMAND shared)
+add_executable(testRunner ${TESTSRC})
+target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
 
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
-                  DEPENDS first shared)
+add_custom_target(check
+    COMMAND ${CMAKE_BINARY_DIR}/testRunner
+    DEPENDS testRunner)
+
+# add_test(NAME matrix COMMAND first)
+# add_test(matrixView COMMAND ${TESTDIR}/matplot.py Lmatrix.dat)
+# add_test(NAME shared COMMAND shared)
+
+# add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
+#                   DEPENDS first shared)
