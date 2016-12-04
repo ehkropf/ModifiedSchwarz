@@ -33,7 +33,7 @@ SpectralData::constructMatrix(uint truncation)
     // The matrix.
 //    _domainMatrix = cmatd(2*Q, 2*Q, fill::zeros);
 //    cmatd& L = _domainMatrix;
-    cmatd L = cmatd(2*Q, 2*Q, fill::zeros);
+    cmatd L(2*Q, 2*Q, fill::zeros);
 
     // Double loop construction.
     for (uint p = 0; p <= m; ++p)
