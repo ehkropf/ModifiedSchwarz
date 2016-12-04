@@ -1,3 +1,5 @@
+#include <armadillo>
+
 #include "UnitTest++/UnitTest++.h"
 
 #include "Problem.hpp"
