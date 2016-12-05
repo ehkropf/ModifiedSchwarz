@@ -169,14 +169,4 @@ SpectralData::constructMatrix(uint truncation)
     return L;
 }
 
-//////////////////////////////////////////////////////////////////////////
-//// Spectral solver definitions.
-//SolutionUPtr
-//SpectralSolver::solve(const Problem& problem)
-//{
-//    // Need to create domain matrix.
-//    return SolutionUPtr(new SpectralSolution(cvecd()));
-//}
-//
-
 }; // namespace ModifiedSchwarz
