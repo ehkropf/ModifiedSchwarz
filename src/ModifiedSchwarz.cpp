@@ -32,8 +32,8 @@ SpectralData::constructMatrix(uint truncation)
     using namespace arma;
 
     uint m = _domain.m();
-    cvecd dv = _domain.getCenters();
-    vecd qv = _domain.getRadii();
+    cvecd dv = _domain.centers();
+    vecd qv = _domain.radii();
 
     // Series truncation level.
     uint N = truncation;
