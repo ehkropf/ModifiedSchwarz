@@ -1,20 +1,21 @@
 #include <iostream>
 
+#include "UnitTest++/UnitTest++.h"
+
 #include "UnitCircleDomain.hpp"
 #include "SpectralData.hpp"
 
-int main()
+using namespace ModifiedSchwarz;
+
+TEST(Sharing)
 {
-    using namespace ModifiedSchwarz;
 
     SpectralDataSPtr data(new SpectralData(domainExample3()));
 
     {
         SpectralDataSPtr data2 = data;
-        std::cout << "Use count: " << data.use_count() << std::endl;
+        CHECK_EQUAL(data.use_count(), 2);
     }
 
-    std::cout << "Use count: " << data.use_count() << std::endl;
-
-    return 0;
+    CHECK_EQUAL(data.use_count(), 1);
 }

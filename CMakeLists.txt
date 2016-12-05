@@ -50,7 +50,8 @@ link_directories(${UNITTEST_LIBRARY_DIR})
 
 ######################################################################
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
-set(TESTSRC test/testRunner.cpp test/Problem.cpp)
+set(TESTSRC test/testRunner.cpp
+    test/Problem.cpp test/SpectralData.cpp)
 
 add_executable(testRunner ${TESTSRC})
 target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
