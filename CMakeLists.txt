@@ -53,7 +53,7 @@ set(TESTSRC test/testRunner.cpp
     test/Polynomial.cpp
     test/SpectralData.cpp test/SpectralSolution.cpp)
 
-add_executable(testRunner ${TESTSRC})
+add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})
 target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
 
 add_custom_target(check
