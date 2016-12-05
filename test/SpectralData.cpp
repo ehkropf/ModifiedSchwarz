@@ -11,6 +11,7 @@ TEST(Sharing)
 {
     SpectralDataSPtr data(new SpectralData(domainExample3()));
 
+    REQUIRE
     {
         SpectralDataSPtr data2 = data;
         CHECK_EQUAL(data.use_count(), 2);
