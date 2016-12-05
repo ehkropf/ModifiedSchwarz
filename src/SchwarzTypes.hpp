@@ -15,6 +15,9 @@ typedef arma::Col<double> vecd;
 
 const ComplexDouble i2pi(0.0, 2.0*arma::datum::pi);
 
+////////////////////////////////////////////////////////////////////////
+cvecd polyval(const cvecd& a, const cvecd& x);
+
 }; // namespace ModifiedSchwarz
 
 #endif // SCHWARZTYPES_HPP

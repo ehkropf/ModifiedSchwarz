@@ -1,8 +1,20 @@
+#include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
 #include "SpectralData.hpp"
 
 namespace ModifiedSchwarz
 {
+
+////////////////////////////////////////////////////////////////////////
+cvecd polyval(const cvecd& a, const cvecd& x)
+{
+    cvecd pn = 0.*x;
+    for (cmatd::const_iterator i = a.begin(); i != a.end(); ++i)
+        pn = pn%x + *i;
+
+    return pn;
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 UnitCircleDomain domainExample3()

@@ -50,6 +50,7 @@ link_directories(${UNITTEST_LIBRARY_DIR})
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 set(TESTSRC test/testRunner.cpp
     test/Problem.cpp
+    test/Polynomial.cpp
     test/SpectralData.cpp test/SpectralSolution.cpp)
 
 add_executable(testRunner ${TESTSRC})
