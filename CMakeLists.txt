@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 ######################################################################
-set(SCHWARZ_SOURCE src/ModifiedSchwarz.hpp src/ModifiedSchwarz.cpp)
+set(SCHWARZ_SOURCE src/ModifiedSchwarz.cpp)
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
 
