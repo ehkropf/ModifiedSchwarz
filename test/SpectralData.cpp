@@ -9,7 +9,6 @@ using namespace ModifiedSchwarz;
 
 TEST(Sharing)
 {
-
     SpectralDataSPtr data(new SpectralData(domainExample3()));
 
     {
