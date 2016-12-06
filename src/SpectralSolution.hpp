@@ -16,8 +16,8 @@ class SpectralSolution
     SpectralDataSPtr _domainData;
 
 public:
-    SpectralSolution(const cmatd& coefficients) : _coefficients(coefficients) {}
-    SpectralSolution(const cmatd& coefficients, SpectralDataSPtr data)
+    SpectralSolution(cmatd coefficients) : _coefficients(coefficients) {}
+    SpectralSolution(cmatd coefficients, SpectralDataSPtr data)
         : _coefficients(coefficients), _domainData(data) {}
 
     const cmatd& coefficients() const { return _coefficients; }
