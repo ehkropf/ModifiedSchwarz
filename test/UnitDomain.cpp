@@ -1,6 +1,6 @@
-#include <iostream>
 #include "UnitTest++/UnitTest++.h"
 
+#include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
 
 using namespace ModifiedSchwarz;
