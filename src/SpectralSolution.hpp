@@ -23,7 +23,7 @@ public:
     const cmatd& coefficients() const { return _coefficients; }
     SpectralDataSPtr data() const { return _domainData; }
 
-    cvecd eval(const cvecd&) { return cvecd(_coefficients.n_elem).zeros(); }
+    cvecd eval(const cvecd&);
 };
 
 }; // namespace ModifiedSchwarz

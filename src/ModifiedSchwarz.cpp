@@ -1,6 +1,7 @@
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
 #include "SpectralData.hpp"
+#include "SpectralSolution.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -184,6 +185,25 @@ SpectralData::constructMatrix(uint truncation)
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
 
     return L;
+}
+
+////////////////////////////////////////////////////////////////////////
+/*!
+ *
+ */
+cvecd
+SpectralSolution::eval(const cvecd& z)
+{
+    cvecd w(z.n_elem);
+    cmatd& a = _coefficients;
+    unsigned N = (a.n_rows - 1)/2;
+    const UnitCircleDomain& D = _domainData->domain();
+
+    for (unsigned j = 0; j < D.m()+1; ++j)
+    {
+    }
+
+    return w;
 }
 
 }; // namespace ModifiedSchwarz
