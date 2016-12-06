@@ -15,6 +15,9 @@ typedef arma::Col<double> vecd;
 
 const ComplexDouble i2pi(0.0, 2.0*arma::datum::pi);
 
+const double eps2pi = std::numeric_limits<double>::epsilon()*2.*std::acos(-1);
+
+
 ////////////////////////////////////////////////////////////////////////
 cvecd polyval(const cvecd& a, const cvecd& x);
 
