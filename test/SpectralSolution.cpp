@@ -29,22 +29,19 @@ TEST(SolutionEval)
      * 2. Get the real part of a function at M points on each boundary.
      * 3. The "solution" on each boundary is given by the FFT of the real part.
      */
-    uint N = 16;
-    uint M = 2*N + 1;
-    UnitCircleDomain D = domainExample3();
+    unsigned N = 16;
+    unsigned M = 2*N + 1;
+    auto D = domainExample3();
     auto zb = D.boundaryPoints(M);
 
     // Real part of a function.
-    auto g = [&D](const cvecd& z) -> vecd { return arma::real(polesInHoles(z, D)); };
+    auto g = [&D](const cvecd& z) -> vecd { return real(polesInHoles(z, D)); };
 
     cmatd a(M, D.m()+1);
     for (unsigned j = 0; j < D.m()+1; ++j)
-        a.col(j) = arma::fft(g(zb.col(j)))/M;
-    std::cout << a << std::endl;
+        a.col(j) = fft(g(zb.col(j)))/M;
 
     SpectralSolution sol(std::move(a), SpectralDataSPtr(new SpectralData(D)));
 
-    std::cout << "Evaluating points:" << std::endl;
-    std::cout << arma::join_horiz(arma::real(sol.eval(zb.col(0))), g(zb.col(0)));
-    CHECK(arma::approx_equal(arma::real(sol.eval(zb.col(0))), g(zb.col(0)), "reldiff", eps2pi));
+    CHECK(approx_equal(real(sol.eval(zb.col(0))), g(zb.col(0)), "absdiff", eps2pi));
 }

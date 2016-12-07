@@ -24,7 +24,7 @@ UnitCircleDomain::boundaryPoints(unsigned npts)
     using namespace arma;
 
     cmatd zb(npts, m()+1, fill::zeros);
-    cvecd circ = exp(i2pi*regspace<cvecd>(0, npts-1)/(npts-1));
+    cvecd circ = exp(i2pi*regspace<cvecd>(0, npts-1)/npts);
 
     zb(span::all, span(0)) = circ;
     for (unsigned j = 0; j < m(); ++j)
@@ -212,7 +212,7 @@ SpectralSolution::eval(const cvecd& z)
         uvec L = find(abs(qj - abs(zj)) < eps2pi);
         if (L.n_elem)
             w.elem(L) = a(0, j) +
-                2.*real(polyval(join_vert(flipud(a.col(j).subvec(1, N)), cvecd(0.)), zj(L)/qj));
+                2.*polyval(join_vert(flipud(a.col(j).subvec(1, N)), cvecd(1, fill::zeros)), zj(L)/qj);
     }
 
     return w;
