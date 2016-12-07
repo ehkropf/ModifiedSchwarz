@@ -5,8 +5,6 @@ if(NOT CMAKE_BUILD_TYPE)
     message(STATUS "Build type defaulting to '${CMAKE_BUILD_TYPE}'")
 endif()
 
-# enable_testing()
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
 find_package(Armadillo REQUIRED)
@@ -67,10 +65,3 @@ target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
 add_custom_target(check
     COMMAND ${CMAKE_BINARY_DIR}/testRunner
     DEPENDS testRunner)
-
-# add_test(NAME matrix COMMAND first)
-# add_test(matrixView COMMAND ${TESTDIR}/matplot.py Lmatrix.dat)
-# add_test(NAME shared COMMAND shared)
-
-# add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND}
-#                   DEPENDS first shared)
