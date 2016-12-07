@@ -10,7 +10,8 @@ namespace ModifiedSchwarz
 {
 
 /*!
- * Schwarz problem is represented by a domain and boundary data.
+ * Schwarz problem is represented by a domain and boundary data (imaginary
+ * part of the boundary values).
  * The boundary data is stored as a matrix where each column represents
  * a boundary.
  *
