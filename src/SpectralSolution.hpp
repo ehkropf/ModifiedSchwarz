@@ -12,14 +12,24 @@ namespace ModifiedSchwarz
  */
 class SpectralSolution
 {
+    cx_vec _constants;
     cx_mat _coefficients;
     SpectralDataSPtr _domainData;
 
-public:
-    SpectralSolution(cx_mat coefficients) : _coefficients(coefficients) {}
-    SpectralSolution(cx_mat coefficients, SpectralDataSPtr data)
-        : _coefficients(coefficients), _domainData(data) {}
+protected:
+    cx_vec extractConstants(const cx_mat&);
+    cx_mat extractCoefficients(const cx_mat&);
 
+public:
+    SpectralSolution(cx_mat solutionMatrix)
+        : _constants(extractConstants(solutionMatrix)),
+          _coefficients(extractCoefficients(solutionMatrix)) {}
+    SpectralSolution(cx_mat solutionMatrix, SpectralDataSPtr data)
+        : _constants(extractConstants(solutionMatrix)),
+          _coefficients(extractCoefficients(solutionMatrix)),
+          _domainData(data) {}
+
+    const cx_vec& constants() const { return _constants; }
     const cx_mat& coefficients() const { return _coefficients; }
     SpectralDataSPtr data() const { return _domainData; }
 
