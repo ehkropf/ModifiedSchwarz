@@ -29,7 +29,7 @@ public:
     }
 
     static Problem<SpectralSolver, SpectralSolution>
-        problem(UnitCircleDomain domain, cmatd boundaryData)
+        problem(UnitCircleDomain domain, cx_mat boundaryData)
         {
             return Problem<SpectralSolver, SpectralSolution>(domain, boundaryData, SpectralSolver());
         }

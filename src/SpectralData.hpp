@@ -14,17 +14,17 @@ namespace ModifiedSchwarz
 class SpectralData
 {
     UnitCircleDomain _domain;
-    cmatd _spectralMatrix;
+    cx_mat _spectralMatrix;
 
 protected:
-    cmatd constructMatrix(uint);
+    cx_mat constructMatrix(uint);
 
 public:
     SpectralData(const UnitCircleDomain& domain, uint truncation = DEFAULT_SPECTRAL_TRUNCATION)
         : _domain(domain), _spectralMatrix(constructMatrix(truncation)) {}
 
     const UnitCircleDomain& domain() const { return _domain; }
-    const cmatd& matrix() const { return _spectralMatrix; }
+    const cx_mat& matrix() const { return _spectralMatrix; }
     uint truncation() const { return (_spectralMatrix.n_cols/2 - _domain.m())/(_domain.m() + 1); }
 
     friend bool operator==(const SpectralData& left, const SpectralData& right)

@@ -9,7 +9,7 @@ int main()
 
     SpectralData smat(domainExample3(), N);
 
-    const cmatd& L = smat.matrix();
+    const cx_mat& L = smat.matrix();
     L.save("Lmatrix.dat", arma::arma_ascii);
 
     return 0;

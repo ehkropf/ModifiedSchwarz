@@ -4,10 +4,10 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
-cvecd polyval(const cvecd& a, const cvecd& x)
+cx_vec polyval(const cx_vec& a, const cx_vec& x)
 {
-    cvecd pn(x.n_elem, arma::fill::zeros);
-    for (cmatd::const_iterator i = a.begin(); i != a.end(); ++i)
+    cx_vec pn(x.n_elem, arma::fill::zeros);
+    for (cx_mat::const_iterator i = a.begin(); i != a.end(); ++i)
         pn = pn%x + *i;
 
     return pn;

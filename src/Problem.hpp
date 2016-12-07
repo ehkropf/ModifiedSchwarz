@@ -23,15 +23,15 @@ template<class Solver, class Solution>
 class Problem
 {
     UnitCircleDomain _domain;
-    cmatd _boundaryData;
+    cx_mat _boundaryData;
     Solver _solver;
 
 public:
-    Problem(UnitCircleDomain domain, cmatd boundaryData, Solver solver)
+    Problem(UnitCircleDomain domain, cx_mat boundaryData, Solver solver)
         : _domain(domain), _boundaryData(boundaryData), _solver(solver) {}
 
     const UnitCircleDomain& domain() const { return _domain; }
-    const cmatd& data() const { return _boundaryData; }
+    const cx_mat& data() const { return _boundaryData; }
     const Solver solver() const { return _solver; }
 
     Solution solve() { return _solver.solve(*this); }

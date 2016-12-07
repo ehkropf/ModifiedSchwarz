@@ -24,7 +24,7 @@ public:
 
 TEST(solve1)
 {
-    AProblem problem(domainExample3(), cmatd(1, 3, arma::fill::zeros), ASolver());
+    AProblem problem(domainExample3(), cx_mat(1, 3, arma::fill::zeros), ASolver());
     ASolution sol = problem.solve();
 
     CHECK(sol.value);

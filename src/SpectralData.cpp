@@ -4,38 +4,38 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
-cmatd
+cx_mat
 SpectralData::constructMatrix(uint truncation)
 {
     using namespace arma;
 
     uint m = _domain.m();
-    cvecd dv = _domain.centers();
-    vecd qv = _domain.radii();
+    cx_vec dv = _domain.centers();
+    vec qv = _domain.radii();
 
     // Series truncation level.
     uint N = truncation;
-    vecd ktmp = -regspace(1., double(N+1));
+    vec ktmp = -regspace(1., double(N+1));
 
     // Number of unknowns.
     uint Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
 
     // The matrix.
-//    _domainMatrix = cmatd(2*Q, 2*Q, fill::zeros);
-//    cmatd& L = _domainMatrix;
-    cmatd L(2*Q, 2*Q, fill::zeros);
+//    _domainMatrix = cx_mat(2*Q, 2*Q, fill::zeros);
+//    cx_mat& L = _domainMatrix;
+    cx_mat L(2*Q, 2*Q, fill::zeros);
 
     // Double loop construction.
     for (uint p = 0; p <= m; ++p)
     {
         uint r0 = (p > 0) ? p*N + (p-1) : 0;
-        ComplexDouble dp = (p > 0) ? dv(p-1) : 0.;
+        cx_double dp = (p > 0) ? dv(p-1) : 0.;
         double qp = (p > 0) ? qv(p-1) : 1.;
 
         for (uint j = 0; j <= m; ++j)
         {
             uint c0 = (j > 0) ? j*N + (j-1) : 0;
-            ComplexDouble dj = (j > 0) ? dv(j-1) : 0.;
+            cx_double dj = (j > 0) ? dv(j-1) : 0.;
             double qj = (j > 0) ? qv(j-1) : 1.;
 
             if (j == 0)
@@ -50,7 +50,7 @@ SpectralData::constructMatrix(uint truncation)
                     // Block L_{p,0}.
                     if (dp == 0.)
                     {
-                        cvecd tmp(N);
+                        cx_vec tmp(N);
                         tmp(0) = i2pi*qp*qp;
                         for (uint i = 1; i < N; ++i)
                         {
@@ -60,7 +60,7 @@ SpectralData::constructMatrix(uint truncation)
                     }
                     else
                     {
-                        cvecd tmp(N);
+                        cx_vec tmp(N);
                         tmp(0) = i2pi*qp*dp;
                         for (uint i = 1; i < N; ++i)
                         {
@@ -84,7 +84,7 @@ SpectralData::constructMatrix(uint truncation)
                     // Block L_{0,j}.
                     if (dj == 0.)
                     {
-                        cvecd tmp(N);
+                        cx_vec tmp(N);
                         tmp(0) = -i2pi*qj;
                         for (uint i = 1; i < N; ++i)
                         {
@@ -94,7 +94,7 @@ SpectralData::constructMatrix(uint truncation)
                     }
                     else
                     {
-                        cvecd tmp(N);
+                        cx_vec tmp(N);
                         tmp(0) = -i2pi*qj;
                         for (uint i = 1; i < N; ++i)
                         {
@@ -119,10 +119,10 @@ SpectralData::constructMatrix(uint truncation)
                 else
                 {
                     // Block L_{p,j}.
-                    cvecd qtmp(N+1);
+                    cx_vec qtmp(N+1);
                     qtmp(0) = qp;
-                    cvecd dtmp(N+1);
-                    ComplexDouble djp = dj - dp;
+                    cx_vec dtmp(N+1);
+                    cx_double djp = dj - dp;
                     dtmp(0) = 1./djp;
                     for (uint i = 1; i < N+1; ++i)
                     {

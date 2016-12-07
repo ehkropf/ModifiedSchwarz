@@ -12,20 +12,20 @@ namespace ModifiedSchwarz
  */
 class UnitCircleDomain
 {
-    cvecd _centers;
-    vecd _radii;
+    cx_vec _centers;
+    vec _radii;
 
 public:
-    UnitCircleDomain(const cvecd &centers, const vecd &radii)
+    UnitCircleDomain(const cx_vec &centers, const vec &radii)
         : _centers(centers), _radii(radii) {}
 
-    const cvecd &centers() const { return _centers; }
-    const vecd &radii() const { return _radii; }
+    const cx_vec &centers() const { return _centers; }
+    const vec &radii() const { return _radii; }
 
     unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
     unsigned m() const { return unsigned(_centers.n_elem); }
 
-    cmatd boundaryPoints(unsigned);
+    cx_mat boundaryPoints(unsigned);
 
     friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)
     {

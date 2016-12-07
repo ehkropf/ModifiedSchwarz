@@ -7,9 +7,9 @@
 
 using namespace ModifiedSchwarz;
 
-cvecd polesInHoles(const cvecd& z, const UnitCircleDomain& D)
+cx_vec polesInHoles(const cx_vec& z, const UnitCircleDomain& D)
 {
-    cvecd w(z.n_elem, arma::fill::zeros);
+    cx_vec w(z.n_elem, arma::fill::zeros);
 
     auto d = D.centers().begin();
     auto q = D.radii().begin();
@@ -35,9 +35,9 @@ TEST(SolutionEval)
     auto zb = D.boundaryPoints(M);
 
     // Real part of a function.
-    auto g = [&D](const cvecd& z) -> vecd { return real(polesInHoles(z, D)); };
+    auto g = [&D](const cx_vec& z) -> vec { return real(polesInHoles(z, D)); };
 
-    cmatd a(M, D.m()+1);
+    cx_mat a(M, D.m()+1);
     for (unsigned j = 0; j < D.m()+1; ++j)
         a.col(j) = fft(g(zb.col(j)))/M;
 

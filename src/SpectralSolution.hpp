@@ -12,18 +12,18 @@ namespace ModifiedSchwarz
  */
 class SpectralSolution
 {
-    cmatd _coefficients;
+    cx_mat _coefficients;
     SpectralDataSPtr _domainData;
 
 public:
-    SpectralSolution(cmatd coefficients) : _coefficients(coefficients) {}
-    SpectralSolution(cmatd coefficients, SpectralDataSPtr data)
+    SpectralSolution(cx_mat coefficients) : _coefficients(coefficients) {}
+    SpectralSolution(cx_mat coefficients, SpectralDataSPtr data)
         : _coefficients(coefficients), _domainData(data) {}
 
-    const cmatd& coefficients() const { return _coefficients; }
+    const cx_mat& coefficients() const { return _coefficients; }
     SpectralDataSPtr data() const { return _domainData; }
 
-    cvecd eval(const cvecd&);
+    cx_vec eval(const cx_vec&);
 };
 
 }; // namespace ModifiedSchwarz
