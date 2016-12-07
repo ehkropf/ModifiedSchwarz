@@ -1,47 +1,7 @@
-#include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
 #include "SpectralData.hpp"
-#include "SpectralSolution.hpp"
 
 namespace ModifiedSchwarz
 {
-
-////////////////////////////////////////////////////////////////////////
-cvecd polyval(const cvecd& a, const cvecd& x)
-{
-    cvecd pn(x.n_elem, arma::fill::zeros);
-    for (cmatd::const_iterator i = a.begin(); i != a.end(); ++i)
-        pn = pn%x + *i;
-
-    return pn;
-}
-
-
-////////////////////////////////////////////////////////////////////////
-cmatd
-UnitCircleDomain::boundaryPoints(unsigned npts)
-{
-    using namespace arma;
-
-    cmatd zb(npts, m()+1, fill::zeros);
-    cvecd circ = exp(i2pi*regspace<cvecd>(0, npts-1)/npts);
-
-    zb(span::all, span(0)) = circ;
-    for (unsigned j = 0; j < m(); ++j)
-    {
-        zb(span::all, span(j+1)) =  _centers(j) + _radii(j)*circ;
-    }
-
-    return zb;
-}
-
-UnitCircleDomain domainExample3()
-{
-    cvecd centers{ ComplexDouble(-0.2517, 0.3129), ComplexDouble(0.2307, -0.4667) };
-    vecd radii{ 0.2377, 0.1557 };
-
-    return UnitCircleDomain(centers, radii);
-}
 
 ////////////////////////////////////////////////////////////////////////
 cmatd
@@ -185,37 +145,6 @@ SpectralData::constructMatrix(uint truncation)
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
 
     return L;
-}
-
-////////////////////////////////////////////////////////////////////////
-/*!
- *
- */
-cvecd
-SpectralSolution::eval(const cvecd& z)
-{
-    using namespace arma;
-
-    const UnitCircleDomain& D = _domainData->domain();
-    const cvecd& dv = D.centers();
-    const vecd& qv = D.radii();
-    const cmatd& a = _coefficients;
-    unsigned N = (a.n_rows - 1)/2;
-
-    cvecd w(z.n_elem);
-    for (unsigned j = 0; j < D.m()+1; ++j)
-    {
-        const ComplexDouble dj = j > 0 ? dv(j-1) : 0.;
-        const double qj = j > 0 ? qv(j-1) : 1.;
-
-        cvecd zj = z - dj;
-        uvec L = find(abs(qj - abs(zj)) < eps2pi);
-        if (L.n_elem)
-            w.elem(L) = a(0, j) +
-                2.*polyval(join_vert(flipud(a.col(j).subvec(1, N)), cvecd(1, fill::zeros)), zj(L)/qj);
-    }
-
-    return w;
 }
 
 }; // namespace ModifiedSchwarz

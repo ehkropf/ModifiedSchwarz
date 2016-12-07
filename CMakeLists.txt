@@ -15,7 +15,12 @@ set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 ######################################################################
-set(SCHWARZ_SOURCE src/ModifiedSchwarz.cpp)
+set(SCHWARZ_SOURCE
+    src/Utility.cpp
+    src/UnitCircleDomain.cpp
+    src/SpectralData.cpp
+    src/SpectralSolution.cpp
+    )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
 
@@ -48,11 +53,13 @@ link_directories(${UNITTEST_LIBRARY_DIR})
 
 ######################################################################
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
-set(TESTSRC test/testRunner.cpp
+set(TESTSRC
+    test/testRunner.cpp
     test/UnitDomain.cpp
     test/Problem.cpp
     test/Polynomial.cpp
-    test/SpectralData.cpp test/SpectralSolution.cpp)
+    test/SpectralData.cpp test/SpectralSolution.cpp
+    )
 
 add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})
 target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
