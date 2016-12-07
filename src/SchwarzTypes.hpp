@@ -10,7 +10,7 @@ namespace ModifiedSchwarz
 using cx_double = arma::cx_double;
 using cx_vec = arma::cx_vec;
 using cx_mat = arma::cx_mat;
-using vec = arma::vec;
+using colvec = arma::colvec;
 
 const cx_double i2pi(0.0, 2.0*arma::datum::pi);
 

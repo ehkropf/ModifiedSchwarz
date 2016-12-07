@@ -14,7 +14,7 @@ SpectralSolution::eval(const cx_vec& z)
 
     const UnitCircleDomain& D = _domainData->domain();
     const cx_vec& dv = D.centers();
-    const vec& qv = D.radii();
+    const colvec& qv = D.radii();
     const cx_mat& a = _coefficients;
     unsigned N = (a.n_rows - 1)/2;
 

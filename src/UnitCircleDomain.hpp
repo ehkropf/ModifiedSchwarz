@@ -13,14 +13,14 @@ namespace ModifiedSchwarz
 class UnitCircleDomain
 {
     cx_vec _centers;
-    vec _radii;
+    colvec _radii;
 
 public:
-    UnitCircleDomain(const cx_vec &centers, const vec &radii)
+    UnitCircleDomain(const cx_vec &centers, const colvec &radii)
         : _centers(centers), _radii(radii) {}
 
     const cx_vec &centers() const { return _centers; }
-    const vec &radii() const { return _radii; }
+    const colvec &radii() const { return _radii; }
 
     unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
     unsigned m() const { return unsigned(_centers.n_elem); }

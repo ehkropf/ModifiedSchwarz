@@ -25,7 +25,7 @@ UnitCircleDomain::boundaryPoints(unsigned npts)
 UnitCircleDomain domainExample3()
 {
     cx_vec centers{ cx_double(-0.2517, 0.3129), cx_double(0.2307, -0.4667) };
-    vec radii{ 0.2377, 0.1557 };
+    colvec radii{ 0.2377, 0.1557 };
 
     return UnitCircleDomain(centers, radii);
 }

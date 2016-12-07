@@ -16,8 +16,8 @@ TEST(Points)
 
     using namespace arma;
     double tol = std::numeric_limits<double>::epsilon()*2*std::acos(-1);
-    CHECK(approx_equal(abs(zb.col(0)), vec(n, fill::ones), "reldiff", tol));
+    CHECK(approx_equal(abs(zb.col(0)), colvec(n, fill::ones), "reldiff", tol));
     for (unsigned j = 0; j < D.m(); ++j)
         CHECK(approx_equal(abs(zb.col(j+1) - D.centers()(j)),
-                           D.radii()(j)*vec(n, fill::ones), "reldiff", tol));
+                           D.radii()(j)*colvec(n, fill::ones), "reldiff", tol));
 }

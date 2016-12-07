@@ -11,11 +11,11 @@ SpectralData::constructMatrix(uint truncation)
 
     uint m = _domain.m();
     cx_vec dv = _domain.centers();
-    vec qv = _domain.radii();
+    colvec qv = _domain.radii();
 
     // Series truncation level.
     uint N = truncation;
-    vec ktmp = -regspace(1., double(N+1));
+    colvec ktmp = -regspace(1., double(N+1));
 
     // Number of unknowns.
     uint Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
