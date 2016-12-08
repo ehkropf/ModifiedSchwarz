@@ -21,10 +21,11 @@ protected:
     cx_mat extractCoefficients(const cx_mat&);
 
 public:
-    SpectralSolution(cx_mat solutionMatrix)
+    SpectralSolution(const cx_mat& solutionMatrix)
         : _constants(extractConstants(solutionMatrix)),
           _coefficients(extractCoefficients(solutionMatrix)) {}
-    SpectralSolution(cx_mat solutionMatrix, SpectralDataSPtr data)
+
+    SpectralSolution(const cx_mat& solutionMatrix, SpectralDataSPtr data)
         : _constants(extractConstants(solutionMatrix)),
           _coefficients(extractCoefficients(solutionMatrix)),
           _domainData(data) {}
