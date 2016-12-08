@@ -7,6 +7,7 @@
 namespace ModifiedSchwarz
 {
 
+using uvec = arma::uvec;
 using cx_double = arma::cx_double;
 using cx_vec = arma::cx_vec;
 using cx_mat = arma::cx_mat;
