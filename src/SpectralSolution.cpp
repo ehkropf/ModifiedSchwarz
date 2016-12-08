@@ -42,10 +42,9 @@ SpectralSolution::eval(const cx_vec& z)
         const cx_double dj = j > 0 ? dv(j-1) : 0.;
         const double qj = j > 0 ? qv(j-1) : 1.;
 
-        cx_vec zj = z - dj;
-        uvec L = find(abs(qj - abs(zj)) < eps2pi);
+        uvec L = D.isOnC(j, z);
         if (L.n_elem)
-            w.elem(L) = kv(j) + 2.*polyval(a.col(j), zj(L)/qj);
+            w.elem(L) = kv(j) + 2.*polyval(a.col(j), (z(L) - dj)/qj);
     }
 
     return w;
