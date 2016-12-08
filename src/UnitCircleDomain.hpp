@@ -20,12 +20,17 @@ public:
         : _centers(centers), _radii(radii) {}
 
     const cx_vec &centers() const { return _centers; }
+    const cx_double dv(unsigned j) const { return _centers(j); }
+    const cx_double dv0(unsigned j) const { return j > 0 ? _centers(j-1) : 0.; }
     const colvec &radii() const { return _radii; }
+    const double qv(unsigned j) const { return _radii(j); }
+    const double qv0(unsigned j) const { return j > 0 ? _radii(j-1) : 1.; }
 
     unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
     unsigned m() const { return unsigned(_centers.n_elem); }
 
-    uvec isOnC(unsigned, const cx_vec&) const;
+    uvec isOnC(unsigned j, const cx_vec& z) const
+    { return find(abs(qv0(j) - abs(z - dv0(j))) < eps2pi); }
 
     cx_mat boundaryPoints(unsigned) const;
 

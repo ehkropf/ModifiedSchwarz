@@ -22,13 +22,6 @@ UnitCircleDomain::boundaryPoints(unsigned npts) const
 }
 
 ////////////////////////////////////////////////////////////////////////
-uvec
-UnitCircleDomain::isOnC(unsigned j, const cx_vec& z) const
-{
-    return find(abs(_radii(j) - abs(z - _centers(j))) < eps2pi);
-}
-
-////////////////////////////////////////////////////////////////////////
 UnitCircleDomain domainExample3()
 {
     cx_vec centers{ cx_double(-0.2517, 0.3129), cx_double(0.2307, -0.4667) };
