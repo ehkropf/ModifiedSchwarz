@@ -25,6 +25,8 @@ public:
     unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
     unsigned m() const { return unsigned(_centers.n_elem); }
 
+    uvec isOnC(unsigned, const cx_vec&) const;
+
     cx_mat boundaryPoints(unsigned) const;
 
     friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)
