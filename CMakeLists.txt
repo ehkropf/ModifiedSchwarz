@@ -15,6 +15,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 ######################################################################
 set(SCHWARZ_SOURCE
     src/Utility.cpp
+    src/RealInterpolant.cpp
     src/UnitCircleDomain.cpp
     src/SpectralData.cpp
     src/SpectralSolution.cpp
@@ -53,9 +54,10 @@ link_directories(${UNITTEST_LIBRARY_DIR})
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 set(TESTSRC
     test/testRunner.cpp
+    test/checkPolynomial.cpp
+    test/checkInterpolant.cpp
     test/checkUnitDomain.cpp
     test/checkProblem.cpp
-    test/checkPolynomial.cpp
     test/checkSpectralData.cpp
     test/checkSpectralSolution.cpp
     )
