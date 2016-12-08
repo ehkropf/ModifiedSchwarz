@@ -17,8 +17,8 @@ SpectralSolution::extractCoefficients(const cx_mat& solMat)
     using namespace arma;
     unsigned N = (solMat.n_rows - 1)/2;
 
-    return join_vert(flipud(solMat(span(1, N), span::all)),
-                          cx_mat(1, solMat.n_cols, fill::zeros));
+    return join_vert(flipud(solMat.rows(1, N)),
+                     cx_mat(1, solMat.n_cols, fill::zeros));
 }
 
 ////////////////////////////////////////////////////////////////////////
