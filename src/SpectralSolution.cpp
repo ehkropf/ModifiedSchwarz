@@ -7,7 +7,7 @@ namespace ModifiedSchwarz
 cx_vec
 SpectralSolution::extractConstants(const cx_mat& solMat)
 {
-    return cx_vec(solMat(0, arma::span::all));
+    return cx_vec(solMat.row(0).st());
 }
 
 ////////////////////////////////////////////////////////////////////////
