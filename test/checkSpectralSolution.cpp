@@ -37,11 +37,15 @@ TEST(SolutionEval)
     // Real part of a function.
     auto g = [&D](const cx_vec& z) -> colvec { return real(polesInHoles(z, D)); };
 
+    // Compute fake solution.
     cx_mat a(M, D.m()+1);
     for (unsigned j = 0; j < D.m()+1; ++j)
         a.col(j) = fft(g(zb.col(j)))/M;
 
     SpectralSolution sol(std::move(a), SpectralDataSPtr(new SpectralData(D)));
 
-    CHECK(approx_equal(real(sol.eval(zb.col(0))), g(zb.col(0)), "absdiff", eps2pi));
+    for (unsigned j = 0; j < D.m()+1; ++j)
+    {
+        CHECK(approx_equal(real(sol.eval(zb.col(j))), g(zb.col(j)), "absdiff", eps2pi));
+    }
 }
