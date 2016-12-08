@@ -25,7 +25,7 @@ public:
     unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
     unsigned m() const { return unsigned(_centers.n_elem); }
 
-    cx_mat boundaryPoints(unsigned);
+    cx_mat boundaryPoints(unsigned) const;
 
     friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)
     {

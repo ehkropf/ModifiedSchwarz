@@ -5,7 +5,7 @@ namespace ModifiedSchwarz
 
 ////////////////////////////////////////////////////////////////////////
 cx_mat
-UnitCircleDomain::boundaryPoints(unsigned npts)
+UnitCircleDomain::boundaryPoints(unsigned npts) const
 {
     using namespace arma;
 
