@@ -7,8 +7,14 @@
 namespace ModifiedSchwarz
 {
 
+////////////////////////////////////////////////////////////////////////
 /*!
- * Solution to Schwarz problem using the spectral method.
+ * Solution to Schwarz problem using the spectral method. Stores the
+ * problem for the imaginary part interpolant along with the imagninary
+ * constants and a real interpolant constructed from the solution data.
+ *
+ * TODO:
+ * * Actually finish the class.
  */
 class SpectralSolution
 {

@@ -11,6 +11,21 @@ namespace ModifiedSchwarz
 /*!
  * Provide interpolation on domain boundaries given real data at
  * evenly spaced points on each boundary.
+ *
+ * Boundary data is stored in a matrix with each column representing
+ * a boundary. Boundary sample data must be real and evenly spaced.
+ *
+ * Let M be the number of sample points on a boundary. The M-point
+ * DFT is taken for that boundary data and the N = ceil((M - 1)/2)
+ * first coefficients are used for the interpolation polynomial
+ *
+ *                            --- N
+ *                            \
+ *     p(z) = real(c_0) + 2 *  .     c_i * ((z - d_j)/q_j)^i
+ *                            /
+ *                            --- i=1
+ *
+ * for points z on boundary C_j.
  */
 class RealInterpolant
 {

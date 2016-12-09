@@ -16,8 +16,13 @@ class SpectralSolver;
 
 //! Spectral problem typedef.
 using SpectralProblem = Problem<SpectralSolver, SpectralSolution>;
+
+////////////////////////////////////////////////////////////////////////
 /*!
  * Solves the modified Schwarz problem via the spectral method.
+ * Call solve() with a previous solution to reuse the SpectralData
+ * created for the last solver run. Saves reconstructing the spectral
+ * matrix which is unique per domain+truncation.
  */
 class SpectralSolver
 {
