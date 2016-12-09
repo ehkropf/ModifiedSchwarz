@@ -9,6 +9,13 @@
 namespace ModifiedSchwarz
 {
 
+////////////////////////////////////////////////////////////////////////
+
+//! Forward declare for typedef.
+class SpectralSolver;
+
+//! Spectral problem typedef.
+using SpectralProblem = Problem<SpectralSolver, SpectralSolution>;
 /*!
  * Solves the modified Schwarz problem via the spectral method.
  */
@@ -19,20 +26,17 @@ class SpectralSolver
 public:
     SpectralSolver() {}
 
-    SpectralSolution solve(const Problem<SpectralSolver, SpectralSolution>&);
-    SpectralSolution solve(
-            const Problem<SpectralSolver, SpectralSolution>& problem,
-            const SpectralSolution& prevSolution)
+    SpectralSolution solve(const SpectralProblem&);
+    SpectralSolution solve(const SpectralProblem& problem, const SpectralSolution& prevSolution)
     {
         _data = prevSolution.data();
         return solve(problem);
     }
 
-    static Problem<SpectralSolver, SpectralSolution>
-        problem(UnitCircleDomain domain, cx_mat boundaryData)
-        {
-            return Problem<SpectralSolver, SpectralSolution>(domain, boundaryData, SpectralSolver());
-        }
+    static SpectralProblem problem(UnitCircleDomain domain, cx_mat boundaryData)
+    {
+        return SpectralProblem(domain, boundaryData, SpectralSolver());
+    }
 };
 
 }; // namespace ModifiedSchwarz
