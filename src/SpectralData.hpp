@@ -9,8 +9,8 @@
 namespace ModifiedSchwarz
 {
 
-#define DEFAULT_SPECTRAL_TRUNCATION 64
 
+constexpr unsigned default_spectral_truncation = 64;
 class SpectralData
 {
     UnitCircleDomain _domain;
@@ -20,7 +20,7 @@ protected:
     cx_mat constructMatrix(uint);
 
 public:
-    SpectralData(const UnitCircleDomain& domain, uint truncation = DEFAULT_SPECTRAL_TRUNCATION)
+    SpectralData(const UnitCircleDomain& domain, uint truncation = default_spectral_truncation)
         : _domain(domain), _spectralMatrix(constructMatrix(truncation)) {}
 
     const UnitCircleDomain& domain() const { return _domain; }
