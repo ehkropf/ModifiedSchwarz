@@ -26,6 +26,11 @@ public:
     RealInterpolant(UnitCircleDomain domain, mat samples)
         : _domain(domain), _boundaryData(samples) { prepareInterpolant(); }
 
+    const UnitCircleDomain& domain() const { return _domain; }
+    const mat& boundaryData() const { return _boundaryData; }
+    const colvec& constants() const { return _constants; }
+    const cx_mat& coefficients() const { return _coefficients; }
+
     colvec eval(const cx_vec& z) const;
 };
 
