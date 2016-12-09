@@ -33,7 +33,7 @@ public:
 
     const UnitCircleDomain& domain() const { return _domain; }
     const cx_mat& data() const { return _boundaryData; }
-    const Solver solver() const { return _solver; }
+    const Solver& solver() const { return _solver; }
 
     Solution solve() { return _solver.solve(*this); }
     Solution solve(const Solution& prevSolution) { return _solver.solve(*this, prevSolution); }
