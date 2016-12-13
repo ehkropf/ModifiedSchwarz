@@ -3,32 +3,30 @@
 
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
+#include "RealInterpolant.hpp"
 
 namespace ModifiedSchwarz
 {
 
+////////////////////////////////////////////////////////////////////////////
 /*!
  * Schwarz problem is represented by a domain and boundary data (imaginary
  * part of the boundary values).
- * The boundary data is stored as a matrix where each column represents
- * a boundary.
- *
- * Provides a solve() method which creates and returns a Solution.
- * A previous solution may be given to solve() for solution acceleration;
- * this is highly dependent on the solver.
- * Of course this means we expect the Solver to conform to this interface.
+ * The boundary data is stored as a RealInterpolant. The original data
+ * points to construct the interpolant are available via the dataPoints()
+ * member wrapper.
  */
 class Problem
 {
-    UnitCircleDomain _domain;
-    cx_mat _boundaryData;
+    RealInterpolant _boundaryData;
 
 public:
-    Problem(UnitCircleDomain domain, cx_mat boundaryData)
-        : _domain(domain), _boundaryData(boundaryData) {}
+    Problem(UnitCircleDomain domain, mat boundaryData)
+        : _boundaryData(RealInterpolant(domain, boundaryData)) {}
 
-    const UnitCircleDomain& domain() const { return _domain; }
-    const cx_mat& data() const { return _boundaryData; }
+    const RealInterpolant& interpolant() const { return _boundaryData; }
+    const UnitCircleDomain& domain() const { return _boundaryData.domain(); }
+    const mat& dataPoints() const { return _boundaryData.boundaryData(); }
 };
 
 }; // namespace ModifiedSchwarz
