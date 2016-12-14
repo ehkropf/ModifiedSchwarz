@@ -4,11 +4,11 @@
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
 #include "RealInterpolant.hpp"
+#include "Solver.hpp"
+#include "Solution.hpp"
 
 namespace ModifiedSchwarz
 {
-
-class Solution;
 
 ////////////////////////////////////////////////////////////////////////////
 /*!
@@ -31,7 +31,9 @@ public:
     const mat& dataPoints() const { return _boundaryData.boundaryData(); }
 
     Solution solve();
+    Solution solve(Solver::Method);
     Solution solve(const Solution& prevSolution);
+    Solution solve(const Solution& prevSolution, Solver::Method);
 };
 
 }; // namespace ModifiedSchwarz

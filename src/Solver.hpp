@@ -2,12 +2,11 @@
 #define SOLVER_HPP
 
 #include "SchwarzTypes.hpp"
+#include "Problem.hpp"
+#include "Solution.hpp"
 
 namespace ModifiedSchwarz
 {
-
-class Problem;
-class Solution;
 
 ///////////////////////////////////////////////////////////////////////////
 /*!
