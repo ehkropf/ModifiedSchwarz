@@ -25,8 +25,8 @@ struct Solver
     Solver() : method(Method::Spectral) {}
     Solver(Method method) : method(method) {}
 
-    static Solution solve(const Problem&);
-    static Solution solve(const Problem&, const Solution&);
+    Solution solve(const Problem&);
+    Solution solve(const Problem&, const Solution&);
 };
 
 }; // namespace ModifiedSchwarz
