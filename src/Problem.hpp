@@ -8,6 +8,8 @@
 namespace ModifiedSchwarz
 {
 
+class Solution;
+
 ////////////////////////////////////////////////////////////////////////////
 /*!
  * Schwarz problem is represented by a domain and boundary data (imaginary
@@ -27,6 +29,9 @@ public:
     const RealInterpolant& interpolant() const { return _boundaryData; }
     const UnitCircleDomain& domain() const { return _boundaryData.domain(); }
     const mat& dataPoints() const { return _boundaryData.boundaryData(); }
+
+    Solution solve();
+    Solution solve(const Solution& prevSolution);
 };
 
 }; // namespace ModifiedSchwarz
