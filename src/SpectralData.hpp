@@ -30,6 +30,9 @@ private:
     UnitCircleDomain _domain;
     MatrixPtr _pSpectralMatrix;
 
+protected:
+    MatrixPtr constructMatrix(uint);
+
 public:
     SpectralData(const UnitCircleDomain& domain, uint truncation = default_spectral_truncation)
         : _domain(domain), _pSpectralMatrix(constructMatrix(truncation)) {}
@@ -45,9 +48,6 @@ public:
     {
         return left._domain == right._domain;
     };
-
-protected:
-    MatrixPtr constructMatrix(uint);
 };
 
 }; // namespace ModifiedSchwarz
