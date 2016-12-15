@@ -24,7 +24,7 @@ constexpr unsigned default_spectral_truncation = 64;
 class SpectralData : public SolverData
 {
 public:
-    using MatrixPtr = std::shared_ptr<cx_mat>;
+    using MatrixPtr = std::shared_ptr<const cx_mat>;
 
 private:
     UnitCircleDomain _domain;

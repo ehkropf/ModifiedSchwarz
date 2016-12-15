@@ -21,7 +21,9 @@ SpectralData::constructMatrix(uint truncation)
     uint Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
 
     // The matrix.
-    MatrixPtr pMatrix(new cx_mat(2*Q, 2*Q, fill::zeros));
+    // FIXME: This pointer won't be released if there is an exception
+    // the function return! Danger!!
+    cx_mat* pMatrix = new cx_mat(2*Q, 2*Q, fill::zeros);
     cx_mat& L = *pMatrix;
 
     // Double loop construction.
@@ -143,7 +145,7 @@ SpectralData::constructMatrix(uint truncation)
     L(span(Q, 2*Q-1), span(0, Q-1)) = conj(L(span(0, Q-1), span(Q, 2*Q-1)));
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
 
-    return pMatrix;
+    return MatrixPtr(pMatrix);
 }
 
 }; // namespace ModifiedSchwarz
