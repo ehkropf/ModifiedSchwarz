@@ -4,7 +4,7 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
-cx_mat
+SpectralData::MatrixPtr
 SpectralData::constructMatrix(uint truncation)
 {
     using namespace arma;
@@ -21,9 +21,8 @@ SpectralData::constructMatrix(uint truncation)
     uint Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
 
     // The matrix.
-//    _domainMatrix = cx_mat(2*Q, 2*Q, fill::zeros);
-//    cx_mat& L = _domainMatrix;
-    cx_mat L(2*Q, 2*Q, fill::zeros);
+    MatrixPtr pMatrix(new cx_mat(2*Q, 2*Q, fill::zeros));
+    cx_mat& L = *pMatrix;
 
     // Double loop construction.
     for (uint p = 0; p <= m; ++p)
@@ -144,7 +143,7 @@ SpectralData::constructMatrix(uint truncation)
     L(span(Q, 2*Q-1), span(0, Q-1)) = conj(L(span(0, Q-1), span(Q, 2*Q-1)));
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
 
-    return L;
+    return pMatrix;
 }
 
 }; // namespace ModifiedSchwarz

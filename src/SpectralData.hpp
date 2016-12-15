@@ -5,6 +5,7 @@
 
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
+#include "SolverData.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -20,37 +21,34 @@ constexpr unsigned default_spectral_truncation = 64;
  *
  * See [elsewhere] for a description of the matrix.
  */
-class SpectralData
+class SpectralData : public SolverData
 {
-    UnitCircleDomain _domain;
-    cx_mat _spectralMatrix;
+public:
+    using MatrixPtr = std::shared_ptr<cx_mat>;
 
-protected:
-    cx_mat constructMatrix(uint);
+private:
+    UnitCircleDomain _domain;
+    MatrixPtr _pSpectralMatrix;
 
 public:
     SpectralData(const UnitCircleDomain& domain, uint truncation = default_spectral_truncation)
-        : _domain(domain), _spectralMatrix(constructMatrix(truncation)) {}
+        : _domain(domain), _pSpectralMatrix(constructMatrix(truncation)) {}
 
     const UnitCircleDomain& domain() const { return _domain; }
-    const cx_mat& matrix() const { return _spectralMatrix; }
+    const cx_mat& matrix() const { return *_pSpectralMatrix; }
     uint truncation() const
     {
-        return (_spectralMatrix.n_cols/2 - _domain.m())/(_domain.m() + 1);
+        return (matrix().n_cols/2 - _domain.m())/(_domain.m() + 1);
     }
 
-    friend bool operator==(const SpectralData& left, const SpectralData& right)
+    friend bool operator==(const SpectralData& left, const SpectralData& right) const
     {
         return left._domain == right._domain;
     };
-};
 
-////////////////////////////////////////////////////////////////////////
-/*!
- * Shared pointer to a const SpectralData instance. Can be re-used by solver
- * objects to speed up subsequent solutions.
- */
-typedef std::shared_ptr<const SpectralData> SpectralDataSPtr;
+protected:
+    MatrixPtr constructMatrix(uint);
+};
 
 }; // namespace ModifiedSchwarz
 
