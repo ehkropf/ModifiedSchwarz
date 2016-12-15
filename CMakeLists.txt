@@ -18,7 +18,6 @@ set(SCHWARZ_SOURCE
     src/RealInterpolant.cpp
     src/UnitCircleDomain.cpp
     src/SpectralData.cpp
-    src/SpectralSolution.cpp
     )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
@@ -57,9 +56,7 @@ set(TESTSRC
     test/checkPolynomial.cpp
     test/checkInterpolant.cpp
     test/checkUnitDomain.cpp
-    test/checkProblem.cpp
     test/checkSpectralData.cpp
-    test/checkSpectralSolution.cpp
     )
 
 add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})

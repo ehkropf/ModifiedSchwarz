@@ -9,13 +9,8 @@ using namespace ModifiedSchwarz;
 
 TEST(Sharing)
 {
-    SpectralDataSPtr data(new SpectralData(domainExample3()));
+    SpectralData data(domainExample3());
+    SpectralData data2 = data;
 
-    REQUIRE
-    {
-        SpectralDataSPtr data2 = data;
-        CHECK_EQUAL(data.use_count(), 2);
-    }
-
-    CHECK_EQUAL(data.use_count(), 1);
+    CHECK(&data.matrix() == &data2.matrix());
 }
