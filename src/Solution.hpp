@@ -40,7 +40,7 @@ public:
     const RealInterpolant& realPart() const { return _realPart; }
     const colvec& constants() const { return _constants; }
     const RealInterpolant& imagPart() const { return _imagPart; }
-    const SolverData& solverDataPtr() const  { return *_pSolverData; }
+    const SolverData& solverData() const  { return *_pSolverData; }
 
     cx_vec eval(const cx_vec&);
 };
