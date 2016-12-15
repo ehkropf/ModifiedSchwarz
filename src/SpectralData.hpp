@@ -41,7 +41,7 @@ public:
         return (matrix().n_cols/2 - _domain.m())/(_domain.m() + 1);
     }
 
-    friend bool operator==(const SpectralData& left, const SpectralData& right) const
+    friend bool operator==(const SpectralData& left, const SpectralData& right)
     {
         return left._domain == right._domain;
     };
