@@ -5,12 +5,10 @@
 
 #include "SchwarzTypes.hpp"
 #include "RealInterpolant.hpp"
+#include "SolverData.hpp"
 
 namespace ModifiedSchwarz
 {
-
-class SolverData;
-using SolverDataSPtr = std::shared_ptr<SolverData>;
 
 ///////////////////////////////////////////////////////////////////////////
 /*!
@@ -28,21 +26,21 @@ class Solution
     RealInterpolant _realPart;
     colvec _constants;
     RealInterpolant _imagPart;
-    SolverDataSPtr _solverDataPtr;
+    SolverData::Ptr _pSolverData;
 
 public:
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart)
         : _realPart(realPart), _constants(constants), _imagPart(imagPart) {};
 
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart,
-             SolverDataSPtr solverDataPtr)
+             SolverData::Ptr&& pSolverData)
         : _realPart(realPart), _constants(constants), _imagPart(imagPart),
-          _solverDataPtr(solverDataPtr) {};
+          _pSolverData(std::move(pSolverData)) {};
 
     const RealInterpolant& realPart() const { return _realPart; }
     const colvec& constants() const { return _constants; }
     const RealInterpolant& imagPart() const { return _imagPart; }
-    SolverDataSPtr solverDataPtr() { return _solverDataPtr; }
+    const SolverData& solverDataPtr() const  { return *_pSolverData; }
 
     cx_vec eval(const cx_vec&);
 };
