@@ -14,7 +14,14 @@ using SolverDataSPtr = std::shared_ptr<SolverData>;
 
 ///////////////////////////////////////////////////////////////////////////
 /*!
+ * Solution is made of 3 parts:
+ *   1. an imaginary part (RealInterpolant) given as part of the problem,
+ *   2. a real part (RealInterpolant) which is found by the solver, and
+ *   3. an imaginary constant for each boundary also found by the solver.
+ * All data is on the boundary of the domain.
  *
+ * In addition, a SolverData object may be stored to accelerate future
+ * solver runs in the same domain.
  */
 class Solution
 {
