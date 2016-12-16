@@ -14,9 +14,9 @@ using cx_vec = arma::cx_vec;
 using cx_mat = arma::cx_mat;
 using colvec = arma::colvec;
 
-const cx_double i2pi(0.0, 2.0*arma::datum::pi);
-
-const double eps2pi = std::numeric_limits<double>::epsilon()*2.*std::acos(-1);
+const double pi = std::acos(-1);
+const cx_double i2pi(0.0, 2.0*pi);
+const double eps2pi = std::numeric_limits<double>::epsilon()*2.*pi;
 
 
 ////////////////////////////////////////////////////////////////////////
