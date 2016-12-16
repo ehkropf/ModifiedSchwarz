@@ -18,6 +18,7 @@ set(SCHWARZ_SOURCE
     src/RealInterpolant.cpp
     src/UnitCircleDomain.cpp
     src/SpectralData.cpp
+    src/SpectralMethod.cpp
     )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
