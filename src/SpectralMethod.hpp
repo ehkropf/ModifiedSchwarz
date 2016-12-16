@@ -35,7 +35,7 @@ public:
     Solution solve();
 
     //! Experiments have shown this to be a reasonable default value.
-    constexpr static unsigned kDefaultTrapezoidalPoints = 100;
+    const static unsigned kDefaultTrapezoidalPoints = 100;
 
     //! Compute system RHS using trapezoidal rule.
     cx_vec computeRHS(unsigned numSamplePoints = kDefaultTrapezoidalPoints);
