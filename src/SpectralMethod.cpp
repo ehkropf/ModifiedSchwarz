@@ -14,7 +14,7 @@ SpectralMethod::computeRHS(unsigned M)
     const unsigned N = _data.truncation();
 
     const cx_mat zj = D.boundaryPoints(M*(m+1));
-    const cx_mat rzj = reshape(_imagPart(vectorise(zj)), size(zj));
+    const mat rzj = reshape(_imagPart(vectorise(zj)), size(zj));
 
 
     // Note p = 0; means k = -1, ..., -N or -k-1 = 0, ..., N-1;
