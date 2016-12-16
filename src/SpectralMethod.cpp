@@ -27,7 +27,7 @@ SpectralMethod::computeRHS(unsigned M)
     for (unsigned j = 0; j <= m; ++j)
     {
         const unsigned coff = j*M;
-        const double qj = j > 0 ? -D.qv(j-1) : 1.;
+        const cx_double qj = j > 0 ? -D.qv(j-1) : 1.;
         L(0, span(coff, coff+(M-1))) = qj*rzj.row(j);
     }
 
