@@ -58,6 +58,7 @@ set(TESTSRC
     test/checkInterpolant.cpp
     test/checkUnitDomain.cpp
     test/checkSpectralData.cpp
+    test/checkSpectralMethod.cpp
     )
 
 add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})
