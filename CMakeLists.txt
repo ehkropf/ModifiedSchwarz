@@ -40,9 +40,6 @@ if(NOT UNITTEST_LIBRARY)
     set(UNITTEST_INCLUDE_DIR "${UNITTEST_INCLUDE_DIR}/include")
 endif()
 
-include_directories(${UNITTEST_INCLUDE_DIR} ${CMAKE_SOURCE_DIR}/src)
-link_directories(${UNITTEST_LIBRARY_DIR})
-
 # ######################################################################
 # add_executable(tProblem test/Problem.cpp)
 # target_link_libraries(tProblem schwarz)
@@ -62,6 +59,10 @@ set(TESTSRC
     )
 
 add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})
+target_include_directories(testRunner
+    PUBLIC ${CMAKE_SOURCE_DIR}/src
+    PUBLIC ${UNITTEST_INCLUDE_DIR}
+    )
 target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
 
 add_custom_target(check
