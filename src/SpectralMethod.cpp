@@ -13,7 +13,7 @@ SpectralMethod::computeRHS(unsigned M)
     const unsigned m = D.m();
     const unsigned N = _data.truncation();
 
-    const cx_mat zj = D.boundaryPoints(M*(m+1));
+    const cx_mat zj = D.boundaryPoints(M);
     const mat rzj = reshape(_imagPart(vectorise(zj)), size(zj));
 
 
@@ -24,20 +24,22 @@ SpectralMethod::computeRHS(unsigned M)
     // used below, but the two are related.)
     cx_mat L(N+m*(N+1), M*(m+1));
 
+    // Shared row values.
     for (unsigned j = 0; j <= m; ++j)
     {
         const unsigned coff = j*M;
         const cx_double qj = j > 0 ? -D.qv(j-1) : 1.;
-        L(0, span(coff, coff+(M-1))) = qj*rzj.row(j);
+        L(0, span(coff, coff+(M-1))) = qj*rzj.col(j).st();
     }
 
+    // For p = 0.
     for (unsigned k = 1; k < N; ++k)
         L.row(k) = L.row(k-1)%vectorise(zj).st();
 
     for (unsigned p = 1; p <= m; ++p)
     {
         const unsigned roff = N + (p-1)*(N+1);
-        cx_vec etap = (zj - D.dv0(p))/D.qv0(p);
+        cx_vec etap = (vectorise(zj) - D.dv0(p))/D.qv0(p);
         L.row(roff) = L.row(0)/etap.st();
         for (unsigned k = 1; k < N+1; ++k)
         {
@@ -45,7 +47,7 @@ SpectralMethod::computeRHS(unsigned M)
         }
     }
 
-    return L*repmat((2.*pi/M)*zj.row(0).st(), m+1, 1);
+    return L*repmat((2.*pi/M)*zj.col(0), m+1, 1);
 }
 
 }; // namespace ModifiedSchwarz
