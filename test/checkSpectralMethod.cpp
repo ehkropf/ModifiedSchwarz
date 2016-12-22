@@ -12,7 +12,7 @@ TEST(theRHS)
     using namespace arma;
 
     auto D = domainExample3();
-    auto g = [&D](const cx_vec& z) -> colvec { return real(polesInHoles(z, D)); };
+    auto g = [&D](const cx_vec& z) -> colvec { return imag(polesInHoles(z, D)); };
 
     mat imagPart = reshape(g(vectorise(D.boundaryPoints(200))), 200, D.m()+1);
     SpectralMethod method(Problem(D, imagPart));
@@ -21,7 +21,8 @@ TEST(theRHS)
     cx_vec refRHS;
     CHECK(refRHS.load("../test/refRHS.dat"));
 
-    std::cout << join_horiz(rhs, refRHS);
+//    colvec abserr = abs(refRHS - rhs);
+//    std::cout << " max absolute error: " << max(abserr) << std::endl;
 
-    CHECK(approx_equal(rhs, refRHS, "absdiff", eps2pi));
+    CHECK(approx_equal(rhs, refRHS, "absdiff", 1e-4));
 }
