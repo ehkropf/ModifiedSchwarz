@@ -57,7 +57,7 @@ SpectralData::constructMatrix(unsigned truncation)
                         {
                             tmp(i) = qp*tmp(i-1);
                         }
-                        L(span(r0+1, r0+N), span(0, N-1)).diag() = tmp;
+                        L(span(r0+1, r0+N), span(0, N-1)).diag() = std::move(tmp);
                     }
                     else
                     {
@@ -67,7 +67,7 @@ SpectralData::constructMatrix(unsigned truncation)
                         {
                             tmp(i) = dp*tmp(i-1);
                         }
-                        L(r0, span(0, N-1)) = tmp.st();
+                        L(r0, span(0, N-1)) = std::move(tmp.st());
 
                         L(r0+1, 0) = i2pi*qp*qp;
                         for (unsigned n = 2; n <= N; ++n)
@@ -91,7 +91,7 @@ SpectralData::constructMatrix(unsigned truncation)
                         {
                             tmp(i) = qj*tmp(i-1);
                         }
-                        L(span(0, N-1), span(Q+c0+1, Q+c0+N)).diag() = tmp;
+                        L(span(0, N-1), span(Q+c0+1, Q+c0+N)).diag() = std::move(tmp);
                     }
                     else
                     {
