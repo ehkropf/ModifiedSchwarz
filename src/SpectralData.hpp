@@ -31,15 +31,15 @@ private:
     MatrixPtr _pSpectralMatrix;
 
 protected:
-    MatrixPtr constructMatrix(uint);
+    MatrixPtr constructMatrix(unsigned);
 
 public:
-    SpectralData(const UnitCircleDomain& domain, uint truncation = default_spectral_truncation)
+    SpectralData(const UnitCircleDomain& domain, unsigned truncation = default_spectral_truncation)
         : _domain(domain), _pSpectralMatrix(constructMatrix(truncation)) {}
 
     const UnitCircleDomain& domain() const { return _domain; }
     const cx_mat& matrix() const { return *_pSpectralMatrix; }
-    uint truncation() const
+    unsigned truncation() const
     {
         return (matrix().n_cols/2 - _domain.m())/(_domain.m() + 1);
     }
