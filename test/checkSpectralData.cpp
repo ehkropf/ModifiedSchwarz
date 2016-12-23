@@ -13,7 +13,7 @@ TEST(Matrix)
     const cx_mat& L = data.matrix();
 
     cx_mat refL;
-    refL.load("../test/refmat.dat");
+    refL.load("../test/refMatrix.dat");
 
     CHECK(arma::approx_equal(L, refL, "absdiff", 1e-4));
 }
