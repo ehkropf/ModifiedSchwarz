@@ -59,6 +59,7 @@ set(TESTSRC
     test/checkSpectralMethod.cpp
     )
 
+###
 add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})
 target_include_directories(testRunner
     PUBLIC ${CMAKE_SOURCE_DIR}/src
@@ -68,4 +69,18 @@ target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
 
 add_custom_target(check
     COMMAND ${CMAKE_BINARY_DIR}/testRunner
-    DEPENDS testRunner)
+    DEPENDS testRunner
+    )
+
+###
+add_executable(matWrite EXCLUDE_FROM_ALL test/matWrite.cpp)
+target_include_directories(matWrite
+    PUBLIC ${CMAKE_SOURCE_DIR}/src
+    PUBLIC ${UNITTEST_INCLUDE_DIR}
+    )
+target_link_libraries(matWrite schwarz)
+
+add_custom_target(write
+    COMMAND ${CMAKE_BINARY_DIR}/matWrite
+    DEPENDS matWrite
+    )
