@@ -51,7 +51,6 @@ endif()
 set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
 set(TESTSRC
     test/testRunner.cpp
-    test/TestShared.cpp
     test/checkPolynomial.cpp
     test/checkInterpolant.cpp
     test/checkUnitDomain.cpp

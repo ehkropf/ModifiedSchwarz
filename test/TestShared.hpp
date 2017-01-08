@@ -7,7 +7,14 @@
 namespace ModifiedSchwarz
 {
 
-cx_vec polesInHoles(const cx_vec&, const UnitCircleDomain&);
+template<typename MatrixType>
+MatrixType polesInHoles(const MatrixType& z, const UnitCircleDomain& D)
+{
+    MatrixType w(size(z), arma::fill::zeros);
+    for (auto & d : D.centers()) w += 1./(z - d);
+
+    return w;
+}
 
 }; // namespace ModifiedSchwarz
 
