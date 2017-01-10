@@ -3,6 +3,14 @@
 namespace ModifiedSchwarz
 {
 
+////////////////////////////////////////////////////////////////////////////////
+SpectralMethod::SpectralMethod(const Problem& prob)
+    : _data(prob.domain()), _imagPart(prob.interpolant()) {}
+
+SpectralMethod::SpectralMethod(const Problem& prob, const Solution& prev)
+        : _data(dynamic_cast<const SpectralData&>(prev.solverData())),
+          _imagPart(prob.interpolant()) {}
+
 cx_vec
 SpectralMethod::computeRHS(unsigned M)
 {

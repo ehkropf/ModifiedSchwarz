@@ -25,12 +25,8 @@ class SpectralMethod
     RealInterpolant _imagPart;
 
 public:
-    SpectralMethod(const Problem& prob)
-        : _data(prob.domain()), _imagPart(prob.interpolant()) {}
-
-    SpectralMethod(const Problem& prob, const Solution& prev)
-        : _data(dynamic_cast<const SpectralData&>(prev.solverData())),
-          _imagPart(prob.interpolant()) {}
+    SpectralMethod(const Problem&);
+    SpectralMethod(const Problem&, const Solution&);
 
     Solution solve();
 
