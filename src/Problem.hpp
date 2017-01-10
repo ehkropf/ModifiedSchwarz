@@ -20,15 +20,16 @@ namespace ModifiedSchwarz
  */
 class Problem
 {
-    RealInterpolant _boundaryData;
+    RealInterpolant _imaginaryPart;
 
 public:
-    Problem(UnitCircleDomain domain, mat boundaryData)
-        : _boundaryData(RealInterpolant(domain, boundaryData)) {}
+    Problem(RealInterpolant imaginaryPart) : _imaginaryPart(imaginaryPart) {}
+    Problem(UnitCircleDomain domain, mat imaginaryPart)
+        : _imaginaryPart(RealInterpolant(domain, imaginaryPart)) {}
 
-    const RealInterpolant& interpolant() const { return _boundaryData; }
-    const UnitCircleDomain& domain() const { return _boundaryData.domain(); }
-    const mat& dataPoints() const { return _boundaryData.boundaryData(); }
+    const RealInterpolant& interpolant() const { return _imaginaryPart; }
+    const UnitCircleDomain& domain() const { return _imaginaryPart.domain(); }
+    const mat& dataPoints() const { return _imaginaryPart.boundaryData(); }
 
     Solution solve();
     Solution solve(Solver::Method);
