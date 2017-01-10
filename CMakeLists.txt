@@ -19,6 +19,8 @@ set(SCHWARZ_SOURCE
     src/UnitCircleDomain.cpp
     src/SpectralData.cpp
     src/SpectralMethod.cpp
+    src/Solver.cpp
+    src/Problem.cpp
     )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
