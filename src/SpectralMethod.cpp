@@ -11,6 +11,27 @@ SpectralMethod::SpectralMethod(const Problem& prob, const Solution& prev)
         : _data(dynamic_cast<const SpectralData&>(prev.solverData())),
           _imagPart(prob.interpolant()) {}
 
+////////////////////////////////////////////////////////////////////////////////
+Solution SpectralMethod::solve()
+{
+    cx_vec x = arma::solve(_data.matrix(), computeRHS(kDefaultTrapezoidalPoints));
+    const unsigned m = _data.domain().m();
+    const unsigned N = (_data.matrix().n_cols/2 - m)/(m + 1);
+    cx_vec c(m+1);
+    cx_mat a(N, m+1);
+
+    for (unsigned j = 0; j <= m; ++j)
+    {
+        unsigned offset = j > 0 ? (j-1)*(N+1) + N : 0;
+        c(j) = j > 0 ? x(offset) : 0.;
+        a.col(j) = arma::flipud(x.rows(offset+1, offset+N));
+    }
+
+    RealInterpolant realPart(_data.domain(), real(c), a);
+    return Solution(realPart, imag(c), _imagPart); //, _data);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 cx_vec
 SpectralMethod::computeRHS(unsigned M)
 {
