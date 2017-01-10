@@ -56,6 +56,7 @@ set(TESTSRC
     test/checkUnitDomain.cpp
     test/checkSpectralData.cpp
     test/checkSpectralMethod.cpp
+    test/checkProblem.cpp
     )
 
 ###

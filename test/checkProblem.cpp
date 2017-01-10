@@ -2,12 +2,18 @@
 
 #include "Problem.hpp"
 #include "UnitCircleDomain.hpp"
+#include "TestShared.hpp"
 
 using namespace ModifiedSchwarz;
 
 TEST(solve1)
 {
-    Problem problem(domainExample3(), mat(1, 3, arma::fill::zeros));
+    unsigned N = 128;
+    auto D = domainExample3();
+    auto zb = D.boundaryPoints(N);
+    auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
+
+    Problem problem(RealInterpolant(D, g(zb)));
 
     CHECK(false);
 }
