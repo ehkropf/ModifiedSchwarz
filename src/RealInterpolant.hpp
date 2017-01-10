@@ -38,8 +38,9 @@ protected:
     void prepareInterpolant();
 
 public:
-    RealInterpolant(UnitCircleDomain domain, mat samples)
-        : _domain(domain), _boundaryData(samples) { prepareInterpolant(); }
+    RealInterpolant() {}
+    RealInterpolant(UnitCircleDomain domain, mat samples);
+    RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients);
 
     const UnitCircleDomain& domain() const { return _domain; }
     const mat& boundaryData() const { return _boundaryData; }

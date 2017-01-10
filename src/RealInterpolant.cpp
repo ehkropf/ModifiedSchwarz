@@ -4,6 +4,16 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
+RealInterpolant::RealInterpolant(UnitCircleDomain domain, mat samples)
+    : _domain(domain), _boundaryData(samples)
+{
+    prepareInterpolant();
+}
+
+RealInterpolant::RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients)
+    : _constants(constants), _coefficients(coefficients) {}
+
+////////////////////////////////////////////////////////////////////////
 void
 RealInterpolant::prepareInterpolant()
 {
