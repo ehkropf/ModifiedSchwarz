@@ -29,18 +29,19 @@ class Solution
     SolverData::Ptr _pSolverData;
 
 public:
+    Solution() {}
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart)
-        : _realPart(realPart), _constants(constants), _imagPart(imagPart) {};
+        : _realPart(realPart), _constants(constants), _imagPart(imagPart) {}
 
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart,
              SolverData::Ptr&& pSolverData)
         : _realPart(realPart), _constants(constants), _imagPart(imagPart),
-          _pSolverData(std::move(pSolverData)) {};
+          _pSolverData(std::move(pSolverData)) {}
 
-    const RealInterpolant& realPart() const { return _realPart; }
-    const colvec& constants() const { return _constants; }
-    const RealInterpolant& imagPart() const { return _imagPart; }
-    const SolverData& solverData() const  { return *_pSolverData; }
+    const RealInterpolant& realPart()   const { return _realPart; }
+    const colvec&          constants()  const { return _constants; }
+    const RealInterpolant& imagPart()   const { return _imagPart; }
+    const SolverData&      solverData() const { return *_pSolverData; }
 
     cx_vec eval(const cx_vec&);
 };
