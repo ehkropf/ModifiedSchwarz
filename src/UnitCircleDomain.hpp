@@ -27,6 +27,7 @@ class UnitCircleDomain
     colvec _radii;
 
 public:
+    UnitCircleDomain() {}
     UnitCircleDomain(const cx_vec &centers, const colvec &radii)
         : _centers(centers), _radii(radii) {}
 
