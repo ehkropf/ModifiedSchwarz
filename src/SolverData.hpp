@@ -15,7 +15,8 @@ class SolverData
 public:
     virtual ~SolverData() = default;
 
-    using Ptr = std::unique_ptr<SolverData>;
+    using Ptr = std::shared_ptr<SolverData>;
+    using ConstPtr = std::shared_ptr<const SolverData>;
 };
 
 }; // namespace ModifiedSchwarz

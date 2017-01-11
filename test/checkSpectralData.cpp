@@ -20,8 +20,8 @@ TEST(Matrix)
 
 TEST(Sharing)
 {
-    SpectralData data(domainExample3());
-    SpectralData data2 = data;
+    SpectralData::Ptr pData = std::make_shared<SpectralData>(domainExample3());
+    SpectralData::Ptr pData2 = pData;
 
-    CHECK(&data.matrix() == &data2.matrix());
+    CHECK(&pData->matrix() == &pData2->matrix());
 }

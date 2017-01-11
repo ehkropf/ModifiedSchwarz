@@ -4,7 +4,11 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
-SpectralData::MatrixPtr
+SpectralData::SpectralData(const UnitCircleDomain& domain, unsigned truncation)
+    : _domain(domain), _spectralMatrix(constructMatrix(truncation)) {}
+
+////////////////////////////////////////////////////////////////////////
+cx_mat
 SpectralData::constructMatrix(unsigned truncation)
 {
     using namespace arma;
@@ -23,8 +27,7 @@ SpectralData::constructMatrix(unsigned truncation)
     // The matrix.
     // FIXME: This pointer won't be released if there is an exception
     // the function return! Danger!!
-    cx_mat* pMatrix = new cx_mat(2*Q, 2*Q, fill::zeros);
-    cx_mat& L = *pMatrix;
+    cx_mat L(2*Q, 2*Q, fill::zeros);
 
     // Double loop construction.
     for (unsigned p = 0; p <= m; ++p)
@@ -145,7 +148,7 @@ SpectralData::constructMatrix(unsigned truncation)
     L(span(Q, 2*Q-1), span(0, Q-1)) = conj(L(span(0, Q-1), span(Q, 2*Q-1)));
     L(span(Q, 2*Q-1), span(Q, 2*Q-1)) = conj(L(span(0, Q-1), span(0, Q-1)));
 
-    return MatrixPtr(pMatrix);
+    return L;
 }
 
 }; // namespace ModifiedSchwarz

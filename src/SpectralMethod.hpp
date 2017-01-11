@@ -21,7 +21,7 @@ namespace ModifiedSchwarz
  */
 class SpectralMethod
 {
-    SpectralData _data;
+    SpectralData::Ptr _data;
     RealInterpolant _imagPart;
 
 public:

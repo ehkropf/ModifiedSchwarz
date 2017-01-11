@@ -5,18 +5,19 @@ namespace ModifiedSchwarz
 
 ////////////////////////////////////////////////////////////////////////////////
 SpectralMethod::SpectralMethod(const Problem& prob)
-    : _data(prob.domain()), _imagPart(prob.interpolant()) {}
+    : _data(std::make_shared<SpectralData>(prob.domain())),
+      _imagPart(prob.interpolant()) {}
 
 SpectralMethod::SpectralMethod(const Problem& prob, const Solution& prev)
-        : _data(dynamic_cast<const SpectralData&>(prev.solverData())),
+        : _data(std::dynamic_pointer_cast<SpectralData>(prev.solverDataPtr())),
           _imagPart(prob.interpolant()) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 Solution SpectralMethod::solve()
 {
-    cx_vec x = arma::solve(_data.matrix(), computeRHS(kDefaultTrapezoidalPoints));
-    const unsigned m = _data.domain().m();
-    const unsigned N = (_data.matrix().n_cols/2 - m)/(m + 1);
+    cx_vec x = arma::solve(_data->matrix(), computeRHS(kDefaultTrapezoidalPoints));
+    const unsigned m = _data->domain().m();
+    const unsigned N = (_data->matrix().n_cols/2 - m)/(m + 1);
     cx_vec c(m+1);
     cx_mat a(N, m+1);
 
@@ -27,7 +28,7 @@ Solution SpectralMethod::solve()
         a.col(j) = arma::flipud(x.rows(offset+1, offset+N));
     }
 
-    RealInterpolant realPart(_data.domain(), real(c), a);
+    RealInterpolant realPart(_data->domain(), real(c), a);
     return Solution(realPart, imag(c), _imagPart); //, _data);
 }
 
@@ -38,9 +39,9 @@ SpectralMethod::computeRHS(unsigned M)
     using namespace arma;
 
     // M is number of sample points for trapezoidal rule.
-    const UnitCircleDomain& D = _data.domain();
+    const UnitCircleDomain& D = _data->domain();
     const unsigned m = D.m();
-    const unsigned N = _data.truncation();
+    const unsigned N = _data->truncation();
 
     using rx_vec = Row<cx_double>;
 

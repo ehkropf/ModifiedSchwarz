@@ -10,7 +10,7 @@
 namespace ModifiedSchwarz
 {
 
-constexpr unsigned default_spectral_truncation = 64;
+constexpr unsigned kDefaultSpectralTruncation = 64;
 
 ////////////////////////////////////////////////////////////////////////
 /*!
@@ -23,22 +23,19 @@ constexpr unsigned default_spectral_truncation = 64;
  */
 class SpectralData : public SolverData
 {
-public:
-    using MatrixPtr = std::shared_ptr<const cx_mat>;
-
-private:
     UnitCircleDomain _domain;
-    MatrixPtr _pSpectralMatrix;
+    cx_mat _spectralMatrix;
 
 protected:
-    MatrixPtr constructMatrix(unsigned);
+    cx_mat constructMatrix(unsigned);
 
 public:
-    SpectralData(const UnitCircleDomain& domain, unsigned truncation = default_spectral_truncation)
-        : _domain(domain), _pSpectralMatrix(constructMatrix(truncation)) {}
+    SpectralData(const UnitCircleDomain&, unsigned truncation = kDefaultSpectralTruncation);
+
+    using Ptr = std::shared_ptr<SpectralData>;
 
     const UnitCircleDomain& domain() const { return _domain; }
-    const cx_mat& matrix() const { return *_pSpectralMatrix; }
+    const cx_mat& matrix() const { return _spectralMatrix; }
     unsigned truncation() const
     {
         return (matrix().n_cols/2 - _domain.m())/(_domain.m() + 1);
