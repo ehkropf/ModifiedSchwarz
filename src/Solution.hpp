@@ -30,13 +30,8 @@ class Solution
 
 public:
     Solution() {}
-    Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart)
-        : _realPart(realPart), _constants(constants), _imagPart(imagPart) {}
-
-    Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart,
-             SolverData::Ptr&& pSolverData)
-        : _realPart(realPart), _constants(constants), _imagPart(imagPart),
-          _pSolverData(std::move(pSolverData)) {}
+    Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart);
+    Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData);
 
     const RealInterpolant& realPart()   const { return _realPart; }
     const colvec&          constants()  const { return _constants; }

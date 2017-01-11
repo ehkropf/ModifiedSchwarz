@@ -21,6 +21,7 @@ set(SCHWARZ_SOURCE
     src/SpectralMethod.cpp
     src/Solver.cpp
     src/Problem.cpp
+    src/Solution.cpp
     )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
