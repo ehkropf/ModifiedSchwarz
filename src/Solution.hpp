@@ -33,10 +33,10 @@ public:
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart);
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData);
 
-    const RealInterpolant& realPart()   const { return _realPart; }
-    const colvec&          constants()  const { return _constants; }
-    const RealInterpolant& imagPart()   const { return _imagPart; }
-    const SolverData&      solverData() const { return *_pSolverData; }
+    const RealInterpolant& realPart()      const { return _realPart; }
+    const colvec&          constants()     const { return _constants; }
+    const RealInterpolant& imagPart()      const { return _imagPart; }
+    const SolverData::Ptr  solverDataPtr() const { return _pSolverData; }
 
     cx_vec eval(const cx_vec&);
 };
