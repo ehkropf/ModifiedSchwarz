@@ -80,7 +80,8 @@ SpectralMethod::computeRHS(unsigned M)
         }
     }
 
-    return sum(L, 1);
+    cx_vec b = sum(L, 1);
+    return join_vert(b, conj(b));
 }
 
 }; // namespace ModifiedSchwarz
