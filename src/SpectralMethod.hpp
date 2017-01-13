@@ -30,6 +30,9 @@ public:
 
     Solution solve();
 
+    const cx_mat& matrix() const { return _data->matrix(); }
+    const SpectralData& data() const { return *_data; }
+
     //! Experiments have shown this to be a reasonable default value.
     const static unsigned kDefaultTrapezoidalPoints = 100;
 
