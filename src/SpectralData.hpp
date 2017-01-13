@@ -10,8 +10,6 @@
 namespace ModifiedSchwarz
 {
 
-constexpr unsigned kDefaultSpectralTruncation = 64;
-
 ////////////////////////////////////////////////////////////////////////
 /*!
  * Each domain has a unique spectral matrix (modulo the chosen
@@ -31,6 +29,8 @@ protected:
 
 public:
     SpectralData(const UnitCircleDomain&, unsigned truncation = kDefaultSpectralTruncation);
+
+    constexpr static unsigned kDefaultSpectralTruncation = 64;
 
     using Ptr = std::shared_ptr<SpectralData>;
 
