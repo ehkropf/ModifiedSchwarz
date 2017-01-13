@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug")
+    set(CMAKE_BUILD_TYPE "Release")
     message(STATUS "Build type defaulting to '${CMAKE_BUILD_TYPE}'")
 endif()
 
