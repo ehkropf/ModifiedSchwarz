@@ -3,6 +3,14 @@
 namespace ModifiedSchwarz
 {
 
+////////////////////////////////////////////////////////////////////////////////
+Problem::Problem(RealInterpolant imaginaryPart)
+    : _imaginaryPart(imaginaryPart) {}
+
+Problem::Problem(UnitCircleDomain domain, mat imaginaryPart)
+    : _imaginaryPart(RealInterpolant(domain, imaginaryPart)) {}
+
+////////////////////////////////////////////////////////////////////////////////
 Solution
 Problem::solve()
 {

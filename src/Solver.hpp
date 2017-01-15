@@ -23,8 +23,8 @@ struct Solver
     enum Method { Spectral };
     Method method;
 
-    Solver() : method(Method::Spectral) {}
-    Solver(Method method) : method(method) {}
+    Solver();
+    Solver(Method method);
 
     Solution solve(const Problem&);
     Solution solve(const Problem&, const Solution&);

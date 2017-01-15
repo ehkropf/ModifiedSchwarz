@@ -23,9 +23,8 @@ class Problem
     RealInterpolant _imaginaryPart;
 
 public:
-    Problem(RealInterpolant imaginaryPart) : _imaginaryPart(imaginaryPart) {}
-    Problem(UnitCircleDomain domain, mat imaginaryPart)
-        : _imaginaryPart(RealInterpolant(domain, imaginaryPart)) {}
+    Problem(RealInterpolant imaginaryPart);
+    Problem(UnitCircleDomain domain, mat imaginaryPart);
 
     const RealInterpolant& interpolant() const { return _imaginaryPart; }
     const UnitCircleDomain& domain() const { return _imaginaryPart.domain(); }
