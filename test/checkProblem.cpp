@@ -14,6 +14,7 @@ TEST(solve1)
     auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
 
     Problem problem(RealInterpolant(D, g(zb)));
+    Solution solution = problem.solve();
 
     CHECK(false);
 }
