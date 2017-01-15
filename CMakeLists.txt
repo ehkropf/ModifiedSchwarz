@@ -14,7 +14,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 ######################################################################
 set(SCHWARZ_SOURCE
-    src/Utility.cpp
     src/RealInterpolant.cpp
     src/UnitCircleDomain.cpp
     src/SpectralData.cpp

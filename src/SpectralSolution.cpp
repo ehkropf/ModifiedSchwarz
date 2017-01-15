@@ -1,4 +1,5 @@
 #include "SpectralSolution.hpp"
+#include "Utility.hpp"
 
 namespace ModifiedSchwarz
 {

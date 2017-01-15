@@ -1,4 +1,5 @@
 #include "RealInterpolant.hpp"
+#include "Utility.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -39,8 +40,8 @@ RealInterpolant::eval(const cx_vec& z) const
         uvec L = _domain.isOnC(j, z);
         if (L.n_elem)
             w.elem(L) = _constants(j)
-                    + real(2.*polyval(_coefficients.col(j),
-                                      (z(L) - _domain.dv0(j))/_domain.qv0(j)));
+                    + real(2.*polyval(cx_vec(_coefficients.col(j)),
+                                      cx_vec((z(L) - _domain.dv0(j))/_domain.qv0(j)) ));
     }
 
 

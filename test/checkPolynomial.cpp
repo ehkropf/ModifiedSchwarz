@@ -2,6 +2,7 @@
 #include "UnitTest++/UnitTest++.h"
 
 #include "SchwarzTypes.hpp"
+#include "Utility.hpp"
 
 using namespace ModifiedSchwarz;
 using namespace std::literals::complex_literals;
