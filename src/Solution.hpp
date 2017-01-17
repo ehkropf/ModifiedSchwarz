@@ -38,7 +38,8 @@ public:
     const RealInterpolant& imagPart()      const { return _imagPart; }
     const SolverData::Ptr  solverDataPtr() const { return _pSolverData; }
 
-    cx_vec eval(const cx_vec&);
+    cx_vec eval(const cx_vec&) const;
+    cx_vec operator()(const cx_vec& z) const { return eval(z); }
 };
 
 }; // namespace ModifiedSchwarz
