@@ -16,7 +16,7 @@ Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant i
           _pSolverData(pSolverData) {}
 
 //////////////////////////////////////////////////////////////////////////////
-cx_vec Solution::eval(const cx_vec& z) const
+cx_vec Solution::operator()(const cx_vec& z) const
 {
     // Separate boundary and domain points.
     // Boundary points are given by realPart(z_j) + 1i*(constant_j + imagPart(z_j)).
