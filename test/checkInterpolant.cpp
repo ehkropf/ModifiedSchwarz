@@ -17,5 +17,5 @@ TEST(BasicInterp)
     auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
 
     RealInterpolant gi(D, g(zb));
-    CHECK(approx_equal(gi.eval(vectorise(zb)), real(vectorise(g(zb))), "absdiff", 10.*eps2pi));
+    CHECK(approx_equal(gi(vectorise(zb)), real(vectorise(g(zb))), "absdiff", 10.*eps2pi));
 }

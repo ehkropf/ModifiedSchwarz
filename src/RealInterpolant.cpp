@@ -28,13 +28,11 @@ RealInterpolant::prepareInterpolant()
 
 ////////////////////////////////////////////////////////////////////////
 colvec
-RealInterpolant::eval(const cx_vec& z) const
+RealInterpolant::operator()(const cx_vec& z) const
 {
-    using namespace arma;
-
     unsigned m = _domain.m();
     colvec w(size(z));
-    w.fill(datum::nan);
+    w.fill(arma::datum::nan);
     for (unsigned j = 0; j < m+1; ++j)
     {
         uvec L = _domain.isOnC(j, z);
