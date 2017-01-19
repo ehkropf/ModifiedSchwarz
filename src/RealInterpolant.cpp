@@ -28,6 +28,15 @@ RealInterpolant::prepareInterpolant()
 
 ////////////////////////////////////////////////////////////////////////
 colvec
+RealInterpolant::evalOn(const cx_vec& z, unsigned j) const
+{
+    return _constants(j)
+        +  real(2.*polyval(cx_vec(_coefficients.col(j)),
+                           cx_vec((z - _domain.dv0(j))/_domain.qv0(j)) ));
+}
+
+////////////////////////////////////////////////////////////////////////
+colvec
 RealInterpolant::operator()(const cx_vec& z) const
 {
     unsigned m = _domain.m();
@@ -37,9 +46,7 @@ RealInterpolant::operator()(const cx_vec& z) const
     {
         uvec L = _domain.isOnC(j, z);
         if (L.n_elem)
-            w.elem(L) = _constants(j)
-                    + real(2.*polyval(cx_vec(_coefficients.col(j)),
-                                      cx_vec((z(L) - _domain.dv0(j))/_domain.qv0(j)) ));
+            w.elem(L) = evalOn(z(L), j);
     }
 
 

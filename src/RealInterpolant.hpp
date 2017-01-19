@@ -47,7 +47,8 @@ public:
     const colvec& constants() const { return _constants; }
     const cx_mat& coefficients() const { return _coefficients; }
 
-    colvec operator()(const cx_vec& z) const;
+    colvec evalOn(const cx_vec&, unsigned) const;
+    colvec operator()(const cx_vec&) const;
 };
 
 }; // namespace ModifiedSchwarz
