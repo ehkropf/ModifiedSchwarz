@@ -18,11 +18,22 @@ Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant i
 //////////////////////////////////////////////////////////////////////////////
 cx_vec Solution::operator()(const cx_vec& z) const
 {
-    // Separate boundary and domain points.
-    // Boundary points are given by realPart(z_j) + 1i*(constant_j + imagPart(z_j)).
-    // Domain values are given by barycentric interpolant.
+    using namespace std::complex_literals;
 
-    return cx_vec();
+    // Boundary points are given by realPart(z_j) + 1i*(constant_j + imagPart(z_j)).
+    cx_vec w(size(z));
+    w.fill(arma::datum::nan);
+
+    const auto D = _realPart.domain();
+    const unsigned m = D.m();
+    for(unsigned j = 0; j <= m; ++j)
+    {
+        const auto inD = D.isOnC(j, z);
+        w(inD) = _realPart.evalOn(z(inD), j)
+            + 1.i*(_constants(j) + _imagPart.evalOn(z(inD), j));
+    }
+
+    return w;
 }
 
 }; // namespace ModifiedSchwarz
