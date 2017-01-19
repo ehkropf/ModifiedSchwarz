@@ -86,3 +86,16 @@ add_custom_target(write
     COMMAND ${CMAKE_BINARY_DIR}/matWrite
     DEPENDS matWrite
     )
+
+######################################################################
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    configure_file(${CMAKE_SOURCE_DIR}/doc/Doxyfile.in
+        ${CMAKE_BINARY_DIR}/Doxyfile @ONLY
+        )
+    add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Generating API docs with Doxygen"
+        )
+endif()
