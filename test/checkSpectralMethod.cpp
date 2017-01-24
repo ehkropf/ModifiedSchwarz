@@ -43,3 +43,7 @@ TEST(residual)
     cx_vec res = rhs - A*x;
     CHECK(max(abs(res)/abs(rhs)) < 100*eps2pi);
 }
+
+TEST(pieces)
+{
+}

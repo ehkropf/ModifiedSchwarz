@@ -6,15 +6,27 @@
 
 using namespace ModifiedSchwarz;
 
-TEST(solve1)
+TEST(CallSolve)
 {
     unsigned N = 128;
     auto D = domainExample3();
-    auto zb = D.boundaryPoints(N);
-    auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
+    //auto zb = D.boundaryPoints(N);
+    auto g = [&D](const cx_mat& z) -> mat { return imag(polesInHoles(z, D)); };
 
-    Problem problem(RealInterpolant(D, g(zb)));
-    Solution solution = problem.solve();
+    Problem problem(RealInterpolant(D, g(D.boundaryPoints(N))));
+    Solution sol = problem.solve();
 
-    CHECK(false);
+    cx_vec zt = vectorise(D.boundaryPoints(7));
+    cx_vec actual = polesInHoles(zt, D);
+
+//    std::cout << "Imag part check:\n"
+//        << imag(actual) - sol.imagPart()(zt) << std::endl;
+//
+//    std::cout << "Real part check:\n"
+//        << join_horiz(real(actual), sol.realPart()(zt)) << std::endl;
+//
+//    cx_vec err = polesInHoles(zt, D) - sol(zt);
+//    std::cout << "max(abs(err) = " << max(abs(err)) << std::endl;
+
+//    CHECK(false);
 }
