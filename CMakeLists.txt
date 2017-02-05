@@ -87,6 +87,18 @@ add_custom_target(write
     DEPENDS matWrite
     )
 
+###
+add_executable(comparing EXCLUDE_FROM_ALL test/comparing.cpp)
+target_include_directories(comparing
+    PUBLIC ${CMAKE_SOURCE_DIR}/src
+    PUBLIC ${UNITTEST_INCLUDE_DIR}
+    )
+target_link_libraries(comparing schwarz)
+add_custom_target(comp
+    COMMAND ${CMAKE_BINARY_DIR}/comparing
+    DEPENDS comparing
+    )
+
 ######################################################################
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
