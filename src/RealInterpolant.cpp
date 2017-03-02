@@ -12,7 +12,12 @@ RealInterpolant::RealInterpolant(UnitCircleDomain domain, mat samples)
 }
 
 RealInterpolant::RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients)
-    : _constants(constants), _coefficients(coefficients) {}
+    : _constants(constants)
+{
+    // Add extra zero row; see comment in prepareInterpolant() below.
+    _coefficients = join_vert(coefficients,
+                              cx_mat(1, coefficients.n_cols, arma::fill::zeros));
+}
 
 ////////////////////////////////////////////////////////////////////////
 void
@@ -22,6 +27,11 @@ RealInterpolant::prepareInterpolant()
     unsigned N = (unsigned)std::ceil((M - 1)/2.);
     cx_mat c(fft(_boundaryData)/M);
     _constants = real(c.row(0).st());
+
+    // Store coeffients with extra zero row for use in polyval. This
+    // is because we add the constant to twice the real part of the
+    // polynomial evaluation. (Artifact of DFT coefficients being
+    // conjugate.)
     _coefficients = join_vert(flipud(c.rows(1, N)),
                               cx_mat(1, _boundaryData.n_cols, arma::fill::zeros));
 }
