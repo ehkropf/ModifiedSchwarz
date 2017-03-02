@@ -68,46 +68,14 @@ SUITE(SpectralMethodTest)
         CHECK(max(abs(res)/abs(rhs)) < 100*eps2pi);
     }
 
-    TEST_FIXTURE(TestFixture, TestPieces)
+    TEST_FIXTURE(TestFixture, TestSolution)
     {
         SpectralMethod method(Problem(domain(), imaginaryPart()));
+        Solution sol = method.solve();
 
-        mat realPart64 = real(polesInHoles(domain().boundaryPoints(64), domain()));
-        RealInterpolant reffun(domain(), realPart64);
+        cx_mat bp(domain().boundaryPoints(10));
+        // std::cout << abs(polesInHoles(cx_vec(vectorise(bp)), domain()) - sol(vectorise(bp)));
 
-        cx_vec rhs = method.computeRHS();
-        const cx_mat& A = method.matrix();
-        cx_vec x = solve(A, rhs);
-
-        std::cout << std::endl;
-        std::cout << "n_elem in x: " << x.n_elem << std::endl;
-
-        unsigned m = domain().m();
-        unsigned N = (A.n_cols/2 - m)/(m + 1);
-        unsigned M = (unsigned)std::ceil((N - 1)/2.);
-
-        std::cout << "m = " << m << "\nN = " << N << std::endl;
-
-        const cx_mat& icoef = reffun.coefficients();
-        std::cout << "Interp coeff size: " << icoef.n_rows << "x" << icoef.n_cols << std::endl;
-        std::cout << "Interp constants:\n" << reffun.constants();
-
-        cx_vec cv(m+1);
-        cx_mat a(M, m+1);
-        cv(0) = 0.;
-        a.col(0) = flipud(x.rows(0, M-1));
-        for (unsigned j = 1; j <= m; ++j)
-        {
-            unsigned offset = (j-1)*(N+1) + N;
-            cv(j) = x(offset);
-            a.col(j) = flipud(x.rows(offset+1, offset+M));
-        }
-        std::cout << "Calc constants:\n" << real(cv);
-        std::cout << "Calc coeff size: " << a.n_rows << "x" << a.n_cols << std::endl;
-
-        mat relerr = abs(icoef.rows(0, M-1) - a);
-        for (unsigned j = 0; j < a.n_cols; ++j) relerr.col(j) /= max(abs(icoef.col(j)));
-        std::cout << relerr;
     }
 
 }
