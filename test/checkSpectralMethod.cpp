@@ -105,13 +105,9 @@ SUITE(SpectralMethodTest)
         std::cout << "Calc constants:\n" << real(cv);
         std::cout << "Calc coeff size: " << a.n_rows << "x" << a.n_cols << std::endl;
 
-        for (unsigned j = 0; j <= m; ++j)
-        {
-            std::cout << "Coeff on C" << j << ", iterpolated vs. calculated.\n";
-            std::cout << join_horiz(icoef.col(j).rows(0, M-1), a.col(j)) << std::endl;
-        }
-
-        std::cout << std::endl;
+        mat relerr = abs(icoef.rows(0, M-1) - a);
+        for (unsigned j = 0; j < a.n_cols; ++j) relerr.col(j) /= max(abs(icoef.col(j)));
+        std::cout << relerr;
     }
 
 }
