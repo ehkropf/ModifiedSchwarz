@@ -73,9 +73,8 @@ SUITE(SpectralMethodTest)
         SpectralMethod method(Problem(domain(), imaginaryPart()));
         Solution sol = method.solve();
 
-        cx_mat bp(domain().boundaryPoints(10));
-        // std::cout << abs(polesInHoles(cx_vec(vectorise(bp)), domain()) - sol(vectorise(bp)));
-
+        cx_vec bv(vectorise(domain().boundaryPoints(10)));
+        CHECK(approx_equal(polesInHoles(cx_vec(vectorise(bv)), domain()), sol(vectorise(bv)), "absdiff", 1e-6));
     }
 
 }
