@@ -61,6 +61,7 @@ set(TESTSRC
     test/checkSpectralData.cpp
     test/checkSpectralMethod.cpp
     test/checkProblem.cpp
+    test/checkSolution.cpp
     )
 
 ###
