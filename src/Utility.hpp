@@ -3,6 +3,9 @@
 
 #include <armadillo>
 
+namespace ModifiedSchwarz
+{
+
 ////////////////////////////////////////////////////////////////////////
 /*!
  * Vector polynomial evaluation.
@@ -22,5 +25,7 @@ ArmaMatLike polyval(const ArmaVecLike& a, const ArmaMatLike& x)
 
     return pn;
 }
+
+}; // namespace ModifiedSchwarz
 
 #endif // UTILITY_HPP
