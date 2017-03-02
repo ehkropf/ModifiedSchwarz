@@ -18,14 +18,17 @@ Solution SpectralMethod::solve()
     cx_vec x = arma::solve(_data->matrix(), computeRHS(kDefaultTrapezoidalPoints));
     const unsigned m = _data->domain().m();
     const unsigned N = (_data->matrix().n_cols/2 - m)/(m + 1);
+    const unsigned M = (unsigned)std::ceil((N - 1)/2.);
     cx_vec c(m+1);
-    cx_mat a(N, m+1);
+    cx_mat a(M, m+1);
 
-    for (unsigned j = 0; j <= m; ++j)
+    c(0) = 0.;
+    a.col(0) = arma::flipud(x.rows(0, M-1));
+    for (unsigned j = 1; j <= m; ++j)
     {
-        unsigned offset = j > 0 ? (j-1)*(N+1) + N : 0;
-        c(j) = j > 0 ? x(offset) : 0.;
-        a.col(j) = arma::flipud(x.rows(offset+1, offset+N));
+        const unsigned offset = (j-1)*(N+1) + N;
+        c(j) = x(offset);
+        a.col(j) = arma::flipud(x.rows(offset+1, offset+M));
     }
 
     RealInterpolant realPart(_data->domain(), real(c), a);
