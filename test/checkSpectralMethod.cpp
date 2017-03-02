@@ -84,6 +84,7 @@ SUITE(SpectralMethodTest)
 
         unsigned m = domain().m();
         unsigned N = (A.n_cols/2 - m)/(m + 1);
+        unsigned M = (unsigned)std::ceil((N - 1)/2.);
 
         std::cout << "m = " << m << "\nN = " << N << std::endl;
 
@@ -92,20 +93,23 @@ SUITE(SpectralMethodTest)
         std::cout << "Interp constants:\n" << reffun.constants();
 
         cx_vec cv(m+1);
-        cx_mat a(N, m+1);
-        for (unsigned j = 0; j <= m; ++j)
+        cx_mat a(M, m+1);
+        cv(0) = 0.;
+        a.col(0) = flipud(x.rows(0, M-1));
+        for (unsigned j = 1; j <= m; ++j)
         {
-            unsigned offset = j > 0 ? (j-1)*(N+1) + N : 0;
-            cv(j) = j > 0 ? x(offset) : 0.;
-            a.col(j) = arma::flipud(x.rows(offset+1, offset+N));
+            unsigned offset = (j-1)*(N+1) + N;
+            cv(j) = x(offset);
+            a.col(j) = flipud(x.rows(offset+1, offset+M));
         }
         std::cout << "Calc constants:\n" << real(cv);
         std::cout << "Calc coeff size: " << a.n_rows << "x" << a.n_cols << std::endl;
 
-        std::cout << "Coeff on C0 (first " << icoef.n_rows << ")";
-        std::cout << arma::join_horiz(icoef.col(0), flipud(x.rows(0, icoef.n_rows-1)));
-//        std::cout << arma::join_horiz(icoef.col(0), a.col(0).rows(0, icoef.n_rows-1));
-        // std::cout << "\n" << x;
+        for (unsigned j = 0; j <= m; ++j)
+        {
+            std::cout << "Coeff on C" << j << ", iterpolated vs. calculated.\n";
+            std::cout << join_horiz(icoef.col(j).rows(0, M-1), a.col(j)) << std::endl;
+        }
 
         std::cout << std::endl;
     }
