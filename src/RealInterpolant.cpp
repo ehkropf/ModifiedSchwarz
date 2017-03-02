@@ -11,8 +11,8 @@ RealInterpolant::RealInterpolant(UnitCircleDomain domain, mat samples)
     prepareInterpolant();
 }
 
-RealInterpolant::RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients)
-    : _constants(constants)
+RealInterpolant::RealInterpolant(UnitCircleDomain domain, colvec constants, cx_mat coefficients)
+    : _domain(domain), _constants(constants)
 {
     // Add extra zero row; see comment in prepareInterpolant() below.
     _coefficients = join_vert(coefficients,
