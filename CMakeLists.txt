@@ -23,6 +23,8 @@ set(SCHWARZ_SOURCE
     src/Solution.cpp
     )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
+add_library(schwarz_static STATIC ${SCHWARZ_SOURCE})
+set_target_properties(schwarz_static PROPERTIES OUTPUT_NAME schwarz)
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
 
 ######################################################################
