@@ -28,4 +28,4 @@ All of the auxilary packages may be installed via [MacPorts](https://www.macport
 
 ### Linux
 
-I have only tested this on Ubuntu. Your mileage will vary with other distributions.
+I have only tested this on Ubuntu 16.04 LTS. Your mileage will vary with other distributions. You MUST check the version of Armadillo and SuperLU that comes with the distribution; both packages were behind in 16.04.
