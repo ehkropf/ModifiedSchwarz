@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.5)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
@@ -40,8 +40,14 @@ if(NOT UNITTEST_LIBRARY)
     endif()
 
     get_filename_component(UNITTEST_LIBRARY_DIR ${UNITTEST_LIBRARY} DIRECTORY)
-    get_filename_component(UNITTEST_INCLUDE_DIR ${UNITTEST_LIBRARY_DIR} DIRECTORY)
-    set(UNITTEST_INCLUDE_DIR "${UNITTEST_INCLUDE_DIR}/include")
+    # get_filename_component(UNITTEST_INCLUDE_DIR ${UNITTEST_LIBRARY_DIR} DIRECTORY)
+    # set(UNITTEST_INCLUDE_DIR "${UNITTEST_INCLUDE_DIR}/include")
+    find_path(UNITTEST_INCLUDE_DIR UnitTest++.h
+        PATH_SUFFIXES unittest++ UnitTest++
+        )
+    message(STATUS "UnitTest++ include: " ${UNITTEST_INCLUDE_DIR})
+
+    set(UNITTEST_FOUND YES)
 endif()
 
 # ######################################################################

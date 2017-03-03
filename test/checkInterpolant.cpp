@@ -1,4 +1,4 @@
-#include "UnitTest++/UnitTest++.h"
+#include "UnitTest++.h"
 
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.cpp"

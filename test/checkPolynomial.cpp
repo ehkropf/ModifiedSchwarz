@@ -1,5 +1,5 @@
 #include <iostream>
-#include "UnitTest++/UnitTest++.h"
+#include "UnitTest++.h"
 
 #include "SchwarzTypes.hpp"
 #include "Utility.hpp"
