@@ -12,6 +12,8 @@ Since you are only viewing this repository, which is the only use for which it i
 
 ModifiedSchwarz relies on the following external libraries:
 
+* [cmake](https://cmake.org) build system. At least version 3.5.
+
 * [Armadillo](http://arma.sourceforge.net) linear algebra template library. Need version 7 or better.
 
     For best results, Armadillo relies on the following packages:
@@ -24,7 +26,7 @@ ModifiedSchwarz relies on the following external libraries:
 * [UnitTest++](https://github.com/unittest-cpp/unittest-cpp) (optional) for `make check` unit testing.
 * [Doxygen](http://www.stack.nl/~dimitri/doxygen/) (optional) for `make doc` html doc stuff.
 
-Once the auxiliary packages are installed (see below for OS specific notes), this repository is cloned, and you are in the repository base directory (probably `<something>/ModifiedSchwarz`), the following sequence of commands should buld the library.
+Once the auxiliary packages are installed (see below for OS specific notes), this repository is cloned, and you are in the repository base directory (probably `<something>/ModifiedSchwarz`), the following sequence of commands should build the library. (See the Linux section below if you have installed Armadillo manually.)
 
 ```bash
 mkdir build
@@ -33,7 +35,7 @@ cmake ..
 make
 ```
 
-Note there is no valid install target currently. (It hasn't been configured.)
+(Yes, the two dots are required following `cmake`.) Note there is no valid install target currently. (It hasn't been configured.)
 
 If you've installed UnitTest++, tests can be run with `make check`. If you've installed Doxygen, you can make the HTML docs via `make doc`.
 
@@ -43,4 +45,37 @@ All of the auxilary packages may be installed via [MacPorts](https://www.macport
 
 ### Linux
 
-I have only tested this on Ubuntu 16.04 LTS. Your mileage will vary with other distributions. You MUST check the version of Armadillo and SuperLU that comes with the distribution; both packages were behind in 16.04.
+I have only tested this on Ubuntu 16.04 LTS. Your mileage will vary with other distributions. The basic stuff (cmake, LAPACK, BLAS, etc.) can be installed via the normal `apt install` route. Note you MUST check the version of Armadillo and SuperLU that comes with the distribution; both packages were behind in 16.04.
+
+As an example involving out-of-band packages, I'll show installing SuperLU and Armadillo, since it's what needed done on 16.04.
+
+#### SuperLU
+
+By default SuperLU builds as a static library; we'll build it as shared. In addition it tries to use supplied BLAS routines; we'll give the option to use the system libraries. Finally I'll show how to use an alternate install location.<super>*</super> So once the package is downloaded and unzipped, and you are in the directory, the following commands will build and install the package:
+
+```bash
+mkdir build
+cd build
+cmake -DBUILD_SHARED_LIBS=ON -Denable_blaslib=OFF -DCMAKE_INSTALL_PREFIX=/opt/local ..
+make
+make test
+sudo make install
+```
+
+<sub>\* I like to install non package managed software to `/opt/local`, making it easier to track.</sub>
+
+#### Armadillo
+
+As before, once the package is downloaded, unzipped, and you are in the directory, give the following commands:
+
+```bash
+mkdir build
+cd build
+cmake -DCMAKE_PREFIX_PATH=/opt/local -DCMAKE_INSTALL_PREFIX=/opt/local ..
+```
+
+Note that when you configure ModifiedSchwarz, you will need to modify the `cmake` command to be
+
+```bash
+cmake -DCMAKE_PREFIX_PATH=/opt/local ..
+```
