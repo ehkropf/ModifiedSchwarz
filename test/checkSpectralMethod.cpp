@@ -16,35 +16,34 @@ SUITE(SpectralMethodTest)
 
     class TestFixture
     {
-            UnitCircleDomain _domain;
-            cx_mat _boundaryPoints;
-            cx_mat _functionValues;
-
         public:
+            UnitCircleDomain domain;
+            cx_mat boundaryPoints;
+            cx_mat functionValues;
+
             static constexpr unsigned npts = 200;
 
             TestFixture()
-                : _domain(domainExample3()),
-                  _boundaryPoints(_domain.boundaryPoints(npts)),
-                  _functionValues(reshape(
-                              testFunction(vectorise(_boundaryPoints)),
-                              npts, _domain.m()+1))
+                : domain(domainExample3()),
+                  boundaryPoints(domain.boundaryPoints(npts)),
+                  functionValues(reshape(
+                              testFunction(vectorise(boundaryPoints)),
+                              npts, domain.m()+1))
             {}
 
-            const UnitCircleDomain& domain() const { return _domain; }
-            mat realPart() const { return real(_functionValues); }
-            mat imaginaryPart() const { return imag(_functionValues); }
+            mat realPart() const { return real(functionValues); }
+            mat imaginaryPart() const { return imag(functionValues); }
 
             cx_vec testFunction(const cx_vec& z)
             {
-                return polesInHoles(z, _domain);
+                return polesInHoles(z, domain);
             }
     };
 
     TEST_FIXTURE(TestFixture, TestRHS)
     {
         const mat& imagPart = imaginaryPart();
-        SpectralMethod method(Problem(domain(), imagPart));
+        SpectralMethod method(Problem(domain, imagPart));
         cx_vec rhs = method.computeRHS(100);
 
         cx_vec refRHS;
@@ -59,7 +58,7 @@ SUITE(SpectralMethodTest)
     TEST_FIXTURE(TestFixture, TestResidual)
     {
         const mat& imagPart = imaginaryPart();
-        SpectralMethod method(Problem(domain(), imagPart));
+        SpectralMethod method(Problem(domain, imagPart));
 
         cx_vec rhs = method.computeRHS();
         const cx_mat& A = method.matrix();
@@ -71,14 +70,14 @@ SUITE(SpectralMethodTest)
 
     TEST_FIXTURE(TestFixture, TestSolution)
     {
-        SpectralMethod method(Problem(domain(), imaginaryPart()));
+        SpectralMethod method(Problem(domain, imaginaryPart()));
         Solution sol = method.solve();
 
         SpectralData& data = *std::dynamic_pointer_cast<SpectralData>(sol.solverDataPtr());
-        CHECK(data.domain() == domain());
+        CHECK(data.domain() == domain);
 
-        cx_vec bv(vectorise(domain().boundaryPoints(10)));
-        CHECK(approx_equal(polesInHoles(cx_vec(vectorise(bv)), domain()), sol(vectorise(bv)), "absdiff", 1e-6));
+        cx_vec bv(vectorise(domain.boundaryPoints(10)));
+        CHECK(approx_equal(polesInHoles(cx_vec(vectorise(bv)), domain), sol(vectorise(bv)), "absdiff", 1e-6));
     }
 
 }
