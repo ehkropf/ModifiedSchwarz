@@ -72,6 +72,7 @@ As before, once the package is downloaded, unzipped, and you are in the director
 mkdir build
 cd build
 cmake -DCMAKE_PREFIX_PATH=/opt/local -DCMAKE_INSTALL_PREFIX=/opt/local ..
+sudo make install
 ```
 
 Note that when you configure ModifiedSchwarz, you will need to modify the `cmake` command to be
