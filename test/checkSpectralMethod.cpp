@@ -2,6 +2,7 @@
 
 #include "SchwarzTypes.hpp"
 #include "SpectralMethod.hpp"
+#include "SpectralData.hpp"
 #include "UnitCircleDomain.hpp"
 #include "RealInterpolant.hpp"
 
@@ -72,6 +73,9 @@ SUITE(SpectralMethodTest)
     {
         SpectralMethod method(Problem(domain(), imaginaryPart()));
         Solution sol = method.solve();
+
+        SpectralData& data = *std::dynamic_pointer_cast<SpectralData>(sol.solverDataPtr());
+        CHECK(data.domain() == domain());
 
         cx_vec bv(vectorise(domain().boundaryPoints(10)));
         CHECK(approx_equal(polesInHoles(cx_vec(vectorise(bv)), domain()), sol(vectorise(bv)), "absdiff", 1e-6));
