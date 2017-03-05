@@ -32,7 +32,7 @@ Solution SpectralMethod::solve()
     }
 
     RealInterpolant realPart(_data->domain(), real(c), a);
-    return Solution(realPart, imag(c), _imagPart); //, _data);
+    return Solution(realPart, imag(c), _imagPart, _data);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
