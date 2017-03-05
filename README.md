@@ -72,6 +72,7 @@ As before, once the package is downloaded, unzipped, and you are in the director
 mkdir build
 cd build
 cmake -DCMAKE_PREFIX_PATH=/opt/local -DCMAKE_INSTALL_PREFIX=/opt/local ..
+make
 sudo make install
 ```
 
