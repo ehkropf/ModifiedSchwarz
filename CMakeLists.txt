@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
-    message(STATUS "Build type defaulting to '${CMAKE_BUILD_TYPE}'")
+    message(STATUS "Defaulting to CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
@@ -31,7 +31,7 @@ target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
 # Testing.
 
 # Because MacPorts does not install the cmake file needed to use find_package().
-if(NOT UNITTEST_LIBRARY)
+if(NOT UNITTEST_FOUND)
     find_library(UNITTEST_LIBRARY UnitTest++)
     if(NOT UNITTEST_LIBRARY)
         message(FATAL_ERROR "UnitTest++ library not found.")
@@ -40,54 +40,51 @@ if(NOT UNITTEST_LIBRARY)
     endif()
 
     get_filename_component(UNITTEST_LIBRARY_DIR ${UNITTEST_LIBRARY} DIRECTORY)
-    # get_filename_component(UNITTEST_INCLUDE_DIR ${UNITTEST_LIBRARY_DIR} DIRECTORY)
-    # set(UNITTEST_INCLUDE_DIR "${UNITTEST_INCLUDE_DIR}/include")
     find_path(UNITTEST_INCLUDE_DIR UnitTest++.h
         PATH_SUFFIXES unittest++ UnitTest++
         )
-    message(STATUS "UnitTest++ include: " ${UNITTEST_INCLUDE_DIR})
+    if(NOT UNITTEST_INCLUDE_DIR)
+        message(FATAL_ERROR "UnitTest++.h not found.")
+    else()
+        message(STATUS "Found UnitTest++.h: " "${UNITTEST_INCLUDE_DIR}/UnitTest++.h")
+    endif()
 
-    set(UNITTEST_FOUND YES)
+    set(UNITTEST_FOUND ON CACHE INTERNAL BOOL)
 endif()
 
-# ######################################################################
-# add_executable(tProblem test/Problem.cpp)
-# target_link_libraries(tProblem schwarz)
-#
-# add_executable(tSpectralData test/SpectralData.cpp)
-# target_link_libraries(tSpectralData schwarz)
-
 ######################################################################
-set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
-set(TESTSRC
-    test/testRunner.cpp
-    test/checkPolynomial.cpp
-    test/checkInterpolant.cpp
-    test/checkUnitDomain.cpp
-    test/checkSpectralData.cpp
-    test/checkSpectralMethod.cpp
-    test/checkProblem.cpp
-    test/checkSolution.cpp
-    )
+if(UNITTEST_FOUND)
+    set(TESTDIR "${CMAKE_CURRENT_SOURCE_DIR}/test")
+    set(TESTSRC
+        test/testRunner.cpp
+        test/checkPolynomial.cpp
+        test/checkInterpolant.cpp
+        test/checkUnitDomain.cpp
+        test/checkSpectralData.cpp
+        test/checkSpectralMethod.cpp
+        test/checkProblem.cpp
+        test/checkSolution.cpp
+        )
 
-###
-add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})
-target_include_directories(testRunner
-    PUBLIC ${CMAKE_SOURCE_DIR}/src
-    PUBLIC ${UNITTEST_INCLUDE_DIR}
-    )
-target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
+    ###
+    add_executable(testRunner EXCLUDE_FROM_ALL ${TESTSRC})
+    target_include_directories(testRunner
+        PUBLIC ${CMAKE_SOURCE_DIR}/src
+        PUBLIC ${UNITTEST_INCLUDE_DIR}
+        )
+    target_link_libraries(testRunner schwarz ${UNITTEST_LIBRARY})
 
-add_custom_target(check
-    COMMAND ${CMAKE_BINARY_DIR}/testRunner
-    DEPENDS testRunner
-    )
+    add_custom_target(check
+        COMMAND ${CMAKE_BINARY_DIR}/testRunner
+        DEPENDS testRunner
+        )
+
+endif(UNITTEST_FOUND)
 
 ###
 add_executable(matWrite EXCLUDE_FROM_ALL test/matWrite.cpp)
 target_include_directories(matWrite
     PUBLIC ${CMAKE_SOURCE_DIR}/src
-    PUBLIC ${UNITTEST_INCLUDE_DIR}
     )
 target_link_libraries(matWrite schwarz)
 
