@@ -2,7 +2,7 @@
 
 #include "Problem.hpp"
 #include "UnitCircleDomain.hpp"
-#include "TestShared.hpp"
+#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 

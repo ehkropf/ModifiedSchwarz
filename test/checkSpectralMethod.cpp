@@ -6,7 +6,7 @@
 #include "UnitCircleDomain.hpp"
 #include "RealInterpolant.hpp"
 
-#include "TestShared.hpp"
+#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 using namespace arma;

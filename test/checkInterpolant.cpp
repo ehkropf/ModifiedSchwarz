@@ -3,7 +3,7 @@
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.cpp"
 #include "RealInterpolant.hpp"
-#include "TestShared.hpp"
+#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 
