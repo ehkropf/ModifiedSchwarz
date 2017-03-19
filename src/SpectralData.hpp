@@ -22,15 +22,16 @@ namespace ModifiedSchwarz
  */
 class SpectralData : public SolverData
 {
+    unsigned _truncation;
     UnitCircleDomain _domain;
     cx_mat _spectralMatrix;
 
 protected:
-    cx_mat constructMatrix(unsigned);
+    cx_mat constructMatrix();
 
 public:
-    SpectralData(const UnitCircleDomain&,
-                 unsigned truncation = SpectralConstants::kSpectralTruncation());
+    SpectralData(const UnitCircleDomain&);
+    SpectralData(const UnitCircleDomain&, unsigned);
 
     using Ptr = std::shared_ptr<SpectralData>;
 

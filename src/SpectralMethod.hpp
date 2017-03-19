@@ -10,9 +10,6 @@
 namespace ModifiedSchwarz
 {
 
-// FIXME: There is no way to communicate truncation level to the
-// spectral matrix and solver. Only default ever taken.
-
 ////////////////////////////////////////////////////////////////////////
 /*!
  * Solves the modified Schwarz problem via the spectral method.

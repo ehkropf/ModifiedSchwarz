@@ -4,12 +4,21 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
+SpectralData::SpectralData(const UnitCircleDomain& domain)
+    : _truncation(SpectralConstants::kSpectralTruncation()),
+      _domain(domain),
+      _spectralMatrix(constructMatrix())
+{}
+
 SpectralData::SpectralData(const UnitCircleDomain& domain, unsigned truncation)
-    : _domain(domain), _spectralMatrix(constructMatrix(truncation)) {}
+    : _truncation(truncation),
+      _domain(domain),
+      _spectralMatrix(constructMatrix())
+{}
 
 ////////////////////////////////////////////////////////////////////////
 cx_mat
-SpectralData::constructMatrix(unsigned truncation)
+SpectralData::constructMatrix()
 {
     using namespace arma;
 
@@ -18,7 +27,7 @@ SpectralData::constructMatrix(unsigned truncation)
     colvec qv = _domain.radii();
 
     // Series truncation level.
-    unsigned N = truncation;
+    unsigned N = _truncation;
     colvec ktmp = -regspace(1., double(N+1));
 
     // Number of unknowns.
