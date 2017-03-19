@@ -6,6 +6,7 @@
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
 #include "SolverData.hpp"
+#include "SpectralConstants.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -28,9 +29,8 @@ protected:
     cx_mat constructMatrix(unsigned);
 
 public:
-    SpectralData(const UnitCircleDomain&, unsigned truncation = kDefaultSpectralTruncation);
-
-    constexpr static unsigned kDefaultSpectralTruncation = 64;
+    SpectralData(const UnitCircleDomain&,
+                 unsigned truncation = SpectralConstants::kSpectralTruncation());
 
     using Ptr = std::shared_ptr<SpectralData>;
 

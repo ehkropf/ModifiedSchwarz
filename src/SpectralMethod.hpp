@@ -2,6 +2,7 @@
 #define SPECTRALSOLVER_HPP
 
 #include "SchwarzTypes.hpp"
+#include "SpectralConstants.hpp"
 #include "SpectralData.hpp"
 #include "Problem.hpp"
 #include "Solution.hpp"
@@ -33,11 +34,8 @@ public:
     const cx_mat& matrix() const { return _data->matrix(); }
     const SpectralData& data() const { return *_data; }
 
-    //! Experiments have shown this to be a reasonable default value.
-    const static unsigned kDefaultTrapezoidalPoints = 100;
-
     //! Compute system RHS using trapezoidal rule.
-    cx_vec computeRHS(unsigned numSamplePoints = kDefaultTrapezoidalPoints);
+    cx_vec computeRHS(unsigned numSamplePoints = SpectralConstants::kTrapezoidalPoints());
 };
 
 }; // namespace ModifiedSchwarz

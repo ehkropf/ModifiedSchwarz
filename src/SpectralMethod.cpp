@@ -15,7 +15,7 @@ SpectralMethod::SpectralMethod(const Problem& prob, const Solution& prev)
 ////////////////////////////////////////////////////////////////////////////////
 Solution SpectralMethod::solve()
 {
-    cx_vec x = arma::solve(_data->matrix(), computeRHS(kDefaultTrapezoidalPoints));
+    cx_vec x = arma::solve(_data->matrix(), computeRHS(SpectralConstants::kTrapezoidalPoints()));
     const unsigned m = _data->domain().m();
     const unsigned N = (_data->matrix().n_cols/2 - m)/(m + 1);
     const unsigned M = (unsigned)std::ceil((N - 1)/2.);
