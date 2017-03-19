@@ -5,17 +5,19 @@ namespace ModifiedSchwarz
 
 ////////////////////////////////////////////////////////////////////////////////
 SpectralMethod::SpectralMethod(const Problem& prob)
-    : _data(std::make_shared<SpectralData>(prob.domain())),
+    : _trapezoidalPoints(SpectralConstants::kTrapezoidalPoints()),
+      _data(std::make_shared<SpectralData>(prob.domain())),
       _imagPart(prob.interpolant()) {}
 
 SpectralMethod::SpectralMethod(const Problem& prob, const Solution& prev)
-        : _data(std::dynamic_pointer_cast<SpectralData>(prev.solverDataPtr())),
-          _imagPart(prob.interpolant()) {}
+    : _trapezoidalPoints(SpectralConstants::kTrapezoidalPoints()),
+      _data(std::dynamic_pointer_cast<SpectralData>(prev.solverDataPtr())),
+      _imagPart(prob.interpolant()) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 Solution SpectralMethod::solve()
 {
-    cx_vec x = arma::solve(_data->matrix(), computeRHS(SpectralConstants::kTrapezoidalPoints()));
+    cx_vec x = arma::solve(_data->matrix(), computeRHS());
     const unsigned m = _data->domain().m();
     const unsigned N = (_data->matrix().n_cols/2 - m)/(m + 1);
     const unsigned M = (unsigned)std::ceil((N - 1)/2.);
@@ -33,6 +35,13 @@ Solution SpectralMethod::solve()
 
     RealInterpolant realPart(_data->domain(), real(c), a);
     return Solution(realPart, imag(c), _imagPart, _data);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+cx_vec
+SpectralMethod::computeRHS()
+{
+    return computeRHS(_trapezoidalPoints);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

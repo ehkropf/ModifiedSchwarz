@@ -25,7 +25,7 @@ public:
     constexpr static unsigned kDefaultTrapezoidalPoints = 100;
 
     //! Known good (via expermiment) default truncation level.
-    constexpr static unsigned kDefaultSpectralTruncation = 64; //96;
+    constexpr static unsigned kDefaultSpectralTruncation = 96;
 
     /*!
      * Returns default number of trapezoidal points to use unless set was

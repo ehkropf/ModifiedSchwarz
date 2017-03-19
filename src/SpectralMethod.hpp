@@ -22,6 +22,7 @@ namespace ModifiedSchwarz
  */
 class SpectralMethod
 {
+    unsigned _trapezoidalPoints;
     SpectralData::Ptr _data;
     RealInterpolant _imagPart;
 
@@ -34,8 +35,13 @@ public:
     const cx_mat& matrix() const { return _data->matrix(); }
     const SpectralData& data() const { return *_data; }
 
-    //! Compute system RHS using trapezoidal rule.
-    cx_vec computeRHS(unsigned numSamplePoints = SpectralConstants::kTrapezoidalPoints());
+    //! Compute system RHS using trapezoidal rule. Uses number of points
+    // SpectralConstants::kTrapezoidalPoints(), read on SpectralMethod
+    // construction, in the rule.
+    cx_vec computeRHS();
+
+    //! Compute system RHS using `numSamplePoints` in trapezoidal rule.
+    cx_vec computeRHS(unsigned numSamplePoints);
 };
 
 }; // namespace ModifiedSchwarz

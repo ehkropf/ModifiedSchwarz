@@ -43,6 +43,7 @@ SUITE(SpectralMethodTest)
     TEST_FIXTURE(TestFixture, TestRHS)
     {
         const mat& imagPart = imaginaryPart();
+        SpectralConstants::setTruncation(64);
         SpectralMethod method(Problem(domain, imagPart));
         cx_vec rhs = method.computeRHS(100);
 
