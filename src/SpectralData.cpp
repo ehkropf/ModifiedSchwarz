@@ -34,8 +34,6 @@ SpectralData::constructMatrix()
     unsigned Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
 
     // The matrix.
-    // FIXME: This pointer won't be released if there is an exception
-    // the function return! Danger!!
     cx_mat L(2*Q, 2*Q, fill::zeros);
 
     // Double loop construction.
