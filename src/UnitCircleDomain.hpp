@@ -3,6 +3,8 @@
 
 #include "SchwarzTypes.hpp"
 
+// FIXME: Move function definitions to cpp file.
+
 namespace ModifiedSchwarz
 {
 

@@ -6,6 +6,10 @@
 namespace ModifiedSchwarz
 {
 
+// FIXME: There should be a member to store the solver methed used. 
+//        In this way, a solver instance can check for compatible previous
+//        solution data.
+
 ///////////////////////////////////////////////////////////////////////////
 /*!
  * Abstract class to store data specific to a solver method.
