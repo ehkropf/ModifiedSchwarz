@@ -72,6 +72,8 @@ public:
      * Given a boundary number, return a vector of indices where z is
      * on that boundary.
      */
+     // FIXME: Should be abs(1 - abs(z - dv0(j))/qv0(j)) < eps2pi. 
+     // But check first. Vaugely recall problem in matlab with above version.
     uvec isOnC(unsigned j, const cx_vec& z) const
     { return find(abs(qv0(j) - abs(z - dv0(j))) < eps2pi); }
 
