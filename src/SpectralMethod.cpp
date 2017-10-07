@@ -1,3 +1,22 @@
+/*
+ * Copyright 2017 Everett Kropf.
+ *
+ * This file is part of ModifiedSchwarz.
+ *
+ * ModifiedSchwarz is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ModifiedSchwarz is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "SpectralMethod.hpp"
 
 namespace ModifiedSchwarz
@@ -5,31 +24,43 @@ namespace ModifiedSchwarz
 
 ////////////////////////////////////////////////////////////////////////////////
 SpectralMethod::SpectralMethod(const Problem& prob)
-    : _data(std::make_shared<SpectralData>(prob.domain())),
+    : _trapezoidalPoints(SpectralConstants::kTrapezoidalPoints()),
+      _data(std::make_shared<SpectralData>(prob.domain())),
       _imagPart(prob.interpolant()) {}
 
 SpectralMethod::SpectralMethod(const Problem& prob, const Solution& prev)
-        : _data(std::dynamic_pointer_cast<SpectralData>(prev.solverDataPtr())),
-          _imagPart(prob.interpolant()) {}
+    : _trapezoidalPoints(SpectralConstants::kTrapezoidalPoints()),
+      _data(std::dynamic_pointer_cast<SpectralData>(prev.solverDataPtr())),
+      _imagPart(prob.interpolant()) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 Solution SpectralMethod::solve()
 {
-    cx_vec x = arma::solve(_data->matrix(), computeRHS(kDefaultTrapezoidalPoints));
+    cx_vec x = arma::solve(_data->matrix(), computeRHS());
     const unsigned m = _data->domain().m();
     const unsigned N = (_data->matrix().n_cols/2 - m)/(m + 1);
+    const unsigned M = (unsigned)std::ceil((N - 1)/2.);
     cx_vec c(m+1);
-    cx_mat a(N, m+1);
+    cx_mat a(M, m+1);
 
-    for (unsigned j = 0; j <= m; ++j)
+    c(0) = 0.;
+    a.col(0) = arma::flipud(x.rows(0, M-1));
+    for (unsigned j = 1; j <= m; ++j)
     {
-        unsigned offset = j > 0 ? (j-1)*(N+1) + N : 0;
-        c(j) = j > 0 ? x(offset) : 0.;
-        a.col(j) = arma::flipud(x.rows(offset+1, offset+N));
+        const unsigned offset = (j-1)*(N+1) + N;
+        c(j) = x(offset);
+        a.col(j) = arma::flipud(x.rows(offset+1, offset+M));
     }
 
     RealInterpolant realPart(_data->domain(), real(c), a);
-    return Solution(realPart, imag(c), _imagPart); //, _data);
+    return Solution(realPart, imag(c), _imagPart, _data);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+cx_vec
+SpectralMethod::computeRHS()
+{
+    return computeRHS(_trapezoidalPoints);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

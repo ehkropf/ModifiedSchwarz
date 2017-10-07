@@ -1,15 +1,43 @@
+/*
+ * Copyright 2017 Everett Kropf.
+ *
+ * This file is part of ModifiedSchwarz.
+ *
+ * ModifiedSchwarz is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ModifiedSchwarz is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "SpectralData.hpp"
 
 namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
+SpectralData::SpectralData(const UnitCircleDomain& domain)
+    : _truncation(SpectralConstants::kSpectralTruncation()),
+      _domain(domain),
+      _spectralMatrix(constructMatrix())
+{}
+
 SpectralData::SpectralData(const UnitCircleDomain& domain, unsigned truncation)
-    : _domain(domain), _spectralMatrix(constructMatrix(truncation)) {}
+    : _truncation(truncation),
+      _domain(domain),
+      _spectralMatrix(constructMatrix())
+{}
 
 ////////////////////////////////////////////////////////////////////////
 cx_mat
-SpectralData::constructMatrix(unsigned truncation)
+SpectralData::constructMatrix()
 {
     using namespace arma;
 
@@ -18,15 +46,13 @@ SpectralData::constructMatrix(unsigned truncation)
     colvec qv = _domain.radii();
 
     // Series truncation level.
-    unsigned N = truncation;
+    unsigned N = _truncation;
     colvec ktmp = -regspace(1., double(N+1));
 
     // Number of unknowns.
     unsigned Q = m*(N + 1) + N; // N = (Q - m)/(m + 1);
 
     // The matrix.
-    // FIXME: This pointer won't be released if there is an exception
-    // the function return! Danger!!
     cx_mat L(2*Q, 2*Q, fill::zeros);
 
     // Double loop construction.

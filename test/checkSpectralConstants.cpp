@@ -17,9 +17,25 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnitTest++.h"
+#include <iostream>
 
-int main()
+#include "UnitTest++.h"
+#include "SpectralConstants.hpp"
+
+using namespace ModifiedSchwarz;
+
+TEST(TrapPoints)
 {
-    return UnitTest::RunAllTests();
+    unsigned pts = SpectralConstants::kTrapezoidalPoints();
+    SpectralConstants::setTrapezoidalPoints(pts + 10);
+    CHECK_EQUAL(pts + 10, SpectralConstants::kTrapezoidalPoints());
+    CHECK_EQUAL(pts, SpectralConstants::kTrapezoidalPoints());
+}
+
+TEST(Truncation)
+{
+    unsigned trunc = SpectralConstants::kSpectralTruncation();
+    SpectralConstants::setTruncation(trunc + 10);
+    CHECK_EQUAL(trunc + 10, SpectralConstants::kSpectralTruncation());
+    CHECK_EQUAL(trunc, SpectralConstants::kSpectralTruncation());
 }

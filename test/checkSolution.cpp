@@ -17,30 +17,45 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-
 #include "UnitTest++.h"
 
+#include "Solution.hpp"
 #include "UnitCircleDomain.hpp"
-#include "SpectralData.hpp"
+#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 
-TEST(Matrix)
+SUITE(SolutionTest)
 {
-    SpectralData data(domainExample3(), 64);
-    const cx_mat& L = data.matrix();
 
-    cx_mat refL;
-    refL.load("../test/refMatrix.dat");
+class TestFixture
+{
+    public:
+    UnitCircleDomain domain;
+    RealInterpolant realPart;
+    RealInterpolant imagPart;
 
-    CHECK(arma::approx_equal(L, refL, "absdiff", 1e-4));
+    static constexpr unsigned npts = 200;
+
+    TestFixture() : domain(domainExample3())
+    {
+        cx_mat zb = domain.boundaryPoints(npts);
+
+        realPart = RealInterpolant(domain, real(polesInHoles(zb, domain)));
+        imagPart = RealInterpolant(domain, imag(polesInHoles(zb, domain)));
+    }
+};
+
+TEST_FIXTURE(TestFixture, EvalSolution)
+{
+    Solution sol(realPart, colvec(domain.m()+1, arma::fill::zeros), imagPart);
+
+    cx_mat zb = domain.boundaryPoints(10);
+    CHECK(approx_equal(polesInHoles(cx_vec(vectorise(zb)), domain), sol(vectorise(zb)), "reldiff", 10*eps2pi));
 }
 
-TEST(Sharing)
+TEST(StoreData)
 {
-    SpectralData::Ptr pData = std::make_shared<SpectralData>(domainExample3());
-    SpectralData::Ptr pData2 = pData;
+}
 
-    CHECK(&pData->matrix() == &pData2->matrix());
 }
