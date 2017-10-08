@@ -24,18 +24,13 @@
 #include "CauchyInterpolant.hpp"
 #include "TestFunctions.hpp"
 
-#define DEBUG
-#ifdef DEBUG
-#define DEBUG_OUT(S) std::cout << S << std::endl
-#else
-#define DEBUG_OUT(S)
-#endif // DEBUG
+#define TEST_OUT(S) std::cout << S << std::endl
 
 using namespace ModifiedSchwarz;
 
 TEST(CauchyInterp)
 {
-    DEBUG_OUT("-----========== Cauchy Interp check ==========-----");
+    TEST_OUT("-----========== Cauchy Interp check ==========-----");
 
     unsigned n_pts = 18;
     auto D = domainExample3();
@@ -44,12 +39,12 @@ TEST(CauchyInterp)
     // points out. Observe output of relational operators on matrix. Can these
     // then be used to index the matrices for subviews? Or is find() requried?
 
-    DEBUG_OUT("Create complex grid via repmats.");
+    TEST_OUT("Create complex grid via repmats.");
     cx_mat Z = D.ngrid(n_pts);
 //    cx_mat Z = cx_mat(arma::repmat(arma::linspace<rowvec>(-1., 1., n_pts), n_pts, 1),
 //                     arma::repmat(arma::linspace<colvec>(-1., 1., n_pts), 1, n_pts));
 
-//    DEBUG_OUT((abs(Z) < 1. - eps2pi));
+//    TEST_OUT((abs(Z) < 1. - eps2pi));
 
     arma::Col<unsigned> mask(Z.n_elem);
     auto iter = mask.begin();
@@ -62,9 +57,9 @@ TEST(CauchyInterp)
             });
     arma::Mat<unsigned> tmp(mask);
     tmp.reshape(size(Z));
-    DEBUG_OUT(tmp);
+    TEST_OUT(tmp);
 
     CHECK(true);
 
-    DEBUG_OUT("-----========== Leaving Cauchy Interp check ==========-----");
+    TEST_OUT("-----========== Leaving Cauchy Interp check ==========-----");
 }
