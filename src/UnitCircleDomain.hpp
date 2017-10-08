@@ -75,8 +75,31 @@ public:
     uvec isOnC(unsigned j, const cx_vec& z) const
     { return find(abs(qv0(j) - abs(z - dv0(j))) < eps2pi); }
 
-    cx_mat boundaryPoints(unsigned) const;
+    /*!
+     * Returns a column vector of indices indicating which points in the given
+     * vector are in the domain.
+     */
+    template <typename ArmaMatLike>
+    uvec isInD(const ArmaMatLike&) const
+    { }
 
+    /*!
+     * Returns matrix of n points on boundary where each column represents a
+     * boundary, whith leftmost column j=0 progressing linearly to rightmost
+     * j=m. Points are created by parameterizing boundary by angle using n
+     * equally spaced angles, and 0 as the starting angle.
+     */
+    cx_mat boundaryPoints(unsigned n) const;
+
+    /*!
+     * Returns n-by-n square grid of points covering the unit disk. Points are
+     * not guaranteed to be in the closure of the domain and should be checked.
+     * Note upper-left element is -1.0+1.0i and lower-right element is 1.0-1.0i
+     * (Cartesian orientation).
+     */
+    cx_mat ngrid(unsigned n) const;
+
+    //! Domain equality.
     friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)
     {
         return arma::all(a._centers == b._centers) & arma::all(a._radii && b._radii);
