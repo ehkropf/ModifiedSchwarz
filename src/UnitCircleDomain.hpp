@@ -75,6 +75,14 @@ public:
     uvec isOnC(unsigned j, const cx_vec& z) const
     { return find(abs(qv0(j) - abs(z - dv0(j))) < eps2pi); }
 
+    /*!
+     * Returns a column vector of indices indicating which points in the given
+     * vector are in the domain.
+     */
+    template <typename ArmaMatLike>
+    uvec isInD(const ArmaMatLike&) const
+    { }
+
     cx_mat boundaryPoints(unsigned) const;
 
     friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)

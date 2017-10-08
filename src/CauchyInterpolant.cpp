@@ -1,4 +1,4 @@
-#include "Cauchy.hpp"
+#include "CauchyInterpolant.hpp"
 
 namespace ModifiedSchwarz
 {

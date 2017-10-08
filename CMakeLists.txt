@@ -33,7 +33,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(SCHWARZ_SOURCE
     src/UnitCircleDomain.cpp
     src/RealInterpolant.cpp
-#    src/CauchyInterpolant.cpp
+    src/CauchyInterpolant.cpp
     src/SpectralConstants.cpp
     src/SpectralData.cpp
     src/SpectralMethod.cpp
@@ -78,6 +78,7 @@ if(UNITTEST_FOUND)
         test/testRunner.cpp
         test/checkPolynomial.cpp
         test/checkInterpolant.cpp
+        test/checkCauchyInterpolant.cpp
         test/checkUnitDomain.cpp
         test/checkSpectralConstants.cpp
         test/checkSpectralData.cpp

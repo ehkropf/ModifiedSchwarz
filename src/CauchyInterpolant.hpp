@@ -17,7 +17,7 @@ public:
     Cauchy(const ComplexInterpolant&, const UnitCircleDomain&, unsigned N = 128);
 
     template<typename ArmaMatLike>
-    ArmaMatLike operator()(const ArmaMatLike& z) const;
+    ArmaMatLike operator()(const ArmaMatLike&) const;
 };
 
 }; // namespace ModifiedSchwarz
