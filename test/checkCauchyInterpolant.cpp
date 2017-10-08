@@ -31,35 +31,8 @@ using namespace ModifiedSchwarz;
 TEST(CauchyInterp)
 {
     TEST_OUT("-----========== Cauchy Interp check ==========-----");
-
-    unsigned n_pts = 18;
-    auto D = domainExample3();
-
-    // Create grid over domain -- square grid with some points in and some
-    // points out. Observe output of relational operators on matrix. Can these
-    // then be used to index the matrices for subviews? Or is find() requried?
-
-    TEST_OUT("Create complex grid via repmats.");
-    cx_mat Z = D.ngrid(n_pts);
-//    cx_mat Z = cx_mat(arma::repmat(arma::linspace<rowvec>(-1., 1., n_pts), n_pts, 1),
-//                     arma::repmat(arma::linspace<colvec>(-1., 1., n_pts), 1, n_pts));
-
-//    TEST_OUT((abs(Z) < 1. - eps2pi));
-
-    arma::Col<unsigned> mask(Z.n_elem);
-    auto iter = mask.begin();
-    auto end = mask.end();
-    Z.for_each([&](cx_double& v)
-            {
-                bool isIn = abs(v) < 1. - eps2pi;
-                for (unsigned j = 1; j <= D.m(); ++j) isIn &= abs(v - D.dv0(j)) > D.qv0(j) - eps2pi;
-                if (iter != end) *(iter++) = isIn;
-            });
-    arma::Mat<unsigned> tmp(mask);
-    tmp.reshape(size(Z));
-    TEST_OUT(tmp);
+    TEST_OUT("  --> Dummy test ... ");
 
     CHECK(true);
-
-    TEST_OUT("-----========== Leaving Cauchy Interp check ==========-----");
+    TEST_OUT("      OK");
 }
