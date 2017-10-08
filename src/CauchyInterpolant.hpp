@@ -26,17 +26,25 @@
 namespace ModifiedSchwarz
 {
 
-class ComplexInterpolant;
-
-class Cauchy
+class CauchyInterpolant
 {
     UnitCircleDomain _domain;
+    cx_mat _bdry_points;
 
 public:
-    Cauchy(const ComplexInterpolant&, const UnitCircleDomain&, unsigned N = 128);
+    /*!
+     * Use matrix of boundary values to construct Cauchy interpolant for
+     * points inside the domain. Uses the discrete boundary values given
+     * to determine number of points to use in Barycentric interpolation.
+     */
+    CauchyInterpolant(const cx_mat& boundary_values, const UnitCircleDomain& domain);
 
-    template<typename ArmaMatLike>
-    ArmaMatLike operator()(const ArmaMatLike&) const;
+    /*!
+     * Given a set of points, evaluate the points in the domain using the
+     * barycentric interpolation method for Cauchy's formula, and set any
+     * points not in the domain (including boundary points) to NaN.
+     */
+    cx_mat operator()(const cx_mat&) const;
 };
 
 }; // namespace ModifiedSchwarz

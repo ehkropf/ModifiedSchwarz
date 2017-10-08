@@ -22,10 +22,24 @@
 namespace ModifiedSchwarz
 {
 
-template<typename ArmaMatLike>
-ArmaMatLike Cauchy::operator()(const ArmaMatLike& z) const
+//////////////////////////////////////////////////////////////////////////////////
+CauchyInterpolant::CauchyInterpolant(const cx_mat& boundary_values, const UnitCircleDomain& domain)
+    : _domain(domain),
+      _bdry_points(boundary_values)
+{}
+
+//////////////////////////////////////////////////////////////////////////////////
+cx_mat
+CauchyInterpolant::operator()(const cx_mat& z) const
 {
-    return z;
+    cx_mat w(size(z));
+    w.fill(arma::datum::nan);
+    uvec mask = find(_domain.inDomain(z));
+
+    // FIXME: Dummy evaluation.
+    w(mask) = z(mask);
+
+    return w;
 }
 
 }; // namespace ModifiedSchwarz
