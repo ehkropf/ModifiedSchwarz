@@ -22,10 +22,26 @@
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
 
+#define TEST_OUT(S) std::cout << S << std::endl
+
 using namespace ModifiedSchwarz;
 
-TEST(Points)
+class TestFixture
 {
+public:
+    UnitCircleDomain domain;
+
+    TestFixture()
+        : domain(domainExample3())
+    {
+        TEST_OUT("-----========== Unit Circle Domain check ==========-----");
+    }
+};
+
+TEST_FIXTURE(TestFixture, Points)
+{
+    TEST_OUT("  --> Points ... ");
+
     unsigned n = 16;
     UnitCircleDomain D = domainExample3();
     cx_mat zb = D.boundaryPoints(n);
@@ -39,4 +55,48 @@ TEST(Points)
     for (unsigned j = 0; j < D.m(); ++j)
         CHECK(approx_equal(abs(zb.col(j+1) - D.centers()(j)),
                            D.radii()(j)*colvec(n, fill::ones), "reldiff", tol));
+
+    TEST_OUT("      OK");
+}
+
+TEST_FIXTURE(TestFixture, InsideDomain)
+{
+    TEST_OUT("  --> Inside domain ... ");
+
+    const unsigned npts = 200;
+    const unsigned expected = 28541;
+
+    auto mask = domain.inDomain(domain.ngrid(npts));
+    unsigned counted = sum(vectorise(mask));
+    if (counted != expected)
+    {
+        TEST_OUT("expected " << expected << " points in domain, found " << counted << " points instead.");
+        CHECK(false);
+    }
+    else
+    {
+        CHECK(true);
+        TEST_OUT("      OK");
+    }
+}
+
+TEST_FIXTURE(TestFixture, OnBoundary)
+{
+    TEST_OUT("  --> On boundary ...");
+
+    auto points = domain.boundaryPoints(257);
+    for (unsigned j = 0; j <= domain.m(); ++j)
+    {
+        auto mask = domain.isOnBoundary(points.col(j));
+        auto notOn = 257 - sum(vectorise(mask));
+        if (notOn)
+        {
+            TEST_OUT("missed " << notOn << " points on boundary " << j);
+            CHECK(false);
+        }
+        else
+            CHECK(true);
+    }
+
+    TEST_OUT("      OK");
 }

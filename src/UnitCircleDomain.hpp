@@ -72,16 +72,25 @@ public:
      * Given a boundary number, return a vector of indices where z is
      * on that boundary.
      */
-    uvec isOnC(unsigned j, const cx_vec& z) const
-    { return find(abs(qv0(j) - abs(z - dv0(j))) < eps2pi); }
+    uvec isOnC(unsigned j, const cx_vec& z) const;
 
     /*!
-     * Given a matrix-like object of points, returns an unsigned matrix-like
-     * object of the same size with 1 if the point is in the domain and 0
-     * if not.
+     * Given a boundary number and a set of points, return an unsigned matrix
+     * of the same size set to 1 if the point is on boundary j and 0 if not.
      */
-    template <typename ArmaMatLike, typename ArmaUMatLike>
-    ArmaUMatLike inDomain(const ArmaMatLike&) const;
+    umat isOnCj(unsigned, const cx_mat&) const;
+
+    /*!
+     * Given a set of points, return a matrix of unsigned values set to 1
+     * if a point is on the boundary and 0 if not.
+     */
+    umat isOnBoundary(const cx_mat&) const;
+
+    /*!
+     * Given a matrix of points, returns an unsigned matrix of the same size
+     * with 1 if the point is in the domain and 0 if not.
+     */
+    umat inDomain(const cx_mat&) const;
 
     /*!
      * Returns matrix of n points on boundary where each column represents a
