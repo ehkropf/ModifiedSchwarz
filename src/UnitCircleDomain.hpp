@@ -76,14 +76,6 @@ public:
     { return find(abs(qv0(j) - abs(z - dv0(j))) < eps2pi); }
 
     /*!
-     * Returns a column vector of indices indicating which points in the given
-     * vector are in the domain.
-     */
-    template <typename ArmaMatLike>
-    uvec isInD(const ArmaMatLike&) const
-    { }
-
-    /*!
      * Returns matrix of n points on boundary where each column represents a
      * boundary, whith leftmost column j=0 progressing linearly to rightmost
      * j=m. Points are created by parameterizing boundary by angle using n
