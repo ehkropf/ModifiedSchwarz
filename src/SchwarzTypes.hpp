@@ -28,14 +28,25 @@ namespace ModifiedSchwarz
 
 //! Column vector of unsigned integers.
 using uvec = arma::uvec;
+
+//! Unsinged integer matrix.
+using umat = arma::umat;
+
 //! Column vector of doubles.
 using colvec = arma::colvec;
+
+//! Row vector of doubles.
+using rowvec = arma::rowvec;
+
 //! Matrix of doubles.
 using mat = arma::mat;
+
 //! Complex double.
 using cx_double = arma::cx_double;
+
 //! Column vector of complex doubles.
 using cx_vec = arma::cx_vec;
+
 //! Matrix of complex doubles.
 using cx_mat = arma::cx_mat;
 

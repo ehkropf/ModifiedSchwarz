@@ -41,6 +41,14 @@ UnitCircleDomain::boundaryPoints(unsigned npts) const
 }
 
 ////////////////////////////////////////////////////////////////////////
+cx_mat
+UnitCircleDomain::ngrid(unsigned npts) const
+{
+    return cx_mat(repmat(arma::linspace<rowvec>(-1., 1., npts), npts, 1),
+                  repmat(arma::linspace<colvec>(1., -1., npts), 1, npts));
+}
+
+////////////////////////////////////////////////////////////////////////
 UnitCircleDomain domainExample3()
 {
     cx_vec centers{ cx_double(-0.2517, 0.3129), cx_double(0.2307, -0.4667) };
