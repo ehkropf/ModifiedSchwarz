@@ -22,11 +22,12 @@
 
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
+#include "FunctionLike.hpp"
 
 namespace ModifiedSchwarz
 {
 
-class CauchyInterpolant
+class CauchyInterpolant : FunctionLike<cx_mat>
 {
     UnitCircleDomain _domain;
     cx_mat _bdry_points;
@@ -44,7 +45,7 @@ public:
      * barycentric interpolation method for Cauchy's formula, and set any
      * points not in the domain (including boundary points) to NaN.
      */
-    cx_mat operator()(const cx_mat&) const;
+    virtual void evalInto(const cx_mat&, cx_mat&) const;
 };
 
 }; // namespace ModifiedSchwarz

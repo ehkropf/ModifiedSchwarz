@@ -65,19 +65,18 @@ RealInterpolant::evalOn(const cx_vec& z, unsigned j) const
 }
 
 ////////////////////////////////////////////////////////////////////////
-colvec
-RealInterpolant::operator()(const cx_vec& z) const
+void RealInterpolant::evalInto(const cx_mat& z, mat& w) const
 {
     unsigned m = _domain.m();
-    colvec w(size(z));
-    w.fill(arma::datum::nan);
+    // colvec w(size(z));
+    // w.fill(arma::datum::nan);
+
     for (unsigned j = 0; j < m+1; ++j)
     {
         uvec L = _domain.isOnC(j, z);
         if (L.n_elem)
             w.elem(L) = evalOn(z(L), j);
     }
-
 
     return w;
 }

@@ -29,17 +29,12 @@ CauchyInterpolant::CauchyInterpolant(const cx_mat& boundary_values, const UnitCi
 {}
 
 //////////////////////////////////////////////////////////////////////////////////
-cx_mat
-CauchyInterpolant::operator()(const cx_mat& z) const
+void CauchyInterpolant::evalInto(const cx_mat& z, cx_mat& w) const
 {
-    cx_mat w(size(z));
-    w.fill(arma::datum::nan);
     uvec mask = find(_domain.inDomain(z));
 
     // FIXME: Dummy evaluation.
     w(mask) = z(mask);
-
-    return w;
 }
 
 }; // namespace ModifiedSchwarz

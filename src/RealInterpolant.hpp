@@ -22,6 +22,7 @@
 
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
+#include "FunctionLike.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -46,7 +47,7 @@ namespace ModifiedSchwarz
  *
  * for points z on boundary C_j.
  */
-class RealInterpolant
+class RealInterpolant : FunctionLike<cx_mat,mat>
 {
     UnitCircleDomain _domain;
     mat _boundaryData;
@@ -67,7 +68,7 @@ public:
     const cx_mat& coefficients() const { return _coefficients; }
 
     colvec evalOn(const cx_vec&, unsigned) const;
-    colvec operator()(const cx_vec&) const;
+    void evalInto(const cx_mat&, mat&) const;
 };
 
 }; // namespace ModifiedSchwarz

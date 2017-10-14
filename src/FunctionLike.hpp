@@ -23,35 +23,36 @@
 namespace ModifiedSchwarz
 {
 
-template <typename Matrix>
+template <typename Amatrix, typename Bmatrix = Amatrix>
 class FunctionLike
 {
 public:
     virtual ~FunctionLike() = default;
 
-    //! Provides function-like evaulation.
-    inline virtual Matrix operator()(const Matrix&) const;
+    //! Provides function-like evaulation. Wrapper for eval()
+    inline virtual Amatrix operator()(const Amatrix&) const;
 
-    //! Called by operator(). Calls evalInto(.,.).
-    virtual Matrix eval(const Matrix&) const;
+    //! Wrapper for evalInto(). Initializes target matrix with NaN values.
+    inline virtual Amatrix eval(const Amatrix&) const;
 
-    //! Must override to allow evaluation into a given target matrix.
-    virtual void evalInto(const Matrix&, Matrix&) const = 0;
+    //! Must override to define evaluation into a given target matrix.
+    virtual void evalInto(const Amatrix&, Bmatrix&) const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////////
-template <typename Matrix>
-Matrix FunctionLike<Matrix>::operator()(const Matrix& z) const
+template <typename Amatrix, typename Bmatrix>
+Amatrix FunctionLike<Amatrix, Bmatrix>::operator()(const Amatrix& z) const
 {
     return eval(z);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-template <typename Matrix>
-Matrix FunctionLike<Matrix>::eval(const Matrix& z) const
+template <typename Amatrix, typename Bmatrix>
+Amatrix FunctionLike<Amatrix, Bmatrix>::eval(const Amatrix& z) const
 {
-    Matrix w(size(z));
+    Amatrix w(size(z));
     evalInto(z, w);
+    return w;
 }
 
 }; //namespace ModifiedSchwarz
