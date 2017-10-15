@@ -29,15 +29,15 @@ namespace ModifiedSchwarz
 
 ////////////////////////////////////////////////////////////////////////
 /*!
- * Provide interpolation on domain boundaries given real data at
- * evenly spaced points on each boundary.
+ * Provide interpolation on domain boundaries given real data at  evenly
+ * spaced points on each boundary.
  *
- * Boundary data is stored in a matrix with each column representing
- * a boundary. Boundary sample data must be real and evenly spaced.
+ * Boundary data is stored in a matrix with each column representing a
+ * boundary. Boundary sample data must be real and evenly spaced.
  *
- * Let M be the number of sample points on a boundary. The M-point
- * DFT is taken for that boundary data and the N = ceil((M - 1)/2)
- * first coefficients are used for the interpolation polynomial
+ * Let M be the number of sample points on a boundary. The M-point  DFT is
+ * taken for that boundary data and the N = ceil((M - 1)/2)  first
+ * coefficients are used for the interpolation polynomial
  *
  *                            --- N
  *                            \
@@ -46,6 +46,9 @@ namespace ModifiedSchwarz
  *                            --- i=1
  *
  * for points z on boundary C_j.
+ *
+ * Note when evaluating points, it is assumed they have been tested to be on
+ * the boundary. Results for non-boundary points are undefined.
  */
 class RealInterpolant : public FunctionLike<cx_vec, colvec>
 {
@@ -62,12 +65,19 @@ public:
     RealInterpolant(UnitCircleDomain domain, mat samples);
     RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients);
 
+    //! Stored domain object.
     const UnitCircleDomain& domain() const { return _domain; }
+    //! Boundary data matrix.
     const mat& boundaryData() const { return _boundaryData; }
+    //! m+1 vector of real constants.
     const colvec& constants() const { return _constants; }
+    //! Vector of polynomial coefficients.
     const cx_mat& coefficients() const { return _coefficients; }
 
+    //! Eval given vector of points on specific boundary.
     colvec evalOn(const cx_vec&, unsigned) const;
+
+    //! Override FunctionLike<>::evalInto for f() behaviour.
     void evalInto(const cx_vec&, colvec&) const;
 };
 
