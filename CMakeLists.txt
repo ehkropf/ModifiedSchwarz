@@ -33,6 +33,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(SCHWARZ_SOURCE
     src/UnitCircleDomain.cpp
     src/RealInterpolant.cpp
+    src/ComplexInterpolant.cpp
     src/CauchyInterpolant.cpp
     src/SpectralConstants.cpp
     src/SpectralData.cpp
