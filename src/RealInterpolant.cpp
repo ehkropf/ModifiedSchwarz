@@ -65,7 +65,7 @@ RealInterpolant::evalOn(const cx_vec& z, unsigned j) const
 }
 
 ////////////////////////////////////////////////////////////////////////
-void RealInterpolant::evalInto(const cx_mat& z, mat& w) const
+void RealInterpolant::evalInto(const cx_vec& z, colvec& w) const
 {
     unsigned m = _domain.m();
     // colvec w(size(z));
@@ -77,8 +77,6 @@ void RealInterpolant::evalInto(const cx_mat& z, mat& w) const
         if (L.n_elem)
             w.elem(L) = evalOn(z(L), j);
     }
-
-    return w;
 }
 
 }; // namespace ModifiedSchwarz

@@ -20,6 +20,8 @@
 #ifndef FUNCLIKE_HPP
 #define FUNCLIKE_HPP
 
+#include "SchwarzTypes.hpp"
+
 namespace ModifiedSchwarz
 {
 
@@ -30,28 +32,31 @@ public:
     virtual ~FunctionLike() = default;
 
     //! Provides function-like evaulation. Wrapper for eval()
-    inline virtual Amatrix operator()(const Amatrix&) const;
+    inline virtual Bmatrix operator()(const Amatrix&) const;
 
     //! Wrapper for evalInto(). Initializes target matrix with NaN values.
-    inline virtual Amatrix eval(const Amatrix&) const;
+    inline virtual Bmatrix eval(const Amatrix&) const;
 
     //! Must override to define evaluation into a given target matrix.
     virtual void evalInto(const Amatrix&, Bmatrix&) const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////////
+// Basic template. Do we need specialization?
+//
 template <typename Amatrix, typename Bmatrix>
-Amatrix FunctionLike<Amatrix, Bmatrix>::operator()(const Amatrix& z) const
+Bmatrix FunctionLike<Amatrix, Bmatrix>::operator()(const Amatrix& z) const
 {
     return eval(z);
 }
 
-//////////////////////////////////////////////////////////////////////////////////
 template <typename Amatrix, typename Bmatrix>
-Amatrix FunctionLike<Amatrix, Bmatrix>::eval(const Amatrix& z) const
+Bmatrix FunctionLike<Amatrix, Bmatrix>::eval(const Amatrix& z) const
 {
-    Amatrix w(size(z));
+    Bmatrix w(size(z));
+    w.fill(nan);
     evalInto(z, w);
+
     return w;
 }
 

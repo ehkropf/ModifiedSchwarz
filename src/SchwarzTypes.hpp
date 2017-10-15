@@ -53,6 +53,7 @@ using cx_mat = arma::cx_mat;
 const double pi = std::acos(-1);
 const cx_double i2pi(0.0, 2.0*pi);
 const double eps2pi = std::numeric_limits<double>::epsilon()*2.*pi;
+const double nan = arma::datum::nan;
 
 }; // namespace ModifiedSchwarz
 
