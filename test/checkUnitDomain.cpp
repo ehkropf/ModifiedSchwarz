@@ -17,30 +17,29 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnitTest++.h"
+#include "UnitTest.h"
 
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
 
-#define TEST_OUT(S) std::cout << S << std::endl
-
 using namespace ModifiedSchwarz;
+
+TEST(UnitCircLabel)
+{
+    TEST_OUT("-----========== Unit Circle Domain check ==========-----")
+}
 
 class TestFixture
 {
 public:
     UnitCircleDomain domain;
 
-    TestFixture()
-        : domain(domainExample3())
-    {
-        TEST_OUT("-----========== Unit Circle Domain check ==========-----");
-    }
+    TestFixture() : domain(domainExample3()) {}
 };
 
 TEST_FIXTURE(TestFixture, Points)
 {
-    TEST_OUT("  --> Points ... ");
+    TEST_LINE("Points")
 
     unsigned n = 16;
     UnitCircleDomain D = domainExample3();
@@ -56,12 +55,12 @@ TEST_FIXTURE(TestFixture, Points)
         CHECK(approx_equal(abs(zb.col(j+1) - D.centers()(j)),
                            D.radii()(j)*colvec(n, fill::ones), "reldiff", tol));
 
-    TEST_OUT("      OK");
+    TEST_OK
 }
 
 TEST_FIXTURE(TestFixture, InsideDomain)
 {
-    TEST_OUT("  --> Inside domain ... ");
+    TEST_LINE("Inside domain")
 
     const unsigned npts = 200;
     const unsigned expected = 28541;
@@ -70,19 +69,19 @@ TEST_FIXTURE(TestFixture, InsideDomain)
     unsigned counted = sum(vectorise(mask));
     if (counted != expected)
     {
-        TEST_OUT("expected " << expected << " points in domain, found " << counted << " points instead.");
+        TEST_OUT("expected " << expected << " points in domain, found " << counted << " points instead.")
         CHECK(false);
     }
     else
     {
         CHECK(true);
-        TEST_OUT("      OK");
+        TEST_OK
     }
 }
 
 TEST_FIXTURE(TestFixture, OnBoundary)
 {
-    TEST_OUT("  --> On boundary ...");
+    TEST_LINE("On boundary")
 
     auto points = domain.boundaryPoints(257);
     for (unsigned j = 0; j <= domain.m(); ++j)
@@ -98,5 +97,5 @@ TEST_FIXTURE(TestFixture, OnBoundary)
             CHECK(true);
     }
 
-    TEST_OUT("      OK");
+    TEST_OK
 }

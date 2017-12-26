@@ -17,7 +17,7 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnitTest++.h"
+#include "UnitTest.h"
 
 #include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
@@ -26,15 +26,24 @@
 
 using namespace ModifiedSchwarz;
 
+TEST(InterpLabel)
+{
+    TEST_FILE("Real Interpolant")
+}
+
 TEST(BasicInterp)
 {
     unsigned N = 128;
     auto D = domainExample3();
     auto zb = D.boundaryPoints(N);
 
+    TEST_LINE("Basic interpolation")
+
     // Real part of sample function.
     auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
 
     RealInterpolant gi(D, g(zb));
     CHECK(approx_equal(gi(vectorise(zb)), real(vectorise(g(zb))), "absdiff", 10.*eps2pi));
+
+    TEST_OK
 }

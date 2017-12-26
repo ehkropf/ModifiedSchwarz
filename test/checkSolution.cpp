@@ -17,13 +17,18 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnitTest++.h"
+#include "UnitTest.h"
 
 #include "Solution.hpp"
 #include "UnitCircleDomain.hpp"
 #include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
+
+TEST(SolutionLabel)
+{
+    TEST_FILE("Solution check")
+}
 
 SUITE(SolutionTest)
 {
@@ -48,10 +53,14 @@ class TestFixture
 
 TEST_FIXTURE(TestFixture, EvalSolution)
 {
+    TEST_LINE("Evaluate solution")
+
     Solution sol(realPart, colvec(domain.m()+1, arma::fill::zeros), imagPart);
 
     cx_mat zb = domain.boundaryPoints(10);
     CHECK(approx_equal(polesInHoles(cx_vec(vectorise(zb)), domain), sol(vectorise(zb)), "reldiff", 10*eps2pi));
+
+    TEST_OK
 }
 
 TEST(StoreData)

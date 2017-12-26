@@ -17,7 +17,7 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnitTest++.h"
+#include "UnitTest.h"
 
 #include "SchwarzTypes.hpp"
 #include "SpectralMethod.hpp"
@@ -29,6 +29,11 @@
 
 using namespace ModifiedSchwarz;
 using namespace arma;
+
+TEST(SpectralMethodLabel)
+{
+    TEST_FILE("Spectral method check")
+}
 
 SUITE(SpectralMethodTest)
 {
@@ -61,6 +66,8 @@ SUITE(SpectralMethodTest)
 
     TEST_FIXTURE(TestFixture, TestRHS)
     {
+        TEST_LINE("Right hand side")
+
         const mat& imagPart = imaginaryPart();
         SpectralConstants::setTruncation(64);
         SpectralMethod method(Problem(domain, imagPart));
@@ -73,10 +80,14 @@ SUITE(SpectralMethodTest)
 //        std::cout << " max absolute error: " << max(abserr) << std::endl;
 
         CHECK(approx_equal(rhs.head_rows(rhs.n_rows/2), refRHS, "absdiff", 1e-4));
+
+        TEST_OK
     }
 
     TEST_FIXTURE(TestFixture, TestResidual)
     {
+        TEST_LINE("Residual")
+
         const mat& imagPart = imaginaryPart();
         SpectralMethod method(Problem(domain, imagPart));
 
@@ -86,10 +97,14 @@ SUITE(SpectralMethodTest)
 
         cx_vec res = rhs - A*x;
         CHECK(max(abs(res)/abs(rhs)) < 100*eps2pi);
+
+        TEST_OK
     }
 
     TEST_FIXTURE(TestFixture, TestSolution)
     {
+        TEST_LINE("Solution")
+
         SpectralMethod method(Problem(domain, imaginaryPart()));
         Solution sol = method.solve();
 
@@ -98,6 +113,8 @@ SUITE(SpectralMethodTest)
 
         cx_vec bv(vectorise(domain.boundaryPoints(10)));
         CHECK(approx_equal(polesInHoles(cx_vec(vectorise(bv)), domain), sol(vectorise(bv)), "absdiff", 1e-6));
+
+        TEST_OK
     }
 
 }

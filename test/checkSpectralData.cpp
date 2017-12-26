@@ -19,15 +19,22 @@
 
 #include <iostream>
 
-#include "UnitTest++.h"
+#include "UnitTest.h"
 
 #include "UnitCircleDomain.hpp"
 #include "SpectralData.hpp"
 
 using namespace ModifiedSchwarz;
 
+TEST(SpectralDataLabel)
+{
+    TEST_FILE("Spectral data check")
+}
+
 TEST(Matrix)
 {
+    TEST_LINE("Matrix")
+
     SpectralData data(domainExample3(), 64);
     const cx_mat& L = data.matrix();
 
@@ -35,12 +42,18 @@ TEST(Matrix)
     refL.load("../test/refMatrix.dat");
 
     CHECK(arma::approx_equal(L, refL, "absdiff", 1e-4));
+
+    TEST_OK
 }
 
 TEST(Sharing)
 {
+    TEST_LINE("Data sharing")
+
     SpectralData::Ptr pData = std::make_shared<SpectralData>(domainExample3());
     SpectralData::Ptr pData2 = pData;
 
     CHECK(&pData->matrix() == &pData2->matrix());
+
+    TEST_OK
 }
