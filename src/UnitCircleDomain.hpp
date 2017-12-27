@@ -49,8 +49,7 @@ class UnitCircleDomain
 
 public:
     UnitCircleDomain() {}
-    UnitCircleDomain(const cx_vec &centers, const colvec &radii)
-        : _centers(centers), _radii(radii) {}
+    UnitCircleDomain(cx_vec, colvec);
 
     const cx_vec &centers() const { return _centers; }
     const colvec &radii() const { return _radii; }
@@ -111,7 +110,7 @@ public:
     //! Domain equality.
     friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)
     {
-        return arma::all(a._centers == b._centers) & arma::all(a._radii && b._radii);
+        return arma::all(a._centers == b._centers) && arma::all(a._radii && b._radii);
     }
 };
 

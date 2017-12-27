@@ -22,6 +22,12 @@
 namespace ModifiedSchwarz
 {
 
+UnitCircleDomain::UnitCircleDomain(cx_vec centers, colvec radii)
+    : _centers(centers),
+      _radii(radii)
+{}
+
+
 ////////////////////////////////////////////////////////////////////////
 uvec
 UnitCircleDomain::isOnC(unsigned j, const cx_vec& z) const
@@ -101,10 +107,8 @@ UnitCircleDomain::ngrid(unsigned npts) const
 ////////////////////////////////////////////////////////////////////////
 UnitCircleDomain domainExample3()
 {
-    cx_vec centers{ cx_double(-0.2517, 0.3129), cx_double(0.2307, -0.4667) };
-    colvec radii{ 0.2377, 0.1557 };
-
-    return UnitCircleDomain(centers, radii);
+    return UnitCircleDomain(cx_vec{ cx_double(-0.2517, 0.3129), cx_double(0.2307, -0.4667) },
+            colvec{ 0.2377, 0.1557 });
 }
 
 }; // namespace ModifiedSchwarz

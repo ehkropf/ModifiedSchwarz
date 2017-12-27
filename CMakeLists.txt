@@ -31,16 +31,18 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 ######################################################################
 set(SCHWARZ_SOURCE
-    src/UnitCircleDomain.cpp
-    src/RealInterpolant.cpp
-    src/ComplexInterpolant.cpp
+    src/BoundaryPoints.cpp
     src/CauchyInterpolant.cpp
+    src/ComplexInterpolant.cpp
+    src/ClosureInterpolant.cpp
+    src/Problem.cpp
+    src/RealInterpolant.cpp
+    src/Solution.cpp
+    src/Solver.cpp
     src/SpectralConstants.cpp
     src/SpectralData.cpp
     src/SpectralMethod.cpp
-    src/Solver.cpp
-    src/Problem.cpp
-    src/Solution.cpp
+    src/UnitCircleDomain.cpp
     )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 add_library(schwarz_static STATIC ${SCHWARZ_SOURCE})

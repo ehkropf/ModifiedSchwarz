@@ -20,32 +20,43 @@
 #ifndef CAUCHY_HPP
 #define CAUCHY_HPP
 
-#include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
+#include "BoundaryValues.h"
 #include "FunctionLike.hpp"
+#include "Solution.hpp"
 
 namespace ModifiedSchwarz
 {
 
-class CauchyInterpolant : FunctionLike<cx_mat>
+/*!
+ * Uses a Barycentric interpolation to approximate Cauchy's integral for
+ * giving values in the domain. Is a FunctionLike object which takes a vector
+ * of points in the domain and returns the appropriate value for each point.
+ * It is expected that the points have been validated to be in the domain;
+ * behaviour for points not in the domain is not defined.
+ */
+class CauchyInterpolant : public FunctionLike<cx_vec>
 {
-    UnitCircleDomain _domain;
-    cx_mat _bdry_points;
+    // TBD
 
 public:
     /*!
-     * Use matrix of boundary values to construct Cauchy interpolant for
+     * Use given boundary sample values to construct Cauchy Interpolant for
      * points inside the domain. Uses the discrete boundary values given
      * to determine number of points to use in Barycentric interpolation.
      */
-    CauchyInterpolant(const cx_mat& boundary_values, const UnitCircleDomain& domain);
+    CauchyInterpolant(const BoundaryValues&);
+
+    /*!
+     * Create Cauchy interpolant from given Solution.
+     */
+    CauchyInterpolant(const Solution&);
 
     /*!
      * Given a set of points, evaluate the points in the domain using the
      * barycentric interpolation method for Cauchy's formula, and set any
      * points not in the domain (including boundary points) to NaN.
      */
-    virtual void evalInto(const cx_mat&, cx_mat&) const;
+    virtual void evalInto(const cx_vec&, cx_vec&) const;
 };
 
 }; // namespace ModifiedSchwarz

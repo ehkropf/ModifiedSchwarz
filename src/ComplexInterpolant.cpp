@@ -27,6 +27,11 @@ ComplexInterpolant::ComplexInterpolant(const RealInterpolant& rpart, const RealI
       _imagPart(ipart)
 {}
 
+ComplexInterpolant::ComplexInterpolant(const Solution& S)
+    : _realPart(S.realPart()),
+      _imagPart(S.imagPart())
+{}
+
 //////////////////////////////////////////////////////////////////////////////////
 void ComplexInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
 {

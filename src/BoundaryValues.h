@@ -17,29 +17,31 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CauchyInterpolant.hpp"
+#ifndef BOUNDARY_VALUES_H
+#define BOUNDARY_VALUES_H
+
+#include "BoundaryPoints.h"
 
 namespace ModifiedSchwarz
 {
 
-//////////////////////////////////////////////////////////////////////////////////
-CauchyInterpolant::CauchyInterpolant(const BoundaryValues& v)
+class BoundaryValues
 {
-    // Use the boundary values to setup and store values needed for evaluation.
-}
+    BoundaryPoints _points;
+    cx_mat _values;
 
-CauchyInterpolant::CauchyInterpolant(const Solution& S)
-{
-    // * Create set of boundary points.
-    // * Evaluate solution interpolant at boundary points.
-    // * Use values to call main constructor.
-}
+public:
+    //! Default constructor.
 
-//////////////////////////////////////////////////////////////////////////////////
-void CauchyInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
-{
-    // FIXME: Dummy evaluation.
-    w = z;
-}
+    //! Construct using points and interpolant.
+
+    //! Get points.
+    const BoundaryPoints& points() const { return _points; }
+
+    //! Get data values.
+    const cx_mat& values() const { return _values; }
+};
 
 }; // namespace ModifiedSchwarz
+
+#endif // BOUNDARY_VALUES_H

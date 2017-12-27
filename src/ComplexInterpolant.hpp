@@ -23,6 +23,7 @@
 #include "SchwarzTypes.hpp"
 #include "FunctionLike.hpp"
 #include "RealInterpolant.hpp"
+#include "Solution.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -43,6 +44,7 @@ class ComplexInterpolant : public FunctionLike<cx_vec>
 
 public:
     ComplexInterpolant(const RealInterpolant&, const RealInterpolant&);
+    ComplexInterpolant(const Solution&);
 
     //! Access to constant reference to stored real part.
     const RealInterpolant& realPart() const { return _realPart; }
