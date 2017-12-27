@@ -99,3 +99,17 @@ TEST_FIXTURE(TestFixture, OnBoundary)
 
     TEST_OK
 }
+
+TEST_FIXTURE(TestFixture, WriteDomain)
+{
+    TEST_LINE("Write test")
+    TEST_OUT("\n\n")
+
+    std::cout
+        << "MOSW_DOMAIN" << std::endl
+        << domain.m() << std::endl
+        << domain.centers()
+        << domain.radii();
+
+    TEST_OUT("\n\n")
+}
