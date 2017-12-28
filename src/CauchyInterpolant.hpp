@@ -44,7 +44,7 @@ public:
      * points inside the domain. Uses the discrete boundary values given
      * to determine number of points to use in Barycentric interpolation.
      */
-    CauchyInterpolant(const BoundaryValues&);
+    CauchyInterpolant(const ComplexBoundaryValues&);
 
     /*!
      * Create Cauchy interpolant from given Solution.

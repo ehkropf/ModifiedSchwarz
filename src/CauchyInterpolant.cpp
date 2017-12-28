@@ -23,7 +23,7 @@ namespace ModifiedSchwarz
 {
 
 //////////////////////////////////////////////////////////////////////////////////
-CauchyInterpolant::CauchyInterpolant(const BoundaryValues& v)
+CauchyInterpolant::CauchyInterpolant(const ComplexBoundaryValues& v)
 {
     // Use the boundary values to setup and store values needed for evaluation.
 }
