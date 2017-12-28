@@ -17,31 +17,30 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOLVERDATA_HPP
-#define SOLVERDATA_HPP
+#include "UnitTest.h"
 
-#include <memory>
+#include "BoundaryValues.h"
 
-namespace ModifiedSchwarz
+using namespace ModifiedSchwarz;
+
+TEST(BoundaryValueLabel)
 {
+    TEST_FILE("BoundaryValue check")
+}
 
-// FIXME: There should be a member to store the solver methed used.
-//        In this way, a solver instance can check for compatible previous
-//        solution data.
-
-///////////////////////////////////////////////////////////////////////////
-/*!
- * Abstract class to store data specific to a solver method.
- */
-class SolverData
+class TestFixture
 {
 public:
-    virtual ~SolverData() = default;
+    UnitCircleDomain domain;
 
-    using Ptr = std::shared_ptr<SolverData>;
-    using ConstPtr = std::shared_ptr<const SolverData>;
+    TestFixture() : domain(domainExample3()) {}
 };
 
-}; // namespace ModifiedSchwarz
+TEST_FIXTURE(TestFixture, SizeCheck)
+{
+    TEST_LINE("Size check")
 
-#endif // SOLVERDATA_HPP
+    BoundaryValues(BoundaryPoints(domain), [](cx_vec& z) { return polesInHoles(z); });
+
+    TEST_OK
+}

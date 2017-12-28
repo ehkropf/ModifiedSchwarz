@@ -20,26 +20,50 @@
 #ifndef BOUNDARY_VALUES_H
 #define BOUNDARY_VALUES_H
 
+#include <functional>
 #include "BoundaryPoints.h"
+#include "ComplexInterpolant.hpp"
+#include "Solution.hpp"
 
 namespace ModifiedSchwarz
 {
 
+template <typename ArmaMat, typename ArmaVec>
 class BoundaryValues
 {
     BoundaryPoints _points;
-    cx_mat _values;
+    ArmaMat _values;
 
 public:
-    //! Default constructor.
+    //! Generic callable object.
+    using Function = std::function<ArmaVec (const cx_mat&)>;
 
-    //! Construct using points and interpolant.
+    //! Default constructor.
+    BoundaryValues() {}
+
+    //! Construction by plain function.
+    BoundaryValues(BoundaryPoints, Function);
 
     //! Get points.
     const BoundaryPoints& points() const { return _points; }
 
     //! Get data values.
-    const cx_mat& values() const { return _values; }
+    const ArmaMat& values() const { return _values; }
+};
+
+using RealBoundaryValues = BoundaryValues<mat, colvec>;
+using ComplexBoundaryValues = BoundaryValues<cx_mat, cx_vec>;
+
+struct BoundaryValueFactory
+{
+    //! Create using RealInterpolant.
+    static RealBoundaryValues create(BoundaryPoints, const RealInterpolant&);
+
+    //! Create using ComplexInterpolant.
+    static ComplexBoundaryValues create(BoundaryPoints, const ComplexInterpolant&);
+
+    //! Create using Solution.
+    static ComplexBoundaryValues create(BoundaryPoints, const Solution&);
 };
 
 }; // namespace ModifiedSchwarz

@@ -32,6 +32,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 ######################################################################
 set(SCHWARZ_SOURCE
     src/BoundaryPoints.cpp
+    src/BoundaryValues.cpp
     src/CauchyInterpolant.cpp
     src/ComplexInterpolant.cpp
     src/ClosureInterpolant.cpp
@@ -80,9 +81,10 @@ if(UNITTEST_FOUND)
     set(TESTSRC
         test/testRunner.cpp
         test/checkPolynomial.cpp
+        test/checkUnitDomain.cpp
+        test/checkBoundaryValues.cpp
         test/checkInterpolant.cpp
         test/checkCauchyInterpolant.cpp
-        test/checkUnitDomain.cpp
         test/checkSpectralConstants.cpp
         test/checkSpectralData.cpp
         test/checkSpectralMethod.cpp

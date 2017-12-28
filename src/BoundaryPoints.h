@@ -37,9 +37,16 @@ class BoundaryPoints
     cx_mat _points;
 
 public:
+    BoundaryPoints() {}
     BoundaryPoints(cx_mat points);
     BoundaryPoints(const UnitCircleDomain& domain,
             unsigned numPoints = BoundaryPointsDefaults::numPoints);
+
+    //! Access points as matrix.
+    const cx_mat& matrix() const  { return _points; }
+
+    //! Access points as vector.
+    cx_vec vector() const { return arma::vectorise(_points); }
 };
 
 }; // namespace ModifiedSchwarz

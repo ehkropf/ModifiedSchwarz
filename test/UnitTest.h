@@ -1,6 +1,7 @@
 #ifndef UNITTEST_MOSW_H
 #define UNITTEST_MOSW_H
 
+#include <iostream>
 #include "UnitTest++.h"
 
 // Some handy macros for talkative unit tests.

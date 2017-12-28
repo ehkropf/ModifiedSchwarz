@@ -17,31 +17,30 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOLVERDATA_HPP
-#define SOLVERDATA_HPP
-
-#include <memory>
+#include "BoundaryValues.h"
 
 namespace ModifiedSchwarz
 {
 
-// FIXME: There should be a member to store the solver methed used.
-//        In this way, a solver instance can check for compatible previous
-//        solution data.
-
-///////////////////////////////////////////////////////////////////////////
-/*!
- * Abstract class to store data specific to a solver method.
- */
-class SolverData
+template <typename ArmaMat, typename ArmaVec>
+BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, BoundaryValues<ArmaMat,ArmaVec>::Function f)
+    : _points(pts)
 {
-public:
-    virtual ~SolverData() = default;
+    _values = f(_points.vector());
+    _values.reshape(_points.matrix().n_rows, _points.matrix().n_cols);
+}
 
-    using Ptr = std::shared_ptr<SolverData>;
-    using ConstPtr = std::shared_ptr<const SolverData>;
-};
+////////////////////////////////////////////////////////////////////////////////
+RealBoundaryValues
+BoundaryValueFactory::create(BoundaryPoints pts, const RealInterpolant& f)
+{
+    return RealBoundaryValues(pts, [&f](const cx_vec& z){ return f(z); });
+}
+
+ComplexBoundaryValues
+BoundaryValueFactory::create(BoundaryPoints pts, const ComplexInterpolant& f)
+{
+    return ComplexBoundaryValues(pts, [&f](const cx_vec& z){ return f(z); });
+}
 
 }; // namespace ModifiedSchwarz
-
-#endif // SOLVERDATA_HPP
