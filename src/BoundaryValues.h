@@ -22,8 +22,6 @@
 
 #include <functional>
 #include "BoundaryPoints.h"
-#include "ComplexInterpolant.hpp"
-#include "Solution.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -54,6 +52,7 @@ public:
 using RealBoundaryValues = BoundaryValues<mat, colvec>;
 using ComplexBoundaryValues = BoundaryValues<cx_mat, cx_vec>;
 
+/*
 struct BoundaryValueFactory
 {
     //! Create using RealInterpolant.
@@ -65,6 +64,7 @@ struct BoundaryValueFactory
     //! Create using Solution.
     static ComplexBoundaryValues create(BoundaryPoints, const Solution&);
 };
+*/
 
 }; // namespace ModifiedSchwarz
 

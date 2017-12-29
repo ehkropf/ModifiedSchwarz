@@ -24,8 +24,8 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
-RealInterpolant::RealInterpolant(UnitCircleDomain domain, mat samples)
-    : _domain(domain), _boundaryData(samples)
+RealInterpolant::RealInterpolant(UnitCircleDomain domain, RealBoundaryValues bvals)
+    : _domain(domain), _boundary_values(bvals)
 {
     prepareInterpolant();
 }
@@ -42,9 +42,10 @@ RealInterpolant::RealInterpolant(UnitCircleDomain domain, colvec constants, cx_m
 void
 RealInterpolant::prepareInterpolant()
 {
-    unsigned M = _boundaryData.n_rows;
+    const mat& bvals = _boundary_values.values();
+    unsigned M = bvals.n_rows;
     unsigned N = (unsigned)std::ceil((M - 1)/2.);
-    cx_mat c(fft(_boundaryData)/M);
+    cx_mat c(fft(bvals)/M);
     _constants = real(c.row(0).st());
 
     // Store coeffients with extra zero row for use in polyval. This
@@ -52,7 +53,7 @@ RealInterpolant::prepareInterpolant()
     // polynomial evaluation. (Artifact of DFT coefficients being
     // conjugate.)
     _coefficients = join_vert(flipud(c.rows(1, N)),
-                              cx_mat(1, _boundaryData.n_cols, arma::fill::zeros));
+                              cx_mat(1, bvals.n_cols, arma::fill::zeros));
 }
 
 ////////////////////////////////////////////////////////////////////////

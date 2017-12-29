@@ -26,7 +26,7 @@ namespace ModifiedSchwarz
 Problem::Problem(RealInterpolant imaginaryPart)
     : _imaginaryPart(imaginaryPart) {}
 
-Problem::Problem(UnitCircleDomain domain, mat imaginaryPart)
+Problem::Problem(UnitCircleDomain domain, RealBoundaryValues imaginaryPart)
     : _imaginaryPart(RealInterpolant(domain, imaginaryPart)) {}
 
 ////////////////////////////////////////////////////////////////////////////////

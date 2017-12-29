@@ -31,6 +31,7 @@ BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, BoundaryValu
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+/*
 RealBoundaryValues
 BoundaryValueFactory::create(BoundaryPoints pts, const RealInterpolant& f)
 {
@@ -42,5 +43,6 @@ BoundaryValueFactory::create(BoundaryPoints pts, const ComplexInterpolant& f)
 {
     return ComplexBoundaryValues(pts, [&f](const cx_vec& z){ return f(z); });
 }
+*/
 
 }; // namespace ModifiedSchwarz

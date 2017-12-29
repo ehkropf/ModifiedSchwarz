@@ -32,4 +32,10 @@ ClosureInterpolant::ClosureInterpolant(const Solution& S)
       _interior_fun(S)
 {}
 
+////////////////////////////////////////////////////////////////////////////////
+void
+ClosureInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
+{
+}
+
 }; // namespace ModifiedSchwarz

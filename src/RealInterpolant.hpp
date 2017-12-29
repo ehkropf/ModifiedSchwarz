@@ -21,7 +21,7 @@
 #define REALINTERPOLANT_HPP
 
 #include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
+#include "BoundaryValues.h"
 #include "FunctionLike.hpp"
 
 namespace ModifiedSchwarz
@@ -53,7 +53,8 @@ namespace ModifiedSchwarz
 class RealInterpolant : public FunctionLike<cx_vec, colvec>
 {
     UnitCircleDomain _domain;
-    mat _boundaryData;
+    RealBoundaryValues _boundary_values;
+    //mat _boundaryData;
     colvec _constants;
     cx_mat _coefficients;
 
@@ -62,13 +63,13 @@ protected:
 
 public:
     RealInterpolant() {}
-    RealInterpolant(UnitCircleDomain domain, mat samples);
+    RealInterpolant(UnitCircleDomain, RealBoundaryValues);
     RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients);
 
     //! Stored domain object.
     const UnitCircleDomain& domain() const { return _domain; }
     //! Boundary data matrix.
-    const mat& boundaryData() const { return _boundaryData; }
+    const mat& boundaryData() const { return _boundary_values.values(); }
     //! m+1 vector of real constants.
     const colvec& constants() const { return _constants; }
     //! Vector of polynomial coefficients.

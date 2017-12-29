@@ -49,6 +49,8 @@ class ClosureInterpolant : public FunctionLike<cx_vec> {
 public:
     ClosureInterpolant(ComplexInterpolant, CauchyInterpolant);
     ClosureInterpolant(const Solution&);
+
+    void evalInto(const cx_vec&, cx_vec&) const;
 };
 
 }; // ModifiedSchwarz
