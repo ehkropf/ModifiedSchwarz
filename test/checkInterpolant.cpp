@@ -20,7 +20,7 @@
 #include "UnitTest.h"
 
 #include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
+#include "BoundaryValues.h"
 #include "RealInterpolant.hpp"
 #include "TestFunctions.hpp"
 
@@ -33,17 +33,17 @@ TEST(InterpLabel)
 
 TEST(BasicInterp)
 {
-    unsigned N = 128;
+    unsigned N = 100;
     auto D = domainExample3();
-    auto zb = D.boundaryPoints(N);
+    auto zb = BoundaryPoints(D, N);
 
     TEST_LINE("Basic interpolation")
 
     // Real part of sample function.
     auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
 
-    RealInterpolant gi(D, g(zb));
-    CHECK(approx_equal(gi(vectorise(zb)), real(vectorise(g(zb))), "absdiff", 10.*eps2pi));
+    RealInterpolant gi(D, RealBoundaryValues(BoundaryPoints(D), g));
+    CHECK(approx_equal(gi(zb.vector()), g(zb.vector()), "absdiff", 10.*eps2pi));
 
     TEST_OK
 }

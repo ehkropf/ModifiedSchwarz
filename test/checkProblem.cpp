@@ -20,7 +20,6 @@
 #include "UnitTest.h"
 
 #include "Problem.hpp"
-#include "UnitCircleDomain.hpp"
 #include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
@@ -42,13 +41,14 @@ SUITE(ProbemTests)
 
     TEST_FIXTURE(Fixture, BasicSolve)
     {
-        unsigned N = 128;
-        auto& D = domain;
-        auto g = [&D](const cx_mat& z) -> mat { return imag(polesInHoles(z, D)); };
-
         TEST_LINE("Basic solve")
 
-        Problem problem(RealInterpolant(D, g(D.boundaryPoints(N))));
+        unsigned N = 128;
+        const UnitCircleDomain& D = domain;
+        auto g = [&D](const cx_mat& z) -> mat { return imag(polesInHoles(z, D)); };
+
+        Problem problem(RealInterpolant(domain,
+                    RealBoundaryValues(BoundaryPoints(domain, N), g)));
         Solution sol = problem.solve();
 
         cx_vec zt = vectorise(D.boundaryPoints(7));
