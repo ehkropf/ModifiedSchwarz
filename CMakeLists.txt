@@ -32,7 +32,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 ######################################################################
 set(SCHWARZ_SOURCE
     src/BoundaryPoints.cpp
-    src/BoundaryValues.cpp
     src/CauchyInterpolant.cpp
     src/ComplexInterpolant.cpp
     src/ClosureInterpolant.cpp

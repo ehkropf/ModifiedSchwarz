@@ -34,7 +34,7 @@ class BoundaryValues
 
 public:
     //! Generic callable object.
-    using Function = std::function<ArmaVec (const cx_mat&)>;
+    using Function = std::function<ArmaVec (const cx_vec&)>;
 
     //! Default constructor.
     BoundaryValues() {}
@@ -65,6 +65,13 @@ struct BoundaryValueFactory
     static ComplexBoundaryValues create(BoundaryPoints, const Solution&);
 };
 */
+
+template <typename ArmaMat, typename ArmaVec>
+BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, BoundaryValues<ArmaMat,ArmaVec>::Function f)
+    : _points(pts), _values(f(_points.vector()))
+{
+    _values.reshape(_points.matrix().n_rows, _points.matrix().n_cols);
+}
 
 }; // namespace ModifiedSchwarz
 

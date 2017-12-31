@@ -20,6 +20,7 @@
 #include "UnitTest.h"
 
 #include "BoundaryValues.h"
+#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 
@@ -31,16 +32,46 @@ TEST(BoundaryValueLabel)
 class TestFixture
 {
 public:
-    UnitCircleDomain domain;
+    using CompFunction = ComplexBoundaryValues::Function;
+    using RealFunction = RealBoundaryValues::Function;
 
-    TestFixture() : domain(domainExample3()) {}
+    UnitCircleDomain domain;
+    CompFunction g;
+    ComplexBoundaryValues cbvals;
+    RealFunction h;
+    RealBoundaryValues rbvals;
+
+    TestFixture() : domain(domainExample3())
+    {
+        const UnitCircleDomain& D = domain;
+        g = [&D](const cx_vec& z){return polesInHoles(z, D); };
+        cbvals = ComplexBoundaryValues(BoundaryPoints(domain), g);
+        h = [&D](const cx_vec& z){return real(polesInHoles(z, D)); };
+        rbvals = RealBoundaryValues(BoundaryPoints(domain), h);
+    }
 };
 
-TEST_FIXTURE(TestFixture, SizeCheck)
+TEST_FIXTURE(TestFixture, BValSizeCheck)
 {
     TEST_LINE("Size check")
 
-    BoundaryValues(BoundaryPoints(domain), [](cx_vec& z) { return polesInHoles(z); });
+    CHECK_EQUAL(cbvals.points().matrix().n_cols, domain.connectivity());
+    CHECK_EQUAL(cbvals.values().n_cols, domain.connectivity());
+    CHECK_EQUAL(cbvals.values().n_rows, cbvals.points().matrix().n_rows);
+
+    CHECK_EQUAL(rbvals.points().matrix().n_cols, domain.connectivity());
+    CHECK_EQUAL(rbvals.values().n_cols, domain.connectivity());
+    CHECK_EQUAL(rbvals.values().n_rows, rbvals.points().matrix().n_rows);
+
+    TEST_OK
+}
+
+TEST_FIXTURE(TestFixture, BValValueCheck)
+{
+    TEST_LINE("Value check")
+
+    CHECK(approx_equal(vectorise(cbvals.values()), g(cbvals.points().vector()), "absdiff", 1e-10));
+    CHECK(approx_equal(vectorise(rbvals.values()), h(rbvals.points().vector()), "absdiff", 1e-10));
 
     TEST_OK
 }
