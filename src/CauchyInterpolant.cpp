@@ -23,10 +23,32 @@ namespace ModifiedSchwarz
 {
 
 //////////////////////////////////////////////////////////////////////////////////
-CauchyInterpolant::CauchyInterpolant(const ComplexBoundaryValues& v)
+CauchyInterpolant::CauchyInterpolant(ComplexBoundaryValues v)
     : _boundary_values(v)
 {
     // Use the boundary values to setup and store values needed for evaluation.
+    // If we assume h_jk are the boundary values at the boundary points t_jk,
+    // then we need the following:
+    //   * sigma_j = j == 0 ? 1 : -1
+    //   * s = sigma_j * q_j * exp(i*(2*pi*k)/N)
+    //       = sigma_j * (t_jk - d_j)
+    //   * h = h_jk * s
+    // where k is in {0,..,N-1}.
+
+    auto sigma = [](unsigned j)->double{ return j == 0 ? 1. : -1.; };
+    const cx_mat& t_jk = _boundary_values.points().matrix();
+    const cx_mat& h_jk = _boundary_values.values();
+    unsigned N = t_jk.n_rows;
+    const auto& D = _boundary_values.domain();
+
+    _s.set_size(t_jk.n_elem);
+    _h.set_size(t_jk.n_elem);
+    for (unsigned j = 0; j < D.connectivity(); ++j)
+    {
+        auto s = arma::span(j*N, (j+1)*N - 1);
+        _s.rows(s) = sigma(j) * (t_jk.col(j) - D.dv0(j));
+        _h.rows(s) = h_jk.col(j) % _s.rows(s);
+    }
 }
 
 CauchyInterpolant::CauchyInterpolant(const Solution& S)
@@ -39,8 +61,19 @@ CauchyInterpolant::CauchyInterpolant(const Solution& S)
 //////////////////////////////////////////////////////////////////////////////////
 void CauchyInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
 {
-    // FIXME: Dummy evaluation.
-    w = z;
+    // On evaluation, we need the matrix
+    //
+    //                      1
+    //     I := (I_jk) = --------
+    //                   t_jk - z
+    //
+    // where t_jk represents a row vector and z a column vector.
+
+    const cx_rvec& t_jk = _boundary_values.points().vector().st();
+    cx_mat I = arma::repmat(t_jk, z.n_elem, 1);
+    I.each_col([&z] (cx_vec& v) { return 1./(v - z); });
+
+    w = (I*_h)/(I*_s);
 }
 
 }; // namespace ModifiedSchwarz

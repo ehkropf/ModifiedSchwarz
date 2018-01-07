@@ -37,6 +37,8 @@ namespace ModifiedSchwarz
 class CauchyInterpolant : public FunctionLike<cx_vec>
 {
     ComplexBoundaryValues _boundary_values;
+    cx_vec _s; //! Column vector of points for evaluation.
+    cx_vec _h; //! Column vector of points for evaluation.
 
 public:
     /*!
@@ -44,7 +46,7 @@ public:
      * points inside the domain. Uses the discrete boundary values given
      * to determine number of points to use in Barycentric interpolation.
      */
-    CauchyInterpolant(const ComplexBoundaryValues&);
+    CauchyInterpolant(ComplexBoundaryValues);
 
     /*!
      * Create Cauchy interpolant from given Solution.
