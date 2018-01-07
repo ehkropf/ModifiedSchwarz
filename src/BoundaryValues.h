@@ -42,6 +42,9 @@ public:
     //! Construction by plain function.
     BoundaryValues(BoundaryPoints, Function);
 
+    //! Domain of definition.
+    UnitCircleDomain domain() const { return _points.domain(); }
+
     //! Get points.
     const BoundaryPoints& points() const { return _points; }
 

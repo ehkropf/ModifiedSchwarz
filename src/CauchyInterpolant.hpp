@@ -36,7 +36,7 @@ namespace ModifiedSchwarz
  */
 class CauchyInterpolant : public FunctionLike<cx_vec>
 {
-    // TBD
+    ComplexBoundaryValues _boundary_values;
 
 public:
     /*!

@@ -24,6 +24,7 @@ namespace ModifiedSchwarz
 
 //////////////////////////////////////////////////////////////////////////////////
 CauchyInterpolant::CauchyInterpolant(const ComplexBoundaryValues& v)
+    : _boundary_values(v)
 {
     // Use the boundary values to setup and store values needed for evaluation.
 }

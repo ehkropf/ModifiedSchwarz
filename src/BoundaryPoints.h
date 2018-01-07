@@ -38,9 +38,12 @@ class BoundaryPoints
 
 public:
     BoundaryPoints() {}
-    BoundaryPoints(cx_mat points);
-    BoundaryPoints(const UnitCircleDomain& domain,
+    BoundaryPoints(UnitCircleDomain domain, cx_mat points);
+    BoundaryPoints(UnitCircleDomain domain,
             unsigned numPoints = BoundaryPointsDefaults::numPoints);
+
+    //! Domain of definition.
+    UnitCircleDomain domain() const { return _domain; }
 
     //! Access points as matrix.
     const cx_mat& matrix() const  { return _points; }

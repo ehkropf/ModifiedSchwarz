@@ -22,11 +22,14 @@
 namespace ModifiedSchwarz
 {
 
-BoundaryPoints::BoundaryPoints(cx_mat points) : _points(points)
+BoundaryPoints::BoundaryPoints(UnitCircleDomain domain, cx_mat points)
+    : _domain(domain),
+      _points(points)
 {
+    // FIXME: Should check that points are actually on domain boundary.
 }
 
-BoundaryPoints::BoundaryPoints(const UnitCircleDomain& domain, unsigned numPoints)
+BoundaryPoints::BoundaryPoints(UnitCircleDomain domain, unsigned numPoints)
     : _domain(domain)
 {
     _points = _domain.boundaryPoints(numPoints);
