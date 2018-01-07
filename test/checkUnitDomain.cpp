@@ -26,7 +26,7 @@ using namespace ModifiedSchwarz;
 
 TEST(UnitCircLabel)
 {
-    TEST_OUT("-----========== Unit Circle Domain check ==========-----")
+    TEST_LINE("Unit Circle Domain check")
 }
 
 class TestFixture
@@ -55,7 +55,7 @@ TEST_FIXTURE(TestFixture, Points)
         CHECK(approx_equal(abs(zb.col(j+1) - D.centers()(j)),
                            D.radii()(j)*colvec(n, fill::ones), "reldiff", tol));
 
-    TEST_OK
+    TEST_DONE
 }
 
 TEST_FIXTURE(TestFixture, InsideDomain)
@@ -97,7 +97,7 @@ TEST_FIXTURE(TestFixture, OnBoundary)
             CHECK(true);
     }
 
-    TEST_OK
+    TEST_DONE
 }
 
 //TEST_FIXTURE(TestFixture, WriteDomain)
