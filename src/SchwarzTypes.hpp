@@ -47,6 +47,9 @@ using cx_double = arma::cx_double;
 //! Column vector of complex doubles.
 using cx_vec = arma::cx_vec;
 
+//! Row vector of complex doubles.
+using cx_rvec = arma::cx_rowvec;
+
 //! Matrix of complex doubles.
 using cx_mat = arma::cx_mat;
 
