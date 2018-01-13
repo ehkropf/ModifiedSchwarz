@@ -69,9 +69,11 @@ void CauchyInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
     //
     // where t_jk represents a row vector and z a column vector.
 
+    // Is there a faster way to build I?
     const cx_rvec& t_jk = _boundary_values.points().vector().st();
     cx_mat I = arma::repmat(t_jk, z.n_elem, 1);
-    I.each_col([&z] (cx_vec& v) { return 1./(v - z); });
+    I.each_col() -= z;
+    I = 1./I;
 
     w = (I*_h)/(I*_s);
 }

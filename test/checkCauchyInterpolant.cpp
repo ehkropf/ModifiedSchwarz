@@ -53,9 +53,6 @@ TEST_FIXTURE(Fixture, ValueCheck)
     auto g = [](const cx_vec& z){ return exp(z); };
     CauchyInterpolant f(ComplexBoundaryValues(BoundaryPoints(domain), g));
 
-    TEST_OUT("Base values:\n" << g(test_point_inside))
-    TEST_OUT("Interp values:\n" << f(test_point_inside))
-
     CHECK(arma::approx_equal(g(test_point_inside), f(test_point_inside), "absdiff", 1e-10));
 
     TEST_DONE
