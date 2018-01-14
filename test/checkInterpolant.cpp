@@ -22,28 +22,59 @@
 #include "SchwarzTypes.hpp"
 #include "BoundaryValues.h"
 #include "RealInterpolant.hpp"
+#include "ComplexInterpolant.hpp"
 #include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
+
+SUITE(InterpolantSuite)
+{
 
 TEST(InterpLabel)
 {
     TEST_FILE("Real Interpolant")
 }
 
-TEST(BasicInterp)
+struct Fixture
 {
-    unsigned N = 100;
-    auto D = domainExample3();
-    auto zb = BoundaryPoints(D, N);
+    using Function = std::function<mat(cx_mat&)>;
 
-    TEST_LINE("Basic interpolation")
+    static constexpr unsigned N = 100;
 
-    // Real part of sample function.
-    auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
+    UnitCircleDomain domain;
+    BoundaryPoints eval_points;
+    ComplexBoundaryValues::Function g;
+    RealBoundaryValues::Function h;
 
-    RealInterpolant gi(RealBoundaryValues(BoundaryPoints(D), g));
-    CHECK(approx_equal(gi(zb.vector()), g(zb.vector()), "absdiff", 10.*eps2pi));
+    Fixture()
+        : domain(domainExample3()),
+          eval_points(BoundaryPoints(domain, N))
+    {
+        g = [this](const cx_mat& z) { return polesInHoles(z, domain); };
+        h = [this](const cx_mat& z) { return real(polesInHoles(z, domain)); };
+    }
+};
 
-    TEST_OK
+TEST_FIXTURE(Fixture, RealInterp)
+{
+    TEST_LINE("Real interpolation")
+
+    RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
+    auto&& zb = eval_points.vector();
+    CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
+
+    TEST_DONE
 }
+
+TEST_FIXTURE(Fixture, ComplexInterp)
+{
+    TEST_LINE("Complex interpolation")
+
+    ComplexInterpolant gi(ComplexBoundaryValues(BoundaryPoints(domain), g));
+    auto&& zb = eval_points.vector();
+    CHECK(approx_equal(gi(zb), g(zb), "absdiff", 10.*eps2pi));
+
+    TEST_DONE
+}
+
+} // SUITE
