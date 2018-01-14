@@ -34,47 +34,41 @@ class BoundaryValues
 
 public:
     //! Generic callable object.
-    using Function = std::function<ArmaVec (const cx_vec&)>;
+    using Function = std::function<ArmaVec(const cx_vec&)>;
 
     //! Default constructor.
     BoundaryValues() {}
 
-    //! Construction by plain function.
+    //! Construction by function.
     BoundaryValues(BoundaryPoints, Function);
+
+    //! Just use given data.
+    BoundaryValues(BoundaryPoints, ArmaMat);
 
     //! Domain of definition.
     UnitCircleDomain domain() const { return _points.domain(); }
 
-    //! Get points.
+    //! Reference to points on which values are defined.
     const BoundaryPoints& points() const { return _points; }
 
-    //! Get data values.
+    //! Reference to values matrix.
     const ArmaMat& values() const { return _values; }
 };
 
-using RealBoundaryValues = BoundaryValues<mat, colvec>;
-using ComplexBoundaryValues = BoundaryValues<cx_mat, cx_vec>;
+using RealBoundaryValues = BoundaryValues<mat,colvec>;
+using ComplexBoundaryValues = BoundaryValues<cx_mat,cx_vec>;
 
-/*
-struct BoundaryValueFactory
-{
-    //! Create using RealInterpolant.
-    static RealBoundaryValues create(BoundaryPoints, const RealInterpolant&);
-
-    //! Create using ComplexInterpolant.
-    static ComplexBoundaryValues create(BoundaryPoints, const ComplexInterpolant&);
-
-    //! Create using Solution.
-    static ComplexBoundaryValues create(BoundaryPoints, const Solution&);
-};
-*/
-
-template <typename ArmaMat, typename ArmaVec>
+template <typename ArmaMat,typename ArmaVec>
 BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, BoundaryValues<ArmaMat,ArmaVec>::Function f)
     : _points(pts), _values(f(_points.vector()))
 {
     _values.reshape(_points.matrix().n_rows, _points.matrix().n_cols);
 }
+
+template <typename ArmaMat,typename ArmaVec>
+BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, ArmaMat vals)
+    : _points(pts), _values(vals)
+{}
 
 }; // namespace ModifiedSchwarz
 

@@ -44,6 +44,7 @@ class ComplexInterpolant : public FunctionLike<cx_vec>
 
 public:
     ComplexInterpolant(const RealInterpolant&, const RealInterpolant&);
+    ComplexInterpolant(ComplexBoundaryValues);
     ComplexInterpolant(const Solution&);
 
     //! Access to constant reference to stored real part.

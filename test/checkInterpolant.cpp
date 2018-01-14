@@ -42,7 +42,7 @@ TEST(BasicInterp)
     // Real part of sample function.
     auto g = [&D](const cx_mat& z) -> mat { return real(polesInHoles(z, D)); };
 
-    RealInterpolant gi(D, RealBoundaryValues(BoundaryPoints(D), g));
+    RealInterpolant gi(RealBoundaryValues(BoundaryPoints(D), g));
     CHECK(approx_equal(gi(zb.vector()), g(zb.vector()), "absdiff", 10.*eps2pi));
 
     TEST_OK

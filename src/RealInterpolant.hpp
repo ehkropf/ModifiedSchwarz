@@ -63,7 +63,7 @@ protected:
 
 public:
     RealInterpolant() {}
-    RealInterpolant(UnitCircleDomain, RealBoundaryValues);
+    RealInterpolant(RealBoundaryValues);
     RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients);
 
     //! Stored domain object.

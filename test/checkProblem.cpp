@@ -47,8 +47,7 @@ SUITE(ProbemTests)
         const UnitCircleDomain& D = domain;
         auto g = [&D](const cx_mat& z) -> mat { return imag(polesInHoles(z, D)); };
 
-        Problem problem(RealInterpolant(domain,
-                    RealBoundaryValues(BoundaryPoints(domain, N), g)));
+        Problem problem(RealInterpolant(RealBoundaryValues(BoundaryPoints(domain, N), g)));
         Solution sol = problem.solve();
 
         cx_vec zt = vectorise(D.boundaryPoints(7));

@@ -27,6 +27,11 @@ ComplexInterpolant::ComplexInterpolant(const RealInterpolant& rpart, const RealI
       _imagPart(ipart)
 {}
 
+ComplexInterpolant::ComplexInterpolant(ComplexBoundaryValues values)
+    : _realPart(RealInterpolant(RealBoundaryValues(values.points(), real(values.values())))),
+      _imagPart(RealInterpolant(RealBoundaryValues(values.points(), imag(values.values()))))
+{}
+
 ComplexInterpolant::ComplexInterpolant(const Solution& S)
     : _realPart(S.realPart()),
       _imagPart(S.imagPart())

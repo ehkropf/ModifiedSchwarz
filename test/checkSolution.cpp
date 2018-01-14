@@ -47,11 +47,9 @@ class TestFixture
         cx_mat zb = domain.boundaryPoints(npts);
 
         const auto& D = domain;
-        realPart = RealInterpolant(domain,
-                RealBoundaryValues(BoundaryPoints(domain, npts),
+        realPart = RealInterpolant(RealBoundaryValues(BoundaryPoints(domain, npts),
                     [&D](const cx_vec& z){ return real(polesInHoles(z, D)); }));
-        imagPart = RealInterpolant(domain,
-                RealBoundaryValues(BoundaryPoints(domain, npts),
+        imagPart = RealInterpolant(RealBoundaryValues(BoundaryPoints(domain, npts),
                     [&D](const cx_vec& z){ return imag(polesInHoles(z, D)); }));
     }
 };

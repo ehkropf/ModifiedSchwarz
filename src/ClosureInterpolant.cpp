@@ -23,13 +23,18 @@ namespace ModifiedSchwarz
 {
 
 ClosureInterpolant::ClosureInterpolant(ComplexInterpolant bfun, CauchyInterpolant ifun)
-    : _boundary_fun(bfun),
-      _interior_fun(ifun)
+    : _boundary(bfun),
+      _interior(ifun)
+{}
+
+ClosureInterpolant::ClosureInterpolant(ComplexBoundaryValues values)
+    : _boundary(ComplexInterpolant(values)),
+      _interior(CauchyInterpolant(values))
 {}
 
 ClosureInterpolant::ClosureInterpolant(const Solution& S)
-    : _boundary_fun(S),
-      _interior_fun(S)
+    : _boundary(S),
+      _interior(S)
 {}
 
 ////////////////////////////////////////////////////////////////////////////////

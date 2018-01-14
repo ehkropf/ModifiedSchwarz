@@ -27,7 +27,7 @@ Problem::Problem(RealInterpolant imaginaryPart)
     : _imaginaryPart(imaginaryPart) {}
 
 Problem::Problem(UnitCircleDomain domain, RealBoundaryValues imaginaryPart)
-    : _imaginaryPart(RealInterpolant(domain, imaginaryPart)) {}
+    : _imaginaryPart(RealInterpolant(imaginaryPart)) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 Solution

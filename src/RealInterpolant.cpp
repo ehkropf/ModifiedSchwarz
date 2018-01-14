@@ -24,8 +24,8 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
-RealInterpolant::RealInterpolant(UnitCircleDomain domain, RealBoundaryValues bvals)
-    : _domain(domain), _boundary_values(bvals)
+RealInterpolant::RealInterpolant(RealBoundaryValues bvals)
+    : _domain(bvals.domain()), _boundary_values(bvals)
 {
     prepareInterpolant();
 }

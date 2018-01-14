@@ -43,11 +43,12 @@ namespace ModifiedSchwarz
  * given the map value of NaN.
  */
 class ClosureInterpolant : public FunctionLike<cx_vec> {
-    ComplexInterpolant _boundary_fun;
-    CauchyInterpolant _interior_fun;
+    ComplexInterpolant _boundary;
+    CauchyInterpolant _interior;
 
 public:
     ClosureInterpolant(ComplexInterpolant, CauchyInterpolant);
+    ClosureInterpolant(ComplexBoundaryValues);
     ClosureInterpolant(const Solution&);
 
     void evalInto(const cx_vec&, cx_vec&) const;
