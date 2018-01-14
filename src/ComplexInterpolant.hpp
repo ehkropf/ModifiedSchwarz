@@ -55,6 +55,9 @@ public:
 
     //! Override FunctionLike<>::evalInto for f() behaviour.
     void evalInto(const cx_vec&, cx_vec&) const;
+
+    //! Domain of definition.
+    UnitCircleDomain domain() const { return _realPart.domain(); }
 };
 
 }; // namespace ModifiedSchwarz

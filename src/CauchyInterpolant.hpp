@@ -61,6 +61,9 @@ public:
      * points not in the domain (including boundary points) to NaN.
      */
     virtual void evalInto(const cx_vec&, cx_vec&) const;
+
+    //! Domain of definition.
+    UnitCircleDomain domain() const { return _boundary_values.domain(); }
 };
 
 }; // namespace ModifiedSchwarz
