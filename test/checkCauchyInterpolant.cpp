@@ -39,20 +39,21 @@ struct Fixture
     // using Function = std::function<tbd(tbd)>;
     UnitCircleDomain domain;
     cx_vec test_point_inside;
+    ComplexBoundaryValues::Function g;
 
     Fixture()
         : domain(domainExample3()),
           test_point_inside{cx_double(0.66822, 0.11895), cx_double(0.667, 0.117)}
-    {}
+    {
+        g = [this](const cx_vec& z){ return polesInHoles(z, domain); };
+    }
 };
 
 TEST_FIXTURE(Fixture, ValueCheck)
 {
-    TEST_LINE("Simple interpolation")
+    TEST_LINE("Check interpolation")
 
-    auto g = [](const cx_vec& z){ return exp(z); };
     CauchyInterpolant f(ComplexBoundaryValues(BoundaryPoints(domain), g));
-
     CHECK(arma::approx_equal(g(test_point_inside), f(test_point_inside), "absdiff", 1e-10));
 
     TEST_DONE
