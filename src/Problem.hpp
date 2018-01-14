@@ -21,7 +21,6 @@
 #define SCHWARZPROBLEM_HPP
 
 #include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
 #include "RealInterpolant.hpp"
 #include "Solver.hpp"
 #include "Solution.hpp"
@@ -43,7 +42,7 @@ class Problem
 
 public:
     Problem(RealInterpolant imaginaryPart);
-    Problem(UnitCircleDomain domain, mat imaginaryPart);
+    Problem(UnitCircleDomain domain, RealBoundaryValues imaginaryPart);
 
     const RealInterpolant& interpolant() const { return _imaginaryPart; }
     const UnitCircleDomain& domain() const { return _imaginaryPart.domain(); }

@@ -17,31 +17,41 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOLVERDATA_HPP
-#define SOLVERDATA_HPP
+#ifndef BOUNDARY_POINTS_H
+#define BOUNDARY_POINTS_H
 
-#include <memory>
+#include "SchwarzTypes.hpp"
+#include "UnitCircleDomain.hpp"
 
 namespace ModifiedSchwarz
 {
 
-// FIXME: There should be a member to store the solver methed used.
-//        In this way, a solver instance can check for compatible previous
-//        solution data.
-
-///////////////////////////////////////////////////////////////////////////
-/*!
- * Abstract class to store data specific to a solver method.
- */
-class SolverData
+struct BoundaryPointsDefaults
 {
-public:
-    virtual ~SolverData() = default;
+    constexpr static unsigned numPoints = 256;
+};
 
-    using Ptr = std::shared_ptr<SolverData>;
-    using ConstPtr = std::shared_ptr<const SolverData>;
+class BoundaryPoints
+{
+    UnitCircleDomain _domain;
+    cx_mat _points;
+
+public:
+    BoundaryPoints() {}
+    BoundaryPoints(UnitCircleDomain domain, cx_mat points);
+    BoundaryPoints(UnitCircleDomain domain,
+            unsigned numPoints = BoundaryPointsDefaults::numPoints);
+
+    //! Domain of definition.
+    UnitCircleDomain domain() const { return _domain; }
+
+    //! Access points as matrix.
+    const cx_mat& matrix() const  { return _points; }
+
+    //! Access points as vector.
+    cx_vec vector() const { return arma::vectorise(_points); }
 };
 
 }; // namespace ModifiedSchwarz
 
-#endif // SOLVERDATA_HPP
+#endif // BOUNDARY_POINTS_H

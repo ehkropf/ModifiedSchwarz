@@ -47,12 +47,16 @@ using cx_double = arma::cx_double;
 //! Column vector of complex doubles.
 using cx_vec = arma::cx_vec;
 
+//! Row vector of complex doubles.
+using cx_rvec = arma::cx_rowvec;
+
 //! Matrix of complex doubles.
 using cx_mat = arma::cx_mat;
 
 const double pi = std::acos(-1);
 const cx_double i2pi(0.0, 2.0*pi);
 const double eps2pi = std::numeric_limits<double>::epsilon()*2.*pi;
+const double nan = arma::datum::nan;
 
 }; // namespace ModifiedSchwarz
 

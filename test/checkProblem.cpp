@@ -17,13 +17,17 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnitTest++.h"
+#include "UnitTest.h"
 
 #include "Problem.hpp"
-#include "UnitCircleDomain.hpp"
 #include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
+
+TEST(ProblemLabel)
+{
+    TEST_FILE("Problem check")
+}
 
 SUITE(ProbemTests)
 {
@@ -37,17 +41,21 @@ SUITE(ProbemTests)
 
     TEST_FIXTURE(Fixture, BasicSolve)
     {
+        TEST_LINE("Basic solve")
+
         unsigned N = 128;
-        auto& D = domain;
+        const UnitCircleDomain& D = domain;
         auto g = [&D](const cx_mat& z) -> mat { return imag(polesInHoles(z, D)); };
 
-        Problem problem(RealInterpolant(D, g(D.boundaryPoints(N))));
+        Problem problem(RealInterpolant(RealBoundaryValues(BoundaryPoints(domain, N), g)));
         Solution sol = problem.solve();
 
         cx_vec zt = vectorise(D.boundaryPoints(7));
         cx_vec actual = polesInHoles(zt, D);
 
         CHECK(arma::approx_equal(polesInHoles(zt, D), sol(zt), "reldiff", 1e-6));
+
+        TEST_OK
     }
 
 }

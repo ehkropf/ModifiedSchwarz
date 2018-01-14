@@ -49,8 +49,7 @@ class UnitCircleDomain
 
 public:
     UnitCircleDomain() {}
-    UnitCircleDomain(const cx_vec &centers, const colvec &radii)
-        : _centers(centers), _radii(radii) {}
+    UnitCircleDomain(cx_vec, colvec);
 
     const cx_vec &centers() const { return _centers; }
     const colvec &radii() const { return _radii; }
@@ -72,10 +71,25 @@ public:
      * Given a boundary number, return a vector of indices where z is
      * on that boundary.
      */
-     // FIXME: Should be abs(1 - abs(z - dv0(j))/qv0(j)) < eps2pi. 
-     // But check first. Vaugely recall problem in matlab with above version.
-    uvec isOnC(unsigned j, const cx_vec& z) const
-    { return find(abs(qv0(j) - abs(z - dv0(j))) < eps2pi); }
+    uvec isOnC(unsigned j, const cx_vec& z) const;
+
+    /*!
+     * Given a boundary number and a set of points, return an unsigned matrix
+     * of the same size set to 1 if the point is on boundary j and 0 if not.
+     */
+    umat isOnCj(unsigned, const cx_mat&) const;
+
+    /*!
+     * Given a set of points, return a matrix of unsigned values set to 1
+     * if a point is on the boundary and 0 if not.
+     */
+    umat isOnBoundary(const cx_mat&) const;
+
+    /*!
+     * Given a matrix of points, returns an unsigned matrix of the same size
+     * with 1 if the point is in the domain and 0 if not.
+     */
+    umat inDomain(const cx_mat&) const;
 
     /*!
      * Returns matrix of n points on boundary where each column represents a
@@ -96,7 +110,7 @@ public:
     //! Domain equality.
     friend bool operator==(const UnitCircleDomain& a, const UnitCircleDomain& b)
     {
-        return arma::all(a._centers == b._centers) & arma::all(a._radii && b._radii);
+        return arma::all(a._centers == b._centers) && arma::all(a._radii && b._radii);
     }
 };
 

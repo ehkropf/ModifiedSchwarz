@@ -17,18 +17,21 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnitTest++.h"
+#include "UnitTest.h"
 
 #include "SchwarzTypes.hpp"
 #include "SpectralMethod.hpp"
 #include "SpectralData.hpp"
-#include "UnitCircleDomain.hpp"
-#include "RealInterpolant.hpp"
 
 #include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 using namespace arma;
+
+TEST(SpectralMethodLabel)
+{
+    TEST_FILE("Spectral method check")
+}
 
 SUITE(SpectralMethodTest)
 {
@@ -37,48 +40,43 @@ SUITE(SpectralMethodTest)
     {
         public:
             UnitCircleDomain domain;
-            cx_mat boundaryPoints;
-            cx_mat functionValues;
+            RealBoundaryValues imaginary_part;
+            RealBoundaryValues boundary_values;
+            ComplexBoundaryValues::Function test_function;
 
             static constexpr unsigned npts = 200;
 
             TestFixture()
-                : domain(domainExample3()),
-                  boundaryPoints(domain.boundaryPoints(npts)),
-                  functionValues(reshape(
-                              testFunction(vectorise(boundaryPoints)),
-                              npts, domain.m()+1))
-            {}
-
-            mat realPart() const { return real(functionValues); }
-            mat imaginaryPart() const { return imag(functionValues); }
-
-            cx_vec testFunction(const cx_vec& z)
+                : domain(domainExample3())//,
             {
-                return polesInHoles(z, domain);
+                const UnitCircleDomain& D = domain;
+                test_function = [&D](const cx_vec& z){ return polesInHoles(z, D); };
+                imaginary_part = RealBoundaryValues(BoundaryPoints(domain, npts),
+                        [this](const cx_vec& z){ return imag(test_function(z)); });
             }
     };
 
     TEST_FIXTURE(TestFixture, TestRHS)
     {
-        const mat& imagPart = imaginaryPart();
+        TEST_LINE("Right hand side")
+
         SpectralConstants::setTruncation(64);
-        SpectralMethod method(Problem(domain, imagPart));
+        SpectralMethod method(Problem(domain, imaginary_part));
         cx_vec rhs = method.computeRHS(100);
 
         cx_vec refRHS;
         CHECK(refRHS.load("../test/refRHS.dat"));
 
-//        colvec abserr = abs(refRHS - rhs);
-//        std::cout << " max absolute error: " << max(abserr) << std::endl;
-
         CHECK(approx_equal(rhs.head_rows(rhs.n_rows/2), refRHS, "absdiff", 1e-4));
+
+        TEST_OK
     }
 
     TEST_FIXTURE(TestFixture, TestResidual)
     {
-        const mat& imagPart = imaginaryPart();
-        SpectralMethod method(Problem(domain, imagPart));
+        TEST_LINE("Residual")
+
+        SpectralMethod method(Problem(domain, imaginary_part));
 
         cx_vec rhs = method.computeRHS();
         const cx_mat& A = method.matrix();
@@ -86,11 +84,15 @@ SUITE(SpectralMethodTest)
 
         cx_vec res = rhs - A*x;
         CHECK(max(abs(res)/abs(rhs)) < 100*eps2pi);
+
+        TEST_OK
     }
 
     TEST_FIXTURE(TestFixture, TestSolution)
     {
-        SpectralMethod method(Problem(domain, imaginaryPart()));
+        TEST_LINE("Solution")
+
+        SpectralMethod method(Problem(domain, imaginary_part));
         Solution sol = method.solve();
 
         SpectralData& data = *std::dynamic_pointer_cast<SpectralData>(sol.solverDataPtr());
@@ -98,6 +100,8 @@ SUITE(SpectralMethodTest)
 
         cx_vec bv(vectorise(domain.boundaryPoints(10)));
         CHECK(approx_equal(polesInHoles(cx_vec(vectorise(bv)), domain), sol(vectorise(bv)), "absdiff", 1e-6));
+
+        TEST_OK
     }
 
 }

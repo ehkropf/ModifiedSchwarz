@@ -26,7 +26,7 @@ namespace ModifiedSchwarz
 {
 
 /*!
- * Static class providing constructor constatns for spectral method.
+ * Static class providing constructor constants for spectral method.
  */
 class SpectralConstants
 {

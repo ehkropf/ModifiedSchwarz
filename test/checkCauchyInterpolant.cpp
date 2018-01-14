@@ -17,43 +17,46 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-
 #include "UnitTest.h"
 
+#include "SchwarzTypes.hpp"
 #include "UnitCircleDomain.hpp"
-#include "SpectralData.hpp"
+#include "CauchyInterpolant.hpp"
+#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 
-TEST(SpectralDataLabel)
+SUITE(CauchyInterpolantTests)
 {
-    TEST_FILE("Spectral data check")
+
+TEST(CauchyInterpLabel)
+{
+    TEST_FILE("Cauchy interpolation")
 }
 
-TEST(Matrix)
+struct Fixture
 {
-    TEST_LINE("Matrix")
+    // using Function = std::function<tbd(tbd)>;
+    UnitCircleDomain domain;
+    cx_vec test_point_inside;
+    ComplexBoundaryValues::Function g;
 
-    SpectralData data(domainExample3(), 64);
-    const cx_mat& L = data.matrix();
+    Fixture()
+        : domain(domainExample3()),
+          test_point_inside{cx_double(0.66822, 0.11895), cx_double(0.667, 0.117)}
+    {
+        g = [this](const cx_vec& z){ return polesInHoles(z, domain); };
+    }
+};
 
-    cx_mat refL;
-    refL.load("../test/refMatrix.dat");
+TEST_FIXTURE(Fixture, ValueCheck)
+{
+    TEST_LINE("Check interpolation")
 
-    CHECK(arma::approx_equal(L, refL, "absdiff", 1e-4));
+    CauchyInterpolant f(ComplexBoundaryValues(BoundaryPoints(domain), g));
+    CHECK(arma::approx_equal(g(test_point_inside), f(test_point_inside), "absdiff", 1e-10));
 
-    TEST_OK
+    TEST_DONE
 }
 
-TEST(Sharing)
-{
-    TEST_LINE("Data sharing")
-
-    SpectralData::Ptr pData = std::make_shared<SpectralData>(domainExample3());
-    SpectralData::Ptr pData2 = pData;
-
-    CHECK(&pData->matrix() == &pData2->matrix());
-
-    TEST_OK
-}
+} // SUITE

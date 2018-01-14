@@ -31,14 +31,18 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 ######################################################################
 set(SCHWARZ_SOURCE
+    src/BoundaryPoints.cpp
+    src/CauchyInterpolant.cpp
+    src/ComplexInterpolant.cpp
+    src/ClosureInterpolant.cpp
+    src/Problem.cpp
     src/RealInterpolant.cpp
-    src/UnitCircleDomain.cpp
+    src/Solution.cpp
+    src/Solver.cpp
     src/SpectralConstants.cpp
     src/SpectralData.cpp
     src/SpectralMethod.cpp
-    src/Solver.cpp
-    src/Problem.cpp
-    src/Solution.cpp
+    src/UnitCircleDomain.cpp
     )
 add_library(schwarz SHARED ${SCHWARZ_SOURCE})
 add_library(schwarz_static STATIC ${SCHWARZ_SOURCE})
@@ -76,8 +80,11 @@ if(UNITTEST_FOUND)
     set(TESTSRC
         test/testRunner.cpp
         test/checkPolynomial.cpp
-        test/checkInterpolant.cpp
         test/checkUnitDomain.cpp
+        test/checkBoundaryValues.cpp
+        test/checkInterpolant.cpp
+        test/checkCauchyInterpolant.cpp
+        test/checkClosureInterpolant.cpp
         test/checkSpectralConstants.cpp
         test/checkSpectralData.cpp
         test/checkSpectralMethod.cpp

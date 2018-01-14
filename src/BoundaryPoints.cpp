@@ -17,31 +17,22 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOLVERDATA_HPP
-#define SOLVERDATA_HPP
-
-#include <memory>
+#include "BoundaryPoints.h"
 
 namespace ModifiedSchwarz
 {
 
-// FIXME: There should be a member to store the solver methed used.
-//        In this way, a solver instance can check for compatible previous
-//        solution data.
-
-///////////////////////////////////////////////////////////////////////////
-/*!
- * Abstract class to store data specific to a solver method.
- */
-class SolverData
+BoundaryPoints::BoundaryPoints(UnitCircleDomain domain, cx_mat points)
+    : _domain(domain),
+      _points(points)
 {
-public:
-    virtual ~SolverData() = default;
+    // FIXME: Should check that points are actually on domain boundary.
+}
 
-    using Ptr = std::shared_ptr<SolverData>;
-    using ConstPtr = std::shared_ptr<const SolverData>;
-};
+BoundaryPoints::BoundaryPoints(UnitCircleDomain domain, unsigned numPoints)
+    : _domain(domain)
+{
+    _points = _domain.boundaryPoints(numPoints);
+}
 
 }; // namespace ModifiedSchwarz
-
-#endif // SOLVERDATA_HPP
