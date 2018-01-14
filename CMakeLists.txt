@@ -84,6 +84,7 @@ if(UNITTEST_FOUND)
         test/checkBoundaryValues.cpp
         test/checkInterpolant.cpp
         test/checkCauchyInterpolant.cpp
+        test/checkClosureInterpolant.cpp
         test/checkSpectralConstants.cpp
         test/checkSpectralData.cpp
         test/checkSpectralMethod.cpp
