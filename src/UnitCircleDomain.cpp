@@ -50,8 +50,8 @@ UnitCircleDomain::isOnBoundary(const cx_mat& z) const
     umat mask(size(z), arma::fill::zeros);
     for (unsigned i = 0; i < z.n_elem; ++i)
     {
-        for (unsigned j = 0; j < m(); ++j)
-            if (abs(z(i) - dv(j)) > qv(j) - eps2pi)
+        for (unsigned j = 0; j < connectivity(); ++j)
+            if (abs(abs(z(i) - dv0(j)) - qv0(j)) < eps2pi)
             {
                 mask(i) = 1;
                 break;
