@@ -41,7 +41,22 @@ ClosureInterpolant::ClosureInterpolant(const Solution& S)
 void
 ClosureInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
 {
+    auto D = _boundary.domain();
+    uvec onb = D.isOnBoundary(z);
 
+    // Evaluate boundary points.
+    uvec mask = arma::find(onb == 1);
+    if (mask.n_elem > 0)
+    {
+        w(mask) = _boundary(z(mask));
+    }
+
+    // Evaluate interior points.
+    mask = arma::find(onb == 0);
+    if (mask.n_elem > 0)
+    {
+        w(mask) = _interior(z(mask));
+    }
 }
 
 }; // namespace ModifiedSchwarz

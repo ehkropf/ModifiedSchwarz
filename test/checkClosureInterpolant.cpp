@@ -71,4 +71,18 @@ TEST_FIXTURE(Fixture, InteriorInterp)
     TEST_DONE
 }
 
+TEST_FIXTURE(Fixture, CombinedInterp)
+{
+    TEST_LINE("Points on boundary and interior")
+
+    uvec m = arma::regspace<uvec>(0, 20, 299);
+    auto zb = boundary_pts.vector();
+    zb = zb(m);
+    auto zz = arma::join_cols(zb, interior_points);
+    CHECK(arma::approx_equal(f(zz), g(zz), "absdiff", 1e-10));
+
+
+    TEST_DONE
+}
+
 } // SUITE
