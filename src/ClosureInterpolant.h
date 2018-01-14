@@ -47,6 +47,7 @@ class ClosureInterpolant : public FunctionLike<cx_vec> {
     CauchyInterpolant _interior;
 
 public:
+    ClosureInterpolant() {};
     ClosureInterpolant(ComplexInterpolant, CauchyInterpolant);
     ClosureInterpolant(ComplexBoundaryValues);
     ClosureInterpolant(const Solution&);

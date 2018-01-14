@@ -41,6 +41,8 @@ class CauchyInterpolant : public FunctionLike<cx_vec>
     cx_vec _h; //! Column vector of points for evaluation.
 
 public:
+    CauchyInterpolant() {};
+
     /*!
      * Use given boundary sample values to construct Cauchy Interpolant for
      * points inside the domain. Uses the discrete boundary values given

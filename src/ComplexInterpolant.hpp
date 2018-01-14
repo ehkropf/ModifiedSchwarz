@@ -43,6 +43,7 @@ class ComplexInterpolant : public FunctionLike<cx_vec>
     RealInterpolant _imagPart;
 
 public:
+    ComplexInterpolant() {};
     ComplexInterpolant(const RealInterpolant&, const RealInterpolant&);
     ComplexInterpolant(ComplexBoundaryValues);
     ComplexInterpolant(const Solution&);
