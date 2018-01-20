@@ -17,14 +17,14 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOLUTION_HPP
-#define SOLUTION_HPP
+#ifndef SOLUTION_H
+#define SOLUTION_H
 
 #include <memory>
 
-#include "SchwarzTypes.hpp"
-#include "RealInterpolant.hpp"
-#include "SolverData.hpp"
+#include "SchwarzTypes.h"
+#include "RealInterpolant.h"
+#include "SolverData.h"
 
 namespace ModifiedSchwarz
 {
@@ -62,4 +62,4 @@ public:
 
 }; // namespace ModifiedSchwarz
 
-#endif // SOLUTION_HPP
+#endif // SOLUTION_H

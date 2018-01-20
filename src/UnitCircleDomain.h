@@ -17,10 +17,10 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UNITCIRCLEDOMAIN_HPP
-#define UNITCIRCLEDOMAIN_HPP
+#ifndef UNITCIRCLEDOMAIN_H
+#define UNITCIRCLEDOMAIN_H
 
-#include "SchwarzTypes.hpp"
+#include "SchwarzTypes.h"
 
 // FIXME: Move function definitions to cpp file.
 
@@ -128,4 +128,4 @@ UnitCircleDomain domainExample3();
 
 }; // namespace ModifiedSchwarz
 
-#endif // UNITCIRCLEDOMAIN_HPP
+#endif // UNITCIRCLEDOMAIN_H

@@ -18,9 +18,9 @@
  */
 
 #include "UnitTest.h"
-
-#include "Problem.hpp"
 #include "TestFunctions.hpp"
+
+#include "Problem.h"
 
 using namespace ModifiedSchwarz;
 

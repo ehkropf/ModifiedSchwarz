@@ -18,9 +18,9 @@
  */
 
 #include "UnitTest.h"
+#include "TestFunctions.hpp"
 
 #include "ClosureInterpolant.h"
-#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 

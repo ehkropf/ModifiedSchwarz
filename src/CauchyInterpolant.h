@@ -17,12 +17,12 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CAUCHY_HPP
-#define CAUCHY_HPP
+#ifndef CAUCHY_H
+#define CAUCHY_H
 
 #include "BoundaryValues.h"
 #include "FunctionLike.hpp"
-#include "Solution.hpp"
+#include "Solution.h"
 
 namespace ModifiedSchwarz
 {
@@ -68,4 +68,4 @@ public:
 
 }; // namespace ModifiedSchwarz
 
-#endif // CAUCHY_HPP
+#endif // CAUCHY_H

@@ -18,11 +18,11 @@
  */
 
 #include "UnitTest.h"
-
-#include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
-#include "CauchyInterpolant.hpp"
 #include "TestFunctions.hpp"
+
+#include "SchwarzTypes.h"
+#include "UnitCircleDomain.h"
+#include "CauchyInterpolant.h"
 
 using namespace ModifiedSchwarz;
 

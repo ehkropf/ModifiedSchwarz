@@ -17,7 +17,7 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Solution.hpp"
+#include "Solution.h"
 
 namespace ModifiedSchwarz
 {

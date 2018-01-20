@@ -17,7 +17,7 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SpectralMethod.hpp"
+#include "SpectralMethod.h"
 
 namespace ModifiedSchwarz
 {

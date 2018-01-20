@@ -20,7 +20,7 @@
 #ifndef FUNCLIKE_HPP
 #define FUNCLIKE_HPP
 
-#include "SchwarzTypes.hpp"
+#include "SchwarzTypes.h"
 
 namespace ModifiedSchwarz
 {

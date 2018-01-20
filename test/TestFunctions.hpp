@@ -20,8 +20,8 @@
 #ifndef TESTSHARED_HPP
 #define TESTSHARED_HPP
 
-#include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
+#include "SchwarzTypes.h"
+#include "UnitCircleDomain.h"
 
 namespace ModifiedSchwarz
 {

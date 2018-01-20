@@ -17,8 +17,8 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCHWARZTYPES_HPP
-#define SCHWARZTYPES_HPP
+#ifndef SCHWARZTYPES_H
+#define SCHWARZTYPES_H
 
 #include <complex>
 #include <armadillo>
@@ -60,4 +60,4 @@ const double nan = arma::datum::nan;
 
 }; // namespace ModifiedSchwarz
 
-#endif // SCHWARZTYPES_HPP
+#endif // SCHWARZTYPES_H

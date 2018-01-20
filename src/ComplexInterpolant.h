@@ -17,13 +17,13 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COMPLEXINTERP_HPP
-#define COMPLEXINTERP_HPP
+#ifndef COMPLEXINTERP_H
+#define COMPLEXINTERP_H
 
-#include "SchwarzTypes.hpp"
+#include "SchwarzTypes.h"
 #include "FunctionLike.hpp"
-#include "RealInterpolant.hpp"
-#include "Solution.hpp"
+#include "RealInterpolant.h"
+#include "Solution.h"
 
 namespace ModifiedSchwarz
 {
@@ -62,4 +62,4 @@ public:
 
 }; // namespace ModifiedSchwarz
 
-#endif // COMPLEXINTERP_HPP
+#endif // COMPLEXINTERP_H

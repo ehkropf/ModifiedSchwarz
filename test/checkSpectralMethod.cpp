@@ -18,12 +18,11 @@
  */
 
 #include "UnitTest.h"
-
-#include "SchwarzTypes.hpp"
-#include "SpectralMethod.hpp"
-#include "SpectralData.hpp"
-
 #include "TestFunctions.hpp"
+
+#include "SchwarzTypes.h"
+#include "SpectralMethod.h"
+#include "SpectralData.h"
 
 using namespace ModifiedSchwarz;
 using namespace arma;

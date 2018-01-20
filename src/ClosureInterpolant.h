@@ -20,11 +20,11 @@
 #ifndef CLOSURE_INTERPOLANT_H
 #define CLOSURE_INTERPOLANT_H
 
-#include "SchwarzTypes.hpp"
+#include "SchwarzTypes.h"
 #include "FunctionLike.hpp"
-#include "CauchyInterpolant.hpp"
-#include "ComplexInterpolant.hpp"
-#include "Solution.hpp"
+#include "CauchyInterpolant.h"
+#include "ComplexInterpolant.h"
+#include "Solution.h"
 
 namespace ModifiedSchwarz
 {

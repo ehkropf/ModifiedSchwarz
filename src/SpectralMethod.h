@@ -17,14 +17,14 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SPECTRALSOLVER_HPP
-#define SPECTRALSOLVER_HPP
+#ifndef SPECTRALSOLVER_H
+#define SPECTRALSOLVER_H
 
-#include "SchwarzTypes.hpp"
-#include "SpectralConstants.hpp"
-#include "SpectralData.hpp"
-#include "Problem.hpp"
-#include "Solution.hpp"
+#include "SchwarzTypes.h"
+#include "SpectralConstants.h"
+#include "SpectralData.h"
+#include "Problem.h"
+#include "Solution.h"
 
 namespace ModifiedSchwarz
 {
@@ -62,4 +62,4 @@ public:
 
 }; // namespace ModifiedSchwarz
 
-#endif // SPECTRALSOLVER_HPP
+#endif // SPECTRALSOLVER_H

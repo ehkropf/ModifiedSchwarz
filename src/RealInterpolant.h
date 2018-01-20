@@ -17,10 +17,10 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef REALINTERPOLANT_HPP
-#define REALINTERPOLANT_HPP
+#ifndef REALINTERPOLANT_H
+#define REALINTERPOLANT_H
 
-#include "SchwarzTypes.hpp"
+#include "SchwarzTypes.h"
 #include "BoundaryValues.h"
 #include "FunctionLike.hpp"
 
@@ -84,4 +84,4 @@ public:
 
 }; // namespace ModifiedSchwarz
 
-#endif // REALINTERPOLANT_HPP
+#endif // REALINTERPOLANT_H

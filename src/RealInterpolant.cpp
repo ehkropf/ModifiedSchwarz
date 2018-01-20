@@ -17,7 +17,7 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "RealInterpolant.hpp"
+#include "RealInterpolant.h"
 #include "Utility.hpp"
 
 namespace ModifiedSchwarz

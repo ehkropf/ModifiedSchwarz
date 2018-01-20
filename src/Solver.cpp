@@ -17,8 +17,8 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Solver.hpp"
-#include "SpectralMethod.hpp"
+#include "Solver.h"
+#include "SpectralMethod.h"
 
 #include <cassert>
 

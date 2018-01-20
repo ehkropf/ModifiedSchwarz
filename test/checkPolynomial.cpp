@@ -20,7 +20,7 @@
 #include <iostream>
 #include "UnitTest.h"
 
-#include "SchwarzTypes.hpp"
+#include "SchwarzTypes.h"
 #include "Utility.hpp"
 
 using namespace ModifiedSchwarz;

@@ -18,10 +18,9 @@
  */
 
 #include "UnitTest.h"
-
-#include "Solution.hpp"
-#include "UnitCircleDomain.hpp"
 #include "TestFunctions.hpp"
+
+#include "Solution.h"
 
 using namespace ModifiedSchwarz;
 

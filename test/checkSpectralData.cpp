@@ -21,8 +21,7 @@
 
 #include "UnitTest.h"
 
-#include "UnitCircleDomain.hpp"
-#include "SpectralData.hpp"
+#include "SpectralData.h"
 
 using namespace ModifiedSchwarz;
 

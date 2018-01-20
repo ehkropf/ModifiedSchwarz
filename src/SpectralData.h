@@ -17,15 +17,15 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SPECTRALDATA_HPP
-#define SPECTRALDATA_HPP
+#ifndef SPECTRALDATA_H
+#define SPECTRALDATA_H
 
 #include <memory>
 
-#include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
-#include "SolverData.hpp"
-#include "SpectralConstants.hpp"
+#include "SchwarzTypes.h"
+#include "UnitCircleDomain.h"
+#include "SolverData.h"
+#include "SpectralConstants.h"
 
 namespace ModifiedSchwarz
 {
@@ -69,4 +69,4 @@ public:
 
 }; // namespace ModifiedSchwarz
 
-#endif // SPECTRALDATA_HPP
+#endif // SPECTRALDATA_H

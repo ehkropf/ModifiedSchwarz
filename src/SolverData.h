@@ -17,8 +17,8 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOLVERDATA_HPP
-#define SOLVERDATA_HPP
+#ifndef SOLVERDATA_H
+#define SOLVERDATA_H
 
 #include <memory>
 
@@ -44,4 +44,4 @@ public:
 
 }; // namespace ModifiedSchwarz
 
-#endif // SOLVERDATA_HPP
+#endif // SOLVERDATA_H

@@ -17,8 +17,8 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SPECRALCONST_HPP
-#define SPECRALCONST_HPP
+#ifndef SPECRALCONST_H
+#define SPECRALCONST_H
 
 // FIXME: This is NOT a thread safe way to do this.
 
@@ -75,4 +75,4 @@ public:
 
 }; // ModifiedSchwarz
 
-#endif // SPECRALCONST_HPP
+#endif // SPECRALCONST_H

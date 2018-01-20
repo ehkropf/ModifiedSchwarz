@@ -20,7 +20,8 @@
 #include <iostream>
 
 #include "UnitTest.h"
-#include "SpectralConstants.hpp"
+
+#include "SpectralConstants.h"
 
 using namespace ModifiedSchwarz;
 

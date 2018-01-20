@@ -17,7 +17,7 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CauchyInterpolant.hpp"
+#include "CauchyInterpolant.h"
 
 namespace ModifiedSchwarz
 {

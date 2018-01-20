@@ -18,9 +18,9 @@
  */
 
 #include "UnitTest.h"
+#include "TestFunctions.hpp"
 
 #include "BoundaryValues.h"
-#include "TestFunctions.hpp"
 
 using namespace ModifiedSchwarz;
 

@@ -20,8 +20,8 @@
 #ifndef BOUNDARY_POINTS_H
 #define BOUNDARY_POINTS_H
 
-#include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
+#include "SchwarzTypes.h"
+#include "UnitCircleDomain.h"
 
 namespace ModifiedSchwarz
 {

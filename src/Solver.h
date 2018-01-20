@@ -17,10 +17,10 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SOLVER_HPP
-#define SOLVER_HPP
+#ifndef SOLVER_H
+#define SOLVER_H
 
-#include "SchwarzTypes.hpp"
+#include "SchwarzTypes.h"
 
 namespace ModifiedSchwarz
 {
@@ -51,4 +51,4 @@ struct Solver
 
 }; // namespace ModifiedSchwarz
 
-#endif // SOLVER_HPP
+#endif // SOLVER_H

@@ -18,12 +18,12 @@
  */
 
 #include "UnitTest.h"
-
-#include "SchwarzTypes.hpp"
-#include "BoundaryValues.h"
-#include "RealInterpolant.hpp"
-#include "ComplexInterpolant.hpp"
 #include "TestFunctions.hpp"
+
+#include "SchwarzTypes.h"
+#include "BoundaryValues.h"
+#include "RealInterpolant.h"
+#include "ComplexInterpolant.h"
 
 using namespace ModifiedSchwarz;
 

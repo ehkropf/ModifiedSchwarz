@@ -19,8 +19,8 @@
 
 #include "UnitTest.h"
 
-#include "SchwarzTypes.hpp"
-#include "UnitCircleDomain.hpp"
+#include "SchwarzTypes.h"
+#include "UnitCircleDomain.h"
 
 using namespace ModifiedSchwarz;
 
