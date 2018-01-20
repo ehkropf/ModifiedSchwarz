@@ -53,9 +53,16 @@ using cx_rvec = arma::cx_rowvec;
 //! Matrix of complex doubles.
 using cx_mat = arma::cx_mat;
 
+//! Does this really need introduction?
 const double pi = std::acos(-1);
+
+//! Useful constant.
 const cx_double i2pi(0.0, 2.0*pi);
+
+//! Scaled machine epsilon.
 const double eps2pi = std::numeric_limits<double>::epsilon()*2.*pi;
+
+//! Not a number.
 const double nan = arma::datum::nan;
 
 }; // namespace ModifiedSchwarz

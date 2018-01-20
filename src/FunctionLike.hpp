@@ -29,15 +29,18 @@ template <typename Amatrix, typename Bmatrix = Amatrix>
 class FunctionLike
 {
 public:
+    //! Required for abstract class.
     virtual ~FunctionLike() = default;
 
     //! Provides function-like evaulation. Wrapper for eval()
     inline virtual Bmatrix operator()(const Amatrix&) const;
 
     //! Wrapper for evalInto(). Initializes target matrix with NaN values.
+    /*!  TODO: Add warning if w.has_nan()?
+     */
     inline virtual Bmatrix eval(const Amatrix&) const;
 
-    //! Must override to define evaluation into a given target matrix.
+    //! Defines eval() behaivour.
     virtual void evalInto(const Amatrix&, Bmatrix&) const = 0;
 };
 

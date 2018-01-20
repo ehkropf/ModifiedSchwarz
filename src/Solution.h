@@ -29,6 +29,8 @@
 namespace ModifiedSchwarz
 {
 
+// FIXME: Move to use ClosureInterpolant instead of own operator().
+
 ///////////////////////////////////////////////////////////////////////////
 /*!
  * Solution is made of 3 parts:
@@ -48,15 +50,25 @@ class Solution
     SolverData::Ptr _pSolverData;
 
 public:
+    //! Empty solution.
     Solution() {}
+
+    //! Basic solution construction.
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart);
+
+    //! Allows storage of solver data to accelerate subsequent solver runs.
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData);
 
+    //! Access solution real part.
     const RealInterpolant& realPart()      const { return _realPart; }
+    //! Access solution constants.
     const colvec&          constants()     const { return _constants; }
+    //! Given imaginary part.
     const RealInterpolant& imagPart()      const { return _imagPart; }
+    //! Read only pointer to solver data.
     const SolverData::Ptr  solverDataPtr() const { return _pSolverData; }
 
+    //! Provide function-like behaviour.
     cx_vec operator()(const cx_vec& z) const;
 };
 

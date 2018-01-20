@@ -27,6 +27,7 @@
 namespace ModifiedSchwarz
 {
 
+//! Numerical Cauchy interpolant.
 /*!
  * Uses a Barycentric interpolation to approximate Cauchy's integral for
  * giving values in the domain. Is a FunctionLike object which takes a vector
@@ -41,8 +42,10 @@ class CauchyInterpolant : public FunctionLike<cx_vec>
     cx_vec _h; //! Column vector of points for evaluation.
 
 public:
+    //! Empty interpolant. Nothing defined.
     CauchyInterpolant() {};
 
+    //! Define using complex boundary samples.
     /*!
      * Use given boundary sample values to construct Cauchy Interpolant for
      * points inside the domain. Uses the discrete boundary values given
@@ -50,16 +53,10 @@ public:
      */
     CauchyInterpolant(ComplexBoundaryValues);
 
-    /*!
-     * Create Cauchy interpolant from given Solution.
-     */
+    //! Create Cauchy interpolant from given Solution.
     CauchyInterpolant(const Solution&);
 
-    /*!
-     * Given a set of points, evaluate the points in the domain using the
-     * barycentric interpolation method for Cauchy's formula, and set any
-     * points not in the domain (including boundary points) to NaN.
-     */
+    //! Provides the function like behaviour.
     virtual void evalInto(const cx_vec&, cx_vec&) const;
 
     //! Domain of definition.

@@ -26,17 +26,23 @@
 namespace ModifiedSchwarz
 {
 
+// FIXME: Template can really be defined by base type -- double or cx_double.
+
+//! Encapsulation of values defined at points given in a BoundaryPoints object.
 template <typename ArmaMat, typename ArmaVec>
 class BoundaryValues
 {
     BoundaryPoints _points;
+    //! Matrix of values.
+    /*! Each column represents one boundary.
+     */
     ArmaMat _values;
 
 public:
-    //! Generic callable object.
+    //! Type declaration for constructor by function.
     using Function = std::function<ArmaVec(const cx_vec&)>;
 
-    //! Default constructor.
+    //! Empty object -- no points or values.
     BoundaryValues() {}
 
     //! Construction by function.
@@ -55,9 +61,12 @@ public:
     const ArmaMat& values() const { return _values; }
 };
 
+//! Convenience typedef.
 using RealBoundaryValues = BoundaryValues<mat,colvec>;
+//! Convenience typedef.
 using ComplexBoundaryValues = BoundaryValues<cx_mat,cx_vec>;
 
+//******************************************************************************
 template <typename ArmaMat,typename ArmaVec>
 BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, BoundaryValues<ArmaMat,ArmaVec>::Function f)
     : _points(pts), _values(f(_points.vector()))

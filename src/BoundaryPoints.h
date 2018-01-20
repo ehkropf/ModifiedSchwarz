@@ -26,29 +26,36 @@
 namespace ModifiedSchwarz
 {
 
+//! Defaults for BoundaryPoints class.
 struct BoundaryPointsDefaults
 {
+    //! Number of points to create on circle boundary if not specified.
     constexpr static unsigned numPoints = 256;
 };
 
+//! Encapsulation of evenly spaced points on each boundary component.
 class BoundaryPoints
 {
     UnitCircleDomain _domain;
+    //! One column per boundary.
     cx_mat _points;
 
 public:
+    //! Empty object -- no points defined.
     BoundaryPoints() {}
+    //! Just use given points.
     BoundaryPoints(UnitCircleDomain domain, cx_mat points);
+    //! Create numPoints evenly spaced points on each boundary.
     BoundaryPoints(UnitCircleDomain domain,
             unsigned numPoints = BoundaryPointsDefaults::numPoints);
 
     //! Domain of definition.
     UnitCircleDomain domain() const { return _domain; }
 
-    //! Access points as matrix.
+    //! View of points as matrix.
     const cx_mat& matrix() const  { return _points; }
 
-    //! Access points as vector.
+    //! View of points as vector via arma::vectorise().
     cx_vec vector() const { return arma::vectorise(_points); }
 };
 

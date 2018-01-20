@@ -38,13 +38,9 @@ namespace ModifiedSchwarz
  * Let M be the number of sample points on a boundary. The M-point  DFT is
  * taken for that boundary data and the N = ceil((M - 1)/2)  first
  * coefficients are used for the interpolation polynomial
- *
- *                            --- N
- *                            \
- *     p(z) = real(c_0) + 2 *  .     c_i * ((z - d_j)/q_j)^i
- *                            /
- *                            --- i=1
- *
+ * \f[
+ *      p_j(z) = \mathrm{real}\{c_{j,0}\} + 2\sum_{i=1}^N c_{j,i} \left(\frac{z - d_j}{q_j}\right)^i
+ * \f]
  * for points z on boundary C_j.
  *
  * Note when evaluating points, it is assumed they have been tested to be on
@@ -52,33 +48,42 @@ namespace ModifiedSchwarz
  */
 class RealInterpolant : public FunctionLike<cx_vec, colvec>
 {
+    // FIXME: Domain is now stored in boundary values.
     UnitCircleDomain _domain;
     RealBoundaryValues _boundary_values;
-    //mat _boundaryData;
+    //! Constants c_j.
     colvec _constants;
+    //! Polynomial coefficients.
+    /*! Coefficients are stored column-wise, one column per boundary. In terms
+     *  of the polynomial, row 0 multiples z^n, row 1 for z^(n-1), down to
+     *  last row multipies z^1.
+     */
     cx_mat _coefficients;
 
 protected:
     void prepareInterpolant();
 
 public:
+    //! Empty (nonfunctional) interpolant.
     RealInterpolant() {}
+    //! Use samples to construct interpolant.
     RealInterpolant(RealBoundaryValues);
+    //! Polynomial data given directly. Mainly used by Solver.
     RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients);
 
-    //! Stored domain object.
+    //! Domain of definition.
     const UnitCircleDomain& domain() const { return _domain; }
     //! Boundary data matrix.
     const mat& boundaryData() const { return _boundary_values.values(); }
-    //! m+1 vector of real constants.
+    //! View of m+1 vector of real constants.
     const colvec& constants() const { return _constants; }
-    //! Vector of polynomial coefficients.
+    //! View of polynomial coefficients.
     const cx_mat& coefficients() const { return _coefficients; }
 
     //! Eval given vector of points on specific boundary.
     colvec evalOn(const cx_vec&, unsigned) const;
 
-    //! Override FunctionLike<>::evalInto for f() behaviour.
+    //! Enable function like behaviour.
     void evalInto(const cx_vec&, colvec&) const;
 };
 
