@@ -29,6 +29,7 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////////
+//! Encapsulation of modified Schwarz problem statement.
 /*!
  * Schwarz problem is represented by a domain and boundary data (imaginary
  * part of the boundary values).
@@ -41,16 +42,29 @@ class Problem
     RealInterpolant _imaginaryPart;
 
 public:
+    //! Define problem with real valued function on the boundary.
     Problem(RealInterpolant imaginaryPart);
+
+    // FIXME: BoundaryValues contians domain; domain arg not needed.
+    //! Define problem with evenly spaced real samples on the boundary.
     Problem(UnitCircleDomain domain, RealBoundaryValues imaginaryPart);
 
+    //! View of imaginary part interpolant.
     const RealInterpolant& interpolant() const { return _imaginaryPart; }
+    //! Domain of definition.
     const UnitCircleDomain& domain() const { return _imaginaryPart.domain(); }
+    //! View of boundary data samples defining interpolant.
     const mat& dataPoints() const { return _imaginaryPart.boundaryData(); }
 
+    //! Call the modified Schwarz solver.
     Solution solve();
+    //! Call the modified Schwarz solver; specify solution method.
     Solution solve(Solver::Method);
+    //! Call the modified Schwarz solver with previous solution acceleration.
     Solution solve(const Solution& prevSolution);
+    // FIXME: Wouldn't the previous solution contain information about the
+    // type of solver used?
+    //! Call solver with previous solution and specified method.
     Solution solve(const Solution& prevSolution, Solver::Method);
 };
 

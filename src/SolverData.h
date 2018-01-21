@@ -30,6 +30,7 @@ namespace ModifiedSchwarz
 //        solution data.
 
 ///////////////////////////////////////////////////////////////////////////
+//! Abstract data class for solver methods.
 /*!
  * Abstract class to store data specific to a solver method.
  */
@@ -38,7 +39,9 @@ class SolverData
 public:
     virtual ~SolverData() = default;
 
+    //! Shared pointer to base class type.
     using Ptr = std::shared_ptr<SolverData>;
+    //! View of shared pointer type.
     using ConstPtr = std::shared_ptr<const SolverData>;
 };
 

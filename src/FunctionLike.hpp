@@ -25,11 +25,19 @@
 namespace ModifiedSchwarz
 {
 
+//! Abstract base class to provide function like behaviour.
+/*!
+ * Derived classes only need to define the abstract evalInto() member
+ * function to provide behaviour such that given Amatrix type and
+ * Bmatrix type a derived class instance f provides
+ *     Bmatrix w = f(const Amatrix& z)
+ * behaviour.
+ */
 template <typename Amatrix, typename Bmatrix = Amatrix>
 class FunctionLike
 {
 public:
-    //! Required for abstract class.
+    //! Virtual destructor required for abstract class.
     virtual ~FunctionLike() = default;
 
     //! Provides function-like evaulation. Wrapper for eval()
@@ -40,7 +48,7 @@ public:
      */
     inline virtual Bmatrix eval(const Amatrix&) const;
 
-    //! Defines eval() behaivour.
+    //! Override to provide functionality.
     virtual void evalInto(const Amatrix&, Bmatrix&) const = 0;
 };
 

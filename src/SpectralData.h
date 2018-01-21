@@ -31,36 +31,56 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
+//! Spectral method for the modified Schwarz problem.
 /*!
  * Each domain has a unique spectral matrix (modulo the chosen
  * truncation level for the boundary function series). For each domain
  * then this class should be passed around as a shared pointer. See
  * associated typedef.
  *
- * See [elsewhere] for a description of the matrix.
+ * For a description of the method and matrix, see
+ *
+ * * D. Crowdy, E. Kropf, C. Green and M. Nasser, "The Schottky–Klein prime
+ *   function: a theoretical and computational tool for applications", _IMA
+ *   Journal of Applied Mathematics_, 81, 2016, pp. 589--628.
  */
 class SpectralData : public SolverData
 {
+    // FIXME: Either this goes, or the calculation in the method goes.
+    // It makes no sense to have both.
     unsigned _truncation;
     UnitCircleDomain _domain;
     cx_mat _spectralMatrix;
 
 protected:
+    //! Builds the spectral domain matrix.
+    /*!
+     *  This matrix is the same for _all_ problems defined on a given
+     *  domain.
+     */
     cx_mat constructMatrix();
 
 public:
+    //! Build method data given domain.
     SpectralData(const UnitCircleDomain&);
+    //! Specify truncation level for spectral representation.
     SpectralData(const UnitCircleDomain&, unsigned);
 
+    //! Override SolverData::Ptr typedef.
     using Ptr = std::shared_ptr<SpectralData>;
 
+    //! Domain of definition.
     const UnitCircleDomain& domain() const { return _domain; }
+    //! View of domain spectral matrix.
     const cx_mat& matrix() const { return _spectralMatrix; }
+    //! Spectral method representation truncation level.
     unsigned truncation() const
     {
         return (matrix().n_cols/2 - _domain.m())/(_domain.m() + 1);
     }
 
+    // FIXME: This should also check truncation level!
+    //! Two SpectralData objects are the same if their domains are the same.
     friend bool operator==(const SpectralData& left, const SpectralData& right)
     {
         return left._domain == right._domain;

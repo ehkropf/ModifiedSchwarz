@@ -28,6 +28,7 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
+//! Real valued interpolant on domain boundary.
 /*!
  * Provide interpolation on domain boundaries given real data at  evenly
  * spaced points on each boundary.

@@ -21,10 +21,13 @@
 #define SPECRALCONST_H
 
 // FIXME: This is NOT a thread safe way to do this.
+// FIXME: No way to query non-default values.
+// FIXME: "k" names are horrible and not-intuitive of function.
 
 namespace ModifiedSchwarz
 {
 
+//! Spectral method constants.
 /*!
  * Static class providing constructor constants for spectral method.
  */
@@ -46,6 +49,7 @@ public:
     //! Known good (via expermiment) default truncation level.
     constexpr static unsigned kDefaultSpectralTruncation = 96;
 
+    //! Default number of points to use in trapezoidal quadrature rule.
     /*!
      * Returns default number of trapezoidal points to use unless set was
      * called. If set was previously called, that value is cleared and next
@@ -53,6 +57,7 @@ public:
      */
     static unsigned kTrapezoidalPoints();
 
+    //! Default length of truncation in spectral representation.
     /*!
      * Returns default truncation level for spectral method unless set was
      * called. If set was previously called, that value is cleared and next
@@ -64,13 +69,13 @@ public:
      *  Sets value for next call of kTrapezoidalPoints(). Note SpectralMethod
      *  reads this constant on construction, and thus will undo any set call.
      */
-    static void setTrapezoidalPoints(const unsigned trapezoidalPoints); //{ _tmpTrapezoidalPoints = trapezoidalPoints; }
+    static void setTrapezoidalPoints(const unsigned trapezoidalPoints);
 
     /*!
      *  Sets value for next call of kTrapezoidalPoints(). Note SpectralMethod
      *  reads this constant on construction, and thus will undo any set call.
      */
-    static void setTruncation(const unsigned truncationLevel); //{ _tmpSpectralTruncation = truncationLevel; }
+    static void setTruncation(const unsigned truncationLevel);
 };
 
 }; // ModifiedSchwarz

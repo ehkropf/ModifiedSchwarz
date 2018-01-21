@@ -30,6 +30,7 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////////////
+//! Acts like a function on the closure of the domain.
 /*!
  * An instantiation of this class acts like a function on the closure of the
  * defined domain. It consists of a ComplexInterpolant for the boundary and a
@@ -47,11 +48,16 @@ class ClosureInterpolant : public FunctionLike<cx_vec> {
     CauchyInterpolant _interior;
 
 public:
+    //! Empty interpolant -- nothing defined.
     ClosureInterpolant() {};
+    //! Build with given interpolants.
     ClosureInterpolant(ComplexInterpolant, CauchyInterpolant);
+    //! Build with given boundary sample values.
     ClosureInterpolant(ComplexBoundaryValues);
+    //! Build from modified Schwarz solution.
     ClosureInterpolant(const Solution&);
 
+    //! Provides function like behaviour.
     void evalInto(const cx_vec&, cx_vec&) const;
 };
 

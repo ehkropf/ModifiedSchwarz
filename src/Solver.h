@@ -29,6 +29,7 @@ class Problem;
 class Solution;
 
 ///////////////////////////////////////////////////////////////////////////
+//! Modified Schwarz problem solver.
 /*!
  * Exists to dispatch Problem and (possibly) previous Solution data
  * to the proper solver method.
@@ -39,13 +40,22 @@ class Solution;
  */
 struct Solver
 {
+    //! Enumeration of implemented problem solver methods.
+    /*!
+     *  Anyone volunteers to provide an implementation of Nasser's method?
+     */
     enum Method { Spectral };
+    //! Determines which solver method is used from solve() member functions.
     Method method;
 
+    //! Default solver method is spectral method.
     Solver();
+    //! Specify method to be used.
     Solver(Method method);
 
+    //! Calls solve() method in appropriate solver method instance.
     Solution solve(const Problem&);
+    //! Passes previous solution to solver method.
     Solution solve(const Problem&, const Solution&);
 };
 

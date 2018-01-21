@@ -30,6 +30,7 @@ namespace ModifiedSchwarz
 {
 
 ////////////////////////////////////////////////////////////////////////
+//! Implements the spectral method to solve the modified Schwarz problem.
 /*!
  * Solves the modified Schwarz problem via the spectral method.
  * Call solve(...) with a previous solution to reuse the SpectralData
@@ -43,17 +44,24 @@ class SpectralMethod
     RealInterpolant _imagPart;
 
 public:
+    //! Setup method using given problem.
     SpectralMethod(const Problem&);
+    //! Setup using previous solution to problem.
     SpectralMethod(const Problem&, const Solution&);
 
+    //! Apply the spectral method to solve the modified Schwarz problem.
     Solution solve();
 
+    //! View of spectral domain matrix.
     const cx_mat& matrix() const { return _data->matrix(); }
+    //! View of stored SpectralData.
     const SpectralData& data() const { return *_data; }
 
-    //! Compute system RHS using trapezoidal rule. Uses number of points
-    // SpectralConstants::kTrapezoidalPoints(), read on SpectralMethod
-    // construction, in the rule.
+    //! Compute system RHS using trapezoidal rule.
+    /*!
+     *  Uses number of points SpectralConstants::kTrapezoidalPoints(),
+     *  read on SpectralMethod construction, in the rule.
+     */
     cx_vec computeRHS();
 
     //! Compute system RHS using `numSamplePoints` in trapezoidal rule.

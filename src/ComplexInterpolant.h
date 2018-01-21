@@ -28,6 +28,7 @@
 namespace ModifiedSchwarz
 {
 
+//! Complex valued interpolation on domain boundary.
 /*!
  * Interpolant for evaluating points on the boundary. Given f is a
  * ComplexInterpolant and z is a complex column vector of points on the
@@ -43,17 +44,21 @@ class ComplexInterpolant : public FunctionLike<cx_vec>
     RealInterpolant _imagPart;
 
 public:
+    //! Empty interpolant -- nothing defined.
     ComplexInterpolant() {};
+    //! Define given real and imaginary parts.
     ComplexInterpolant(const RealInterpolant&, const RealInterpolant&);
+    //! Define given boundary samples.
     ComplexInterpolant(ComplexBoundaryValues);
+    //! Build from modified Schwarz solution.
     ComplexInterpolant(const Solution&);
 
-    //! Access to constant reference to stored real part.
+    //! View of real part.
     const RealInterpolant& realPart() const { return _realPart; }
-    //! Access to constant reference to stored imaginary part.
+    //! View of imaginary part.
     const RealInterpolant& imagPart() const { return _imagPart; }
 
-    //! Override FunctionLike<>::evalInto for f() behaviour.
+    //! Provide function like behaviour.
     void evalInto(const cx_vec&, cx_vec&) const;
 
     //! Domain of definition.

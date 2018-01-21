@@ -64,7 +64,7 @@ As an example involving out-of-band packages, I'll show installing SuperLU and A
 
 #### SuperLU
 
-By default SuperLU builds as a static library; we'll build it as shared. In addition it tries to use supplied BLAS routines; we'll give the option to use the system libraries. Finally I'll show how to use an alternate install location.<super>*</super> So once the package is downloaded and unzipped, and you are in the directory, the following commands will build and install the package:
+By default SuperLU builds as a static library; we'll build it as shared. In addition it tries to use supplied BLAS routines; we'll give the option to use the system libraries. Finally I'll show how to use an alternate install location. So once the package is downloaded and unzipped, and you are in the directory, the following commands will build and install the package:
 
 ```bash
 mkdir build
@@ -74,8 +74,6 @@ make
 make test
 sudo make install
 ```
-
-<sub>\* I like to install non package managed software to `/opt/local`, making it easier to track.</sub>
 
 #### Armadillo
 
