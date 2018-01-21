@@ -17,8 +17,8 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOUNDARY_VALUES_H
-#define BOUNDARY_VALUES_H
+#ifndef BOUNDARY_VALUES_HPP
+#define BOUNDARY_VALUES_HPP
 
 #include <functional>
 #include "BoundaryPoints.h"
@@ -81,4 +81,4 @@ BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, ArmaMat vals
 
 }; // namespace ModifiedSchwarz
 
-#endif // BOUNDARY_VALUES_H
+#endif // BOUNDARY_VALUES_HPP

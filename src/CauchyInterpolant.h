@@ -20,7 +20,7 @@
 #ifndef CAUCHY_H
 #define CAUCHY_H
 
-#include "BoundaryValues.h"
+#include "BoundaryValues.hpp"
 #include "FunctionLike.hpp"
 #include "Solution.h"
 

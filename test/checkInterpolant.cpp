@@ -21,7 +21,7 @@
 #include "TestFunctions.hpp"
 
 #include "SchwarzTypes.h"
-#include "BoundaryValues.h"
+#include "BoundaryValues.hpp"
 #include "RealInterpolant.h"
 #include "ComplexInterpolant.h"
 

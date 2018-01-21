@@ -21,7 +21,7 @@
 #define REALINTERPOLANT_H
 
 #include "SchwarzTypes.h"
-#include "BoundaryValues.h"
+#include "BoundaryValues.hpp"
 #include "FunctionLike.hpp"
 
 namespace ModifiedSchwarz

@@ -20,7 +20,7 @@
 #include "UnitTest.h"
 #include "TestFunctions.hpp"
 
-#include "BoundaryValues.h"
+#include "BoundaryValues.hpp"
 
 using namespace ModifiedSchwarz;
 
