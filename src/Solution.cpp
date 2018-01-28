@@ -24,35 +24,25 @@ namespace ModifiedSchwarz
 
 //////////////////////////////////////////////////////////////////////////////
 Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart)
-    : _realPart(realPart),
-      _constants(constants),
-      _imagPart(imagPart) {}
-
-Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData)
-        : _realPart(realPart),
-          _constants(constants),
-          _imagPart(imagPart),
-          _pSolverData(pSolverData) {}
-
-//////////////////////////////////////////////////////////////////////////////
-cx_vec Solution::operator()(const cx_vec& z) const
+    : _constants(constants)
 {
-    using namespace std::complex_literals;
+    imagPart.adjustConstants(_constants);
+    ComplexInterpolant&& boundary = ComplexInterpolant(realPart, imagPart);
 
-    // Boundary points are given by realPart(z_j) + 1i*(constant_j + imagPart(z_j)).
-    cx_vec w(size(z));
-    w.fill(arma::datum::nan);
-
-    const auto D = _realPart.domain();
-    const unsigned m = D.m();
-    for(unsigned j = 0; j <= m; ++j)
     {
-        const auto inD = D.isOnC(j, z);
-        w(inD) = _realPart.evalOn(z(inD), j)
-            + 1.i*(_constants(j) + _imagPart.evalOn(z(inD), j));
     }
 
-    return w;
+    ComplexBoundaryValues&& values = ComplexBoundaryValues(
+            realPart.boundaryValues().points(),
+            cx_mat(realPart.boundaryValues().values(), imagPart.boundaryValues().values())
+            );
+    _interpolant = ClosureInterpolant(boundary, CauchyInterpolant(values));
+}
+
+Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData)
+{
+    *this = Solution(realPart, constants, imagPart);
+    _pSolverData = pSolverData;
 }
 
 }; // namespace ModifiedSchwarz

@@ -23,7 +23,7 @@
 #include <memory>
 
 #include "SchwarzTypes.h"
-#include "RealInterpolant.h"
+#include "ClosureInterpolant.h"
 #include "SolverData.h"
 
 namespace ModifiedSchwarz
@@ -43,12 +43,11 @@ namespace ModifiedSchwarz
  * In addition, a SolverData object may be stored to accelerate future
  * solver runs in the same domain.
  */
-class Solution
+class Solution : public FunctionLike<cx_vec>
 {
-    RealInterpolant _realPart;
     colvec _constants;
-    RealInterpolant _imagPart;
     SolverData::Ptr _pSolverData;
+    ClosureInterpolant _interpolant;
 
 public:
     //! Empty solution -- nothing defined.
@@ -61,16 +60,23 @@ public:
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData);
 
     //! View of solution real part.
-    const RealInterpolant& realPart()      const { return _realPart; }
+    const RealInterpolant& realPart()      const { return _interpolant.boundary().realPart(); }
     //! View of solution constants.
     const colvec&          constants()     const { return _constants; }
     //! View of given imaginary part.
-    const RealInterpolant& imagPart()      const { return _imagPart; }
+    const RealInterpolant& imagPart()      const { return _interpolant.boundary().realPart(); }
     //! Read only pointer to solver data.
     const SolverData::Ptr  solverDataPtr() const { return _pSolverData; }
 
-    //! Provide function-like behaviour.
-    cx_vec operator()(const cx_vec& z) const;
+    //! Provide function like behaviour.
+    /*!
+     *  Override FunctionLike::operator() because ClosureInterpolant already
+     *  uses this mechanism. No need to allocate return value twice.
+     */
+    cx_vec operator()(const cx_vec& z) const { return _interpolant(z); }
+
+    //! Dummy definition to satisfy abstract requirement.
+    void evalInto(const cx_vec&, cx_vec&) const {}
 };
 
 }; // namespace ModifiedSchwarz

@@ -54,6 +54,12 @@ public:
     //! Build with given boundary sample values.
     ClosureInterpolant(ComplexBoundaryValues);
 
+    //! View of stored boundary interpolant.
+    const ComplexInterpolant& boundary() const { return _boundary; }
+
+    //! View of stored interior interpolant.
+    const CauchyInterpolant& interior() const { return _interior; }
+
     //! Provides function like behaviour.
     void evalInto(const cx_vec&, cx_vec&) const;
 };
