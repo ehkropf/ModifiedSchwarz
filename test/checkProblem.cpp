@@ -26,7 +26,7 @@ using namespace ModifiedSchwarz;
 
 TEST(ProblemLabel)
 {
-    TEST_FILE("Problem check")
+    TEST_FILE("Problem check");
 }
 
 SUITE(ProbemTests)
@@ -41,7 +41,7 @@ SUITE(ProbemTests)
 
     TEST_FIXTURE(Fixture, BasicSolve)
     {
-        TEST_LINE("Basic solve")
+        TEST_LINE("Basic solve");
 
         unsigned N = 128;
         const UnitCircleDomain& D = domain;
@@ -58,7 +58,7 @@ SUITE(ProbemTests)
         // TEST_OUT("run check")
         CHECK(arma::approx_equal(polesInHoles(zt, D), sol(zt), "reldiff", 1e-6));
 
-        TEST_OK
+        TEST_DONE;
     }
 
 }

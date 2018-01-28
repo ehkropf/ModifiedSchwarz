@@ -26,7 +26,7 @@ using namespace ModifiedSchwarz;
 
 TEST(UnitCircLabel)
 {
-    TEST_LINE("Unit Circle Domain check")
+    TEST_LINE("Unit Circle Domain check");
 }
 
 class TestFixture
@@ -39,7 +39,7 @@ public:
 
 TEST_FIXTURE(TestFixture, Points)
 {
-    TEST_LINE("Points")
+    TEST_LINE("Points");
 
     unsigned n = 16;
     UnitCircleDomain D = domainExample3();
@@ -55,12 +55,12 @@ TEST_FIXTURE(TestFixture, Points)
         CHECK(approx_equal(abs(zb.col(j+1) - D.centers()(j)),
                            D.radii()(j)*colvec(n, fill::ones), "reldiff", tol));
 
-    TEST_DONE
+    TEST_DONE;
 }
 
 TEST_FIXTURE(TestFixture, InsideDomain)
 {
-    TEST_LINE("Inside domain")
+    TEST_LINE("Inside domain");
 
     const unsigned npts = 200;
     const unsigned expected = 28541;
@@ -69,19 +69,20 @@ TEST_FIXTURE(TestFixture, InsideDomain)
     unsigned counted = sum(vectorise(mask));
     if (counted != expected)
     {
-        TEST_OUT("expected " << expected << " points in domain, found " << counted << " points instead.")
+        TEST_OUT("expected " << expected << " points in domain, found " << counted << " points instead.");
         CHECK(false);
     }
     else
     {
         CHECK(true);
-        TEST_OK
     }
+
+    TEST_DONE;
 }
 
 TEST_FIXTURE(TestFixture, OnBoundary)
 {
-    TEST_LINE("On boundary")
+    TEST_LINE("On boundary");
 
     auto points = domain.boundaryPoints(257);
     for (unsigned j = 0; j <= domain.m(); ++j)
@@ -97,7 +98,7 @@ TEST_FIXTURE(TestFixture, OnBoundary)
             CHECK(true);
     }
 
-    TEST_DONE
+    TEST_DONE;
 }
 
 //TEST_FIXTURE(TestFixture, WriteDomain)

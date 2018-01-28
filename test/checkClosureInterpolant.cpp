@@ -29,7 +29,7 @@ SUITE(ClosureInterpSuite)
 
 TEST(ClosureInterpLabel)
 {
-    TEST_FILE("Closure interpolant")
+    TEST_FILE("Closure interpolant");
 }
 
 struct Fixture
@@ -54,26 +54,26 @@ struct Fixture
 
 TEST_FIXTURE(Fixture, BoundaryInterp)
 {
-    TEST_LINE("Points on the boundary")
+    TEST_LINE("Points on the boundary");
 
     auto&& zb = boundary_pts.vector();
     CHECK(arma::approx_equal(f(zb), g(zb), "absidff", 1e-10));
 
-    TEST_DONE
+    TEST_DONE;
 }
 
 TEST_FIXTURE(Fixture, InteriorInterp)
 {
-    TEST_LINE("Points in the interior")
+    TEST_LINE("Points in the interior");
 
     CHECK(arma::approx_equal(f(interior_points), g(interior_points), "absdiff", 1e-10));
 
-    TEST_DONE
+    TEST_DONE;
 }
 
 TEST_FIXTURE(Fixture, CombinedInterp)
 {
-    TEST_LINE("Points on boundary and interior")
+    TEST_LINE("Points on boundary and interior");
 
     uvec m = arma::regspace<uvec>(0, 20, 299);
     auto zb = boundary_pts.vector();
@@ -81,8 +81,7 @@ TEST_FIXTURE(Fixture, CombinedInterp)
     auto zz = arma::join_cols(zb, interior_points);
     CHECK(arma::approx_equal(f(zz), g(zz), "absdiff", 1e-10));
 
-
-    TEST_DONE
+    TEST_DONE;
 }
 
 } // SUITE

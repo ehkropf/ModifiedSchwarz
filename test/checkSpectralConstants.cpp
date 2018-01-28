@@ -27,29 +27,29 @@ using namespace ModifiedSchwarz;
 
 TEST(ConstantsLabel)
 {
-    TEST_FILE("Spectral Constants")
+    TEST_FILE("Spectral Constants");
 }
 
 TEST(TrapPoints)
 {
-    TEST_LINE("Trapezoidal rule points")
+    TEST_LINE("Trapezoidal rule points");
 
     unsigned pts = SpectralConstants::kTrapezoidalPoints();
     SpectralConstants::setTrapezoidalPoints(pts + 10);
     CHECK_EQUAL(pts + 10, SpectralConstants::kTrapezoidalPoints());
     CHECK_EQUAL(pts, SpectralConstants::kTrapezoidalPoints());
 
-    TEST_OK
+    TEST_DONE;
 }
 
 TEST(Truncation)
 {
-    TEST_LINE("Truncation")
+    TEST_LINE("Truncation");
 
     unsigned trunc = SpectralConstants::kSpectralTruncation();
     SpectralConstants::setTruncation(trunc + 10);
     CHECK_EQUAL(trunc + 10, SpectralConstants::kSpectralTruncation());
     CHECK_EQUAL(trunc, SpectralConstants::kSpectralTruncation());
 
-    TEST_OK
+    TEST_DONE;
 }

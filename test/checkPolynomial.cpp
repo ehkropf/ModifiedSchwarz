@@ -32,15 +32,15 @@ cx_vec y = { 0., 0., 8. };
 
 TEST(PolyLabel)
 {
-    TEST_FILE("Polynomial")
+    TEST_FILE("Polynomial");
 }
 
 TEST(Values)
 {
-    TEST_LINE("Polynomial values")
+    TEST_LINE("Polynomial values");
 
     cx_vec pv = polyval(a, x);
     CHECK(arma::approx_equal(pv, y, "reldiff", 1e-14));
 
-    TEST_OK
+    TEST_DONE;
 }

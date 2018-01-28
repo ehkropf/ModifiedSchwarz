@@ -27,12 +27,12 @@ using namespace ModifiedSchwarz;
 
 TEST(SpectralDataLabel)
 {
-    TEST_FILE("Spectral data check")
+    TEST_FILE("Spectral data check");
 }
 
 TEST(Matrix)
 {
-    TEST_LINE("Matrix")
+    TEST_LINE("Matrix");
 
     SpectralData data(domainExample3(), 64);
     const cx_mat& L = data.matrix();
@@ -42,17 +42,17 @@ TEST(Matrix)
 
     CHECK(arma::approx_equal(L, refL, "absdiff", 1e-4));
 
-    TEST_OK
+    TEST_DONE;
 }
 
 TEST(Sharing)
 {
-    TEST_LINE("Data sharing")
+    TEST_LINE("Data sharing");
 
     SpectralData::Ptr pData = std::make_shared<SpectralData>(domainExample3());
     SpectralData::Ptr pData2 = pData;
 
     CHECK(&pData->matrix() == &pData2->matrix());
 
-    TEST_OK
+    TEST_DONE;
 }

@@ -32,7 +32,7 @@ SUITE(InterpolantSuite)
 
 TEST(InterpLabel)
 {
-    TEST_FILE("Real Interpolant")
+    TEST_FILE("Real Interpolant");
 }
 
 struct Fixture
@@ -57,24 +57,24 @@ struct Fixture
 
 TEST_FIXTURE(Fixture, RealInterp)
 {
-    TEST_LINE("Real interpolation")
+    TEST_LINE("Real interpolation");
 
     RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
     auto&& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
 
-    TEST_DONE
+    TEST_DONE;
 }
 
 TEST_FIXTURE(Fixture, ComplexInterp)
 {
-    TEST_LINE("Complex interpolation")
+    TEST_LINE("Complex interpolation");
 
     ComplexInterpolant gi(ComplexBoundaryValues(BoundaryPoints(domain), g));
     auto&& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), g(zb), "absdiff", 10.*eps2pi));
 
-    TEST_DONE
+    TEST_DONE;
 }
 
 } // SUITE

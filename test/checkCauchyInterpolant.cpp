@@ -31,7 +31,7 @@ SUITE(CauchyInterpolantTests)
 
 TEST(CauchyInterpLabel)
 {
-    TEST_FILE("Cauchy interpolation")
+    TEST_FILE("Cauchy interpolation");
 }
 
 struct Fixture
@@ -51,12 +51,12 @@ struct Fixture
 
 TEST_FIXTURE(Fixture, ValueCheck)
 {
-    TEST_LINE("Check interpolation")
+    TEST_LINE("Check interpolation");
 
     CauchyInterpolant f(ComplexBoundaryValues(BoundaryPoints(domain), g));
     CHECK(arma::approx_equal(g(test_point_inside), f(test_point_inside), "absdiff", 1e-10));
 
-    TEST_DONE
+    TEST_DONE;
 }
 
 } // SUITE

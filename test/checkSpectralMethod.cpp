@@ -29,7 +29,7 @@ using namespace arma;
 
 TEST(SpectralMethodLabel)
 {
-    TEST_FILE("Spectral method check")
+    TEST_FILE("Spectral method check");
 }
 
 SUITE(SpectralMethodTest)
@@ -57,7 +57,7 @@ SUITE(SpectralMethodTest)
 
     TEST_FIXTURE(TestFixture, TestRHS)
     {
-        TEST_LINE("Right hand side")
+        TEST_LINE("Right hand side");
 
         SpectralConstants::setTruncation(64);
         SpectralMethod method(Problem(domain, imaginary_part));
@@ -68,12 +68,12 @@ SUITE(SpectralMethodTest)
 
         CHECK(approx_equal(rhs.head_rows(rhs.n_rows/2), refRHS, "absdiff", 1e-4));
 
-        TEST_OK
+        TEST_DONE;
     }
 
     TEST_FIXTURE(TestFixture, TestResidual)
     {
-        TEST_LINE("Residual")
+        TEST_LINE("Residual");
 
         SpectralMethod method(Problem(domain, imaginary_part));
 
@@ -84,12 +84,12 @@ SUITE(SpectralMethodTest)
         cx_vec res = rhs - A*x;
         CHECK(max(abs(res)/abs(rhs)) < 100*eps2pi);
 
-        TEST_OK
+        TEST_DONE;
     }
 
     TEST_FIXTURE(TestFixture, TestSolution)
     {
-        TEST_LINE("Solution")
+        TEST_LINE("Solution");
 
         SpectralMethod method(Problem(domain, imaginary_part));
         Solution sol = method.solve();
@@ -100,7 +100,7 @@ SUITE(SpectralMethodTest)
         cx_vec bv(vectorise(domain.boundaryPoints(10)));
         CHECK(approx_equal(polesInHoles(cx_vec(vectorise(bv)), domain), sol(vectorise(bv)), "absdiff", 1e-6));
 
-        TEST_OK
+        TEST_DONE;
     }
 
 }

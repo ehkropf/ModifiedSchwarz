@@ -26,7 +26,7 @@ using namespace ModifiedSchwarz;
 
 TEST(BoundaryValueLabel)
 {
-    TEST_FILE("BoundaryValue check")
+    TEST_FILE("BoundaryValue check");
 }
 
 class TestFixture
@@ -53,7 +53,7 @@ public:
 
 TEST_FIXTURE(TestFixture, BValSizeCheck)
 {
-    TEST_LINE("Size check")
+    TEST_LINE("Size check");
 
     CHECK_EQUAL(cbvals.points().matrix().n_cols, domain.connectivity());
     CHECK_EQUAL(cbvals.values().n_cols, domain.connectivity());
@@ -63,15 +63,15 @@ TEST_FIXTURE(TestFixture, BValSizeCheck)
     CHECK_EQUAL(rbvals.values().n_cols, domain.connectivity());
     CHECK_EQUAL(rbvals.values().n_rows, rbvals.points().matrix().n_rows);
 
-    TEST_OK
+    TEST_DONE;
 }
 
 TEST_FIXTURE(TestFixture, BValValueCheck)
 {
-    TEST_LINE("Value check")
+    TEST_LINE("Value check");
 
     CHECK(approx_equal(vectorise(cbvals.values()), g(cbvals.points().vector()), "absdiff", 1e-10));
     CHECK(approx_equal(vectorise(rbvals.values()), h(rbvals.points().vector()), "absdiff", 1e-10));
 
-    TEST_OK
+    TEST_DONE;
 }
