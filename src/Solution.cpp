@@ -30,7 +30,10 @@ Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant i
     SDEBUG("create boundary interpolant");
     ComplexInterpolant&& boundary = ComplexInterpolant(realPart, imagPart);
 
+    mat realValues;
+    if (realPart.boundaryValues().isEmpty())
     {
+        realPart.generateBoundaryValues(imagPart.boundaryValues().points());
     }
 
     SDEBUG("create boundary values, real size=" << realPart.boundaryValues().values().n_rows

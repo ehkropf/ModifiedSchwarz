@@ -80,4 +80,10 @@ void RealInterpolant::evalInto(const cx_vec& z, colvec& w) const
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+void RealInterpolant::generateBoundaryValues(BoundaryPoints pts)
+{
+    _boundary_values = RealBoundaryValues(pts, *this);
+}
+
 }; // namespace ModifiedSchwarz

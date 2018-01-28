@@ -62,6 +62,7 @@ class RealInterpolant : public FunctionLike<cx_vec, colvec>
     cx_mat _coefficients;
 
 protected:
+    //! Runs FFT on boundary values to generate coefficients.
     void prepareInterpolant();
 
 public:
@@ -74,6 +75,8 @@ public:
 
     //! Domain of definition.
     const UnitCircleDomain& domain() const { return _domain; }
+    //! View of stored BoundaryValues.
+    const RealBoundaryValues& boundaryValues() const { return _boundary_values; }
     //! Boundary data matrix.
     const mat& boundaryData() const { return _boundary_values.values(); }
     //! View of m+1 vector of real constants.
@@ -86,6 +89,12 @@ public:
 
     //! Enable function like behaviour.
     void evalInto(const cx_vec&, colvec&) const;
+
+    //! Adjust polynomial constants by given vector c (add to stored constant vector).
+    void adjustConstants(const colvec& c) { _constants += c; }
+
+    //! Use interpolant to generate values at given points.
+    void generateBoundaryValues(BoundaryPoints);
 };
 
 }; // namespace ModifiedSchwarz

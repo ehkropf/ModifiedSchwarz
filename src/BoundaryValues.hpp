@@ -59,6 +59,9 @@ public:
 
     //! Reference to values matrix.
     const ArmaMat& values() const { return _values; }
+
+    //! Considered empty if values().n_rows == 0.
+    bool isEmpty() const { return _values.n_rows == 0; }
 };
 
 //! Convenience typedef.
