@@ -23,6 +23,13 @@
 #include <complex>
 #include <armadillo>
 
+#define DEBUG
+#ifdef DEBUG
+#define SDEBUG(S) std::cout << "<debug> " << __FILE__ << "(" << __LINE__ << "): " << S << std::endl
+#else
+#define SDEBUG(S)
+#endif // DEBUG
+
 namespace ModifiedSchwarz
 {
 

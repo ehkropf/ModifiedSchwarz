@@ -27,15 +27,21 @@ Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant i
     : _constants(constants)
 {
     imagPart.adjustConstants(_constants);
+    SDEBUG("create boundary interpolant");
     ComplexInterpolant&& boundary = ComplexInterpolant(realPart, imagPart);
 
     {
     }
 
+    SDEBUG("create boundary values, real size=" << realPart.boundaryValues().values().n_rows
+            << "-by-" << realPart.boundaryValues().values().n_cols << " and imag size="
+            << imagPart.boundaryValues().values().n_rows << "-by-"
+            << imagPart.boundaryValues().values().n_cols);
     ComplexBoundaryValues&& values = ComplexBoundaryValues(
             realPart.boundaryValues().points(),
             cx_mat(realPart.boundaryValues().values(), imagPart.boundaryValues().values())
             );
+    SDEBUG("create closure interpolant");
     _interpolant = ClosureInterpolant(boundary, CauchyInterpolant(values));
 }
 

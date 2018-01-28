@@ -36,7 +36,9 @@ SpectralMethod::SpectralMethod(const Problem& prob, const Solution& prev)
 ////////////////////////////////////////////////////////////////////////////////
 Solution SpectralMethod::solve()
 {
+    SDEBUG("call matrix solve");
     cx_vec x = arma::solve(_data->matrix(), computeRHS());
+
     const unsigned m = _data->domain().m();
     const unsigned N = (_data->matrix().n_cols/2 - m)/(m + 1);
     const unsigned M = (unsigned)std::ceil((N - 1)/2.);
@@ -52,7 +54,10 @@ Solution SpectralMethod::solve()
         a.col(j) = arma::flipud(x.rows(offset+1, offset+M));
     }
 
+    SDEBUG("create real part");
     RealInterpolant realPart(_data->domain(), real(c), a);
+
+    SDEBUG("return solution");
     return Solution(realPart, imag(c), _imagPart, _data);
 }
 

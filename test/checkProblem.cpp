@@ -48,11 +48,14 @@ SUITE(ProbemTests)
         auto g = [&D](const cx_mat& z) -> mat { return imag(polesInHoles(z, D)); };
 
         Problem problem(RealInterpolant(RealBoundaryValues(BoundaryPoints(domain, N), g)));
+        TEST_OUT("problem created")
         Solution sol = problem.solve();
+        TEST_OUT("solved")
 
         cx_vec zt = vectorise(D.boundaryPoints(7));
         cx_vec actual = polesInHoles(zt, D);
 
+        TEST_OUT("run check")
         CHECK(arma::approx_equal(polesInHoles(zt, D), sol(zt), "reldiff", 1e-6));
 
         TEST_OK
