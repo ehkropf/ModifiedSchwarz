@@ -24,7 +24,6 @@
 #include "FunctionLike.hpp"
 #include "CauchyInterpolant.h"
 #include "ComplexInterpolant.h"
-#include "Solution.h"
 
 namespace ModifiedSchwarz
 {
@@ -54,8 +53,6 @@ public:
     ClosureInterpolant(ComplexInterpolant, CauchyInterpolant);
     //! Build with given boundary sample values.
     ClosureInterpolant(ComplexBoundaryValues);
-    //! Build from modified Schwarz solution.
-    ClosureInterpolant(const Solution&);
 
     //! Provides function like behaviour.
     void evalInto(const cx_vec&, cx_vec&) const;

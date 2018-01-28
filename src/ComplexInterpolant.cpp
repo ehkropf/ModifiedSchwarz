@@ -32,11 +32,6 @@ ComplexInterpolant::ComplexInterpolant(ComplexBoundaryValues values)
       _imagPart(RealInterpolant(RealBoundaryValues(values.points(), imag(values.values()))))
 {}
 
-ComplexInterpolant::ComplexInterpolant(const Solution& S)
-    : _realPart(S.realPart()),
-      _imagPart(S.imagPart())
-{}
-
 //////////////////////////////////////////////////////////////////////////////////
 void ComplexInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
 {

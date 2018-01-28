@@ -22,7 +22,6 @@
 
 #include "BoundaryValues.hpp"
 #include "FunctionLike.hpp"
-#include "Solution.h"
 
 namespace ModifiedSchwarz
 {
@@ -52,9 +51,6 @@ public:
      * to determine number of points to use in Barycentric interpolation.
      */
     CauchyInterpolant(ComplexBoundaryValues);
-
-    //! Create Cauchy interpolant from given Solution.
-    CauchyInterpolant(const Solution&);
 
     //! Provides the function like behaviour.
     virtual void evalInto(const cx_vec&, cx_vec&) const;

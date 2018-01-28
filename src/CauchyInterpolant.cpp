@@ -51,13 +51,6 @@ CauchyInterpolant::CauchyInterpolant(ComplexBoundaryValues v)
     }
 }
 
-CauchyInterpolant::CauchyInterpolant(const Solution& S)
-{
-    // * Create set of boundary points.
-    // * Evaluate solution interpolant at boundary points.
-    // * Use values to call main constructor.
-}
-
 //////////////////////////////////////////////////////////////////////////////////
 void CauchyInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
 {

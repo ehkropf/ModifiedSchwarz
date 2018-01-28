@@ -32,11 +32,6 @@ ClosureInterpolant::ClosureInterpolant(ComplexBoundaryValues values)
       _interior(CauchyInterpolant(values))
 {}
 
-ClosureInterpolant::ClosureInterpolant(const Solution& S)
-    : _boundary(S),
-      _interior(S)
-{}
-
 ////////////////////////////////////////////////////////////////////////////////
 void
 ClosureInterpolant::evalInto(const cx_vec& z, cx_vec& w) const

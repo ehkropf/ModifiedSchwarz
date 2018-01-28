@@ -23,7 +23,6 @@
 #include "SchwarzTypes.h"
 #include "FunctionLike.hpp"
 #include "RealInterpolant.h"
-#include "Solution.h"
 
 namespace ModifiedSchwarz
 {
@@ -50,8 +49,6 @@ public:
     ComplexInterpolant(const RealInterpolant&, const RealInterpolant&);
     //! Define given boundary samples.
     ComplexInterpolant(ComplexBoundaryValues);
-    //! Build from modified Schwarz solution.
-    ComplexInterpolant(const Solution&);
 
     //! View of real part.
     const RealInterpolant& realPart() const { return _realPart; }
