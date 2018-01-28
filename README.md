@@ -50,7 +50,13 @@ make
 
 (Yes, the two dots are required following `cmake`.) Note there is no valid install target currently. (It hasn't been configured.)
 
-If you've installed UnitTest++, tests can be run with `make check`. If you've installed Doxygen, you can make the HTML docs via `make doc`.
+### Unit tests
+
+If you've installed UnitTest++, tests can be run with `make check`. 
+
+### Code documentation
+
+If you've installed Doxygen, you can make the HTML docs via `make doc`.
 
 ### OS X/macOS
 
