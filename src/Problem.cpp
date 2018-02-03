@@ -54,4 +54,9 @@ Problem::solve(const Solution& prevSolution, Solver::Method m)
     return Solver(m).solve(*this, prevSolution);
 }
 
+std::ostream& operator<<(std::ostream& os, Problem& P)
+{
+    return os << "Problem is defined by\n" << P._imaginaryPart;
+}
+
 }; // namespace ModifiedSchwarz
