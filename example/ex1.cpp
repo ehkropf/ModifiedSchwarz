@@ -3,13 +3,84 @@
  */
 
 #include <iostream>
+#include <iomanip>
 
 #include "Problem.h"
 
 #define STDOUT(S) std::cout << S << std::endl
 
+#define MFNAME "ex1.meta"
+#define DFNAME "ex1.data"
+
 using namespace ModifiedSchwarz;
 
+////////////////////////////////////////////////////////////////////////
+struct GridExtents
+{
+    double xmin;
+    double xmax;
+    double ymin;
+    double ymax;
+
+    GridExtents() {}
+
+    GridExtents(double xmin, double xmax, double ymin, double ymax)
+        : xmin(xmin), xmax(xmax), ymin(ymin), ymax(ymax)
+    {}
+
+    GridExtents(colvec extents)
+    {
+        *this = GridExtents(extents(0), extents(1), extents(2), extents(3));
+    }
+
+    colvec array() const { return colvec{xmin, xmax, ymin, ymax}; }
+};
+
+struct GridInformation
+{
+    UnitCircleDomain domain;
+    unsigned npts;
+    GridExtents extents;
+
+    enum StreamType { File, Readable };
+    StreamType streamtype;
+
+    GridInformation(UnitCircleDomain domain, unsigned npts)
+        : domain(domain),
+          npts(npts),
+          extents(-1., 1., -1., 1.),
+          streamtype(File)
+    {}
+};
+
+std::ostream& operator<<(std::ostream& os, GridInformation& g)
+{
+    switch (g.streamtype)
+    {
+        case GridInformation::File:
+            os << "m=" << g.domain.m() << std::endl;
+            os.precision(15);
+            os.setf(std::ios::fixed);
+            g.domain.centers().raw_print(os);
+            g.domain.radii().raw_print(os);
+            os << "res=" << g.npts << std::endl;
+            g.extents.array().t().raw_print(os);
+            break;
+
+        case GridInformation::Readable:
+            os << "Inner holes: " << g.domain.connectivity() << "\n"
+                << "Centers:\n" << g.domain.centers()
+                << "Radii:\n" << g.domain.radii()
+                << "Resolution: " << g.npts << "\n"
+                << "X-extents: [" << g.extents.xmin << "," << g.extents.xmax << "]\n"
+                << "Y-extents: [" << g.extents.ymin << "," << g.extents.ymax << "]"
+                << std::endl;
+            break;
+    }
+    return os;
+}
+
+////////////////////////////////////////////////////////////////////////
 /*
  *  Function defined by simple pole in each interior circle center.
  */
@@ -50,20 +121,38 @@ int main()
     /*
      *  Grid points in domain for evaluation.
      */
-    cx_vec z = vectorise(domain.ngrid(400));
+    unsigned res = 400;
+    cx_vec z = vectorise(domain.ngrid(res));
     auto mask = domain.inDomain(z);
     z = z(find(mask));
 
     /*
-     *  Solution can be evaulated like a function.
+     * Output grid metadata.
      */
-    STDOUT("evaluating points ...");
-    cx_vec w = sol(z);
-    STDOUT("done");
+    auto gmeta = GridInformation(domain, res);
+    STDOUT("\nWriting metadata");
+    std::ofstream ofs(MFNAME, std::ios::out);
+    ofs << gmeta;
+    ofs.close();
 
-    STDOUT("z rows: " << z.n_rows);
-    STDOUT("w rows: " << w.n_rows);
-    //cx_mat(join_rows(z, w)).save("ex1.data", arma::arma_ascii);
+    gmeta.streamtype = GridInformation::Readable;
+    STDOUT("\nReadable:\n" << gmeta);
+
+//    /*
+//     *  Solution can be evaulated like a function.
+//     */
+//    STDOUT("evaluating points " << z.n_elem << " points ...");
+//    cx_vec w = sol(z);
+//    STDOUT("done; why was that so slow!?");
+//
+//    auto&& data = cx_mat(join_rows(z, w));
+//    STDOUT("saving data to ex1.data");
+//    data.save("ex1.data", arma::raw_binary);
+//
+////    STDOUT("First few rows for check:");
+////    std::cout.precision(9);
+////    data.rows(0,4).raw_print(std::cout);
+
 
     return 0;
 }
