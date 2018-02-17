@@ -95,6 +95,9 @@ public:
 
     //! Use interpolant to generate values at given points.
     void generateBoundaryValues(BoundaryPoints);
+
+    //! Self description.
+    friend std::ostream& operator<<(std::ostream&, RealInterpolant&);
 };
 
 }; // namespace ModifiedSchwarz

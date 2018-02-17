@@ -131,3 +131,16 @@ if(DOXYGEN_FOUND)
         COMMENT "Generating API docs with Doxygen"
         )
 endif()
+
+######################################################################
+# example
+set(EXDIR "${CMAKE_SOURCE_DIR}/example")
+set(EXSRC example/ex1.cpp)
+add_executable(ex1 EXCLUDE_FROM_ALL ${EXSRC})
+target_include_directories(ex1 PUBLIC ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(ex1 schwarz)
+add_custom_target(example
+        COMMAND ${CMAKE_BINARY_DIR}/ex1
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        DEPENDS ex1
+        )

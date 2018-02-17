@@ -66,6 +66,9 @@ public:
     // type of solver used?
     //! Call solver with previous solution and specified method.
     Solution solve(const Solution& prevSolution, Solver::Method);
+
+    // Self output.
+    friend std::ostream& operator<<(std::ostream&, Problem&);
 };
 
 }; // namespace ModifiedSchwarz

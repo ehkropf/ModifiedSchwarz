@@ -86,4 +86,16 @@ void RealInterpolant::generateBoundaryValues(BoundaryPoints pts)
     _boundary_values = RealBoundaryValues(pts, *this);
 }
 
+////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<(std::ostream& os, RealInterpolant& I)
+{
+    unsigned m = I._domain.connectivity();
+
+    return os << "class:RealInterpolant\n{\n"
+        << "\tconnectivity: " << m << "\n"
+        << "\tsamplePointsPerBoundary: " << I._boundary_values.points().vector().n_elem/m << "\n"
+        << "\tcoefficientsPerBoundary: " << I._coefficients.n_elem/m << "\n"
+        << "}\n";
+}
+
 }; // namespace ModifiedSchwarz
