@@ -138,20 +138,20 @@ int main()
     gmeta.streamtype = GridInformation::Readable;
     STDOUT("\nReadable:\n" << gmeta);
 
-//    /*
-//     *  Solution can be evaulated like a function.
-//     */
-//    STDOUT("evaluating points " << z.n_elem << " points ...");
-//    cx_vec w = sol(z);
-//    STDOUT("done; why was that so slow!?");
-//
-//    auto&& data = cx_mat(join_rows(z, w));
-//    STDOUT("saving data to ex1.data");
-//    data.save("ex1.data", arma::raw_binary);
-//
-////    STDOUT("First few rows for check:");
-////    std::cout.precision(9);
-////    data.rows(0,4).raw_print(std::cout);
+    /*
+     *  Solution can be evaulated like a function.
+     */
+    STDOUT("evaluating points " << z.n_elem << " points ...");
+    cx_vec w = sol(z);
+    STDOUT("done; why was that so slow!?");
+
+    auto&& data = cx_mat(join_rows(z, w));
+    STDOUT("saving data to ex1.data");
+    data.save("ex1.data", arma::raw_binary);
+
+//    STDOUT("First few rows for check:");
+//    std::cout.precision(9);
+//    data.rows(0,4).raw_print(std::cout);
 
 
     return 0;
