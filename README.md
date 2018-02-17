@@ -50,6 +50,10 @@ make
 
 (Yes, the two dots are required following `cmake`.) Note there is no valid install target currently. (It hasn't been configured.)
 
+### Example
+
+Example usage is provided. Use `make example` to compile and run.
+
 ### Unit tests
 
 If you've installed UnitTest++, tests can be run with `make check`. 
