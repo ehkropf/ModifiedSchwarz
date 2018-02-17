@@ -75,6 +75,7 @@ if __name__ == "__main__":
 
     fname = sys.argv[1] # "../build/ex1.data"
     mfname = sys.argv[2] # "../build/ex1.meta"
+    pngname = sys.argv[3]
 
     gdat = GridData(mfname)
 
@@ -90,8 +91,5 @@ if __name__ == "__main__":
 
     fig = plt.figure()
     ax = fig.gca()
-    ax.imshow(img,
-             interpolation='none',
-             aspect='equal')
-    plt.savefig('../build/ex1.png', bbox_inches='tight')
-
+    ax.imshow(img, interpolation='none', aspect='equal')
+    plt.savefig(pngname, bbox_inches='tight')

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 
 #include "Problem.h"
 
@@ -113,7 +114,6 @@ int main()
      *  to use on the boundary.
      */
     Problem problem(hv);
-    STDOUT(problem);
 
     Solution sol = problem.solve();
     STDOUT("Solver run.");
@@ -143,16 +143,19 @@ int main()
      */
     STDOUT("evaluating points " << z.n_elem << " points ...");
     cx_vec w = sol(z);
-    STDOUT("done; why was that so slow!?");
+    STDOUT("done; OMG that's slow without FMM!");
 
     auto&& data = cx_mat(join_rows(z, w));
     STDOUT("saving data to ex1.data");
     data.save("ex1.data", arma::raw_binary);
 
-//    STDOUT("First few rows for check:");
-//    std::cout.precision(9);
-//    data.rows(0,4).raw_print(std::cout);
+    std::string cmd("../example/drawex.py " DFNAME " " MFNAME " ex1.png");
+    STDOUT("Creating image: " << cmd);
+    system(cmd.c_str());
 
+    cmd = std::string("open ex1.png");
+    STDOUT("Showing image: " << cmd);
+    system(cmd.c_str());
 
     return 0;
 }
