@@ -24,10 +24,25 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
-find_package(Armadillo REQUIRED)
-include_directories(${ARMADILLO_INCLUDE_DIRS})
 set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+find_package(Armadillo REQUIRED)
+include_directories(${ARMADILLO_INCLUDE_DIRS})
+
+find_library(FMM_LIB hfmm2d)
+if(NOT FMM_LIB)
+    message(FATAL_ERROR "FMM library not found.")
+else()
+    message(STATUS "Found FMM library: ${FMM_LIB}")
+endif()
+
+find_library(GFORTRAN_LIB gfortran)
+if(NOT GFORTRAN_LIB)
+    message(FATAL_ERROR "gFortran lib not found.")
+else()
+    message(STATUS "Found gFortran: ${GFORTRAN_LIB}")
+endif()
 
 ######################################################################
 set(SCHWARZ_SOURCE
@@ -43,6 +58,7 @@ set(SCHWARZ_SOURCE
     src/SpectralData.cpp
     src/SpectralMethod.cpp
     src/UnitCircleDomain.cpp
+    src/ZFMM_Wrapper.cpp
     )
 add_library(schwarz_obj OBJECT ${SCHWARZ_SOURCE})
 set_target_properties(${schwarz_obj} PROPERTIES POSITION_INDEPENDENT_CODE 1)
@@ -50,7 +66,11 @@ set_target_properties(${schwarz_obj} PROPERTIES POSITION_INDEPENDENT_CODE 1)
 add_library(schwarz SHARED $<TARGET_OBJECTS:schwarz_obj>)
 add_library(schwarz_static STATIC $<TARGET_OBJECTS:schwarz_obj>)
 set_target_properties(schwarz_static PROPERTIES OUTPUT_NAME schwarz)
-target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
+target_link_libraries(schwarz
+    ${ARMADILLO_LIBRARIES}
+    ${FMM_LIB}
+    ${GFORTRAN_LIB}
+    )
 
 ######################################################################
 # Testing.
