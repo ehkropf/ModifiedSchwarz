@@ -121,7 +121,7 @@ int main()
     /*
      *  Grid points in domain for evaluation.
      */
-    unsigned res = 400;
+    unsigned res = 1000;
     cx_vec z = vectorise(domain.ngrid(res));
     auto mask = domain.inDomain(z);
     z = z(find(mask));
@@ -143,7 +143,7 @@ int main()
      */
     STDOUT("evaluating points " << z.n_elem << " points ...");
     cx_vec w = sol(z);
-    STDOUT("done; OMG that's slow without FMM!");
+    STDOUT("done"); //; OMG that's slow without FMM!");
 
     auto&& data = cx_mat(join_rows(z, w));
     STDOUT("saving data to ex1.data");
