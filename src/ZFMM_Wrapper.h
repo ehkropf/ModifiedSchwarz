@@ -27,11 +27,11 @@ namespace ModifiedSchwarz
 //! Define call to Fortran function.
 extern "C" void zfmm2dparttarg_(
         int* ier, int* iprec,
-        int* nsource, cx_double* source, cx_double* dipstr,
+        int* nsource, const cx_double* source, const cx_double* dipstr,
         int* ifpot, cx_double* pot,
         int* ifgrad, cx_double* grad,
         int* ifhess, cx_double* hess,
-        int* ntarget, cx_double* target,
+        int* ntarget, const cx_double* target,
         int* ifpottarg, cx_double* pottarg,
         int* ifgradtarg, cx_double* gradtarg,
         int* ifhesstarg, cx_double* hesstarg);
@@ -82,7 +82,7 @@ struct ZFMM2d {
     cx_vec gradtarg;
     cx_vec hesstarg;
 
-    ZFMM2d(cx_vec& source, cx_vec& dipstr, cx_vec& target, ZFMM2dSet set = ZFMM2dSet());
+    ZFMM2d(const cx_vec& source, const cx_vec& dipstr, const cx_vec& target, ZFMM2dSet set = ZFMM2dSet());
 };
 
 }; // namespace ModifiedSchwarz

@@ -34,7 +34,7 @@ ZFMM2dSet::ZFMM2dSet()
 {}
 
 //------------------------------------------------------------------------------
-ZFMM2d::ZFMM2d(cx_vec& source, cx_vec& dipstr, cx_vec& target, ZFMM2dSet set)
+ZFMM2d::ZFMM2d(const cx_vec& source, const cx_vec& dipstr, const cx_vec& target, ZFMM2dSet set)
         : set(set)
 {
     int nsource = source.n_elem;
