@@ -18,6 +18,7 @@
  */
 
 #include "CauchyInterpolant.h"
+#include "ZFMM_Wrapper.h"
 
 namespace ModifiedSchwarz
 {
@@ -62,13 +63,25 @@ void CauchyInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
     //
     // where t_jk represents a row vector and z a column vector.
 
-    // Is there a faster way to build I?
-    const cx_rvec& t_jk = _boundary_values.points().vector().st();
-    cx_mat I = arma::repmat(t_jk, z.n_elem, 1);
-    I.each_col() -= z;
-    I = 1./I;
+    if (_boundary_values.points().vector().n_elem * z.n_elem < min_pts_for_FMM)
+    {
+        // Quicker for a small number of points.
+        const cx_rvec& t_jk = _boundary_values.points().vector().st();
+        cx_mat I = arma::repmat(t_jk, z.n_elem, 1);
+        I.each_col() -= z;
+        I = 1./I;
 
-    w = (I*_h)/(I*_s);
+        w = (I*_h)/(I*_s);
+    }
+    else
+    {
+        // FMM for larger number of points.
+        cx_vec source = _boundary_values.points().vector();
+        ZFMM2d top(source, cx_vec(-_h), z);
+        ZFMM2d bot(source, cx_vec(-_s), z);
+
+        w = top.pottarg/bot.pottarg;
+    }
 }
 
 }; // namespace ModifiedSchwarz

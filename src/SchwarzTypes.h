@@ -71,6 +71,9 @@ const double eps2pi = std::numeric_limits<double>::epsilon()*2.*pi;
 //! Not a number.
 const double nan = arma::datum::nan;
 
+//! Point threshold to use FMM.
+const unsigned min_pts_for_FMM = 1e4;
+
 }; // namespace ModifiedSchwarz
 
 #endif // SCHWARZTYPES_H
