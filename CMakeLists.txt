@@ -106,6 +106,7 @@ if(UNITTEST_FOUND)
         test/checkUnitDomain.cpp
         test/checkBoundaryValues.cpp
         test/checkInterpolant.cpp
+        test/checkFMM.cpp
         test/checkCauchyInterpolant.cpp
         test/checkClosureInterpolant.cpp
         test/checkSpectralConstants.cpp
