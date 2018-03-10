@@ -66,7 +66,7 @@ If you've installed Doxygen, you can make the HTML docs via `make doc`.
 
 ### OS X/macOS
 
-All of the auxilary packages may be installed via [MacPorts](https://www.macports.org). I haven't tried with Homebrew, but this would probably be fine.
+All of the auxilary packages, with the excepiton of fmmlib2d, may be installed via [MacPorts](https://www.macports.org). I haven't tried with Homebrew, but this would probably be fine.
 
 ### Linux
 
