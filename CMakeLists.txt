@@ -44,8 +44,11 @@ set(SCHWARZ_SOURCE
     src/SpectralMethod.cpp
     src/UnitCircleDomain.cpp
     )
-add_library(schwarz SHARED ${SCHWARZ_SOURCE})
-add_library(schwarz_static STATIC ${SCHWARZ_SOURCE})
+add_library(schwarz_obj OBJECT ${SCHWARZ_SOURCE})
+set_target_properties(${schwarz_obj} PROPERTIES POSITION_INDEPENDENT_CODE 1)
+
+add_library(schwarz SHARED $<TARGET_OBJECTS:schwarz_obj>)
+add_library(schwarz_static STATIC $<TARGET_OBJECTS:schwarz_obj>)
 set_target_properties(schwarz_static PROPERTIES OUTPUT_NAME schwarz)
 target_link_libraries(schwarz ${ARMADILLO_LIBRARIES})
 
