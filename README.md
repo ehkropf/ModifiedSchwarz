@@ -36,7 +36,7 @@ ModifiedSchwarz relies on the following external libraries:
     * [ARPACK](http://www.caam.rice.edu/software/ARPACK/).
     * [SuperLU](http://crd-legacy.lbl.gov/~xiaoye/SuperLU/). Armadillo requires version 5 or better.
 
-* [fmmlib2d](https://github.com/zgimbutas/fmmlib2d) fast multipole method (2d). After building, copy `libhfmm2d.a` to somewhere it will be found by `cmake` (`/usr/local/lib` is a good example). You can also give cmake the location of the library via `CMAKE_LIBRARY_PATH` (example `cmake -CMAKE_LIBRARY_PATH=<path to libhfmm2d.a> ..`).
+* [fmmlib2d](https://github.com/zgimbutas/fmmlib2d) fast multipole method (2d). After building, copy `libhfmm2d.a` to somewhere it will be found by `cmake` (`/usr/local/lib` is a good example). You can also give cmake the location of the library via `CMAKE_LIBRARY_PATH` (example `cmake -DCMAKE_LIBRARY_PATH=<path to libhfmm2d.a> ..`).
 
 * [UnitTest++](https://github.com/unittest-cpp/unittest-cpp) (optional) for `make check` unit testing.
 * [Doxygen](http://www.stack.nl/~dimitri/doxygen/) (optional) for `make doc` html doc stuff.
@@ -52,17 +52,17 @@ make
 
 (Yes, the two dots are required following `cmake`.) Note there is no valid install target currently. (It hasn't been configured.)
 
+### Code documentation
+
+If you've installed Doxygen, you can make the HTML docs via `make doc`.
+
 ### Example
 
-Example usage is provided. Use `make example` to compile and run.
+Example usage is provided. Edit the `draw.py` script to point to your local copy of Python 3, and then use `make example` to compile and run.
 
 ### Unit tests
 
 If you've installed UnitTest++, tests can be run with `make check`.
-
-### Code documentation
-
-If you've installed Doxygen, you can make the HTML docs via `make doc`.
 
 ### OS X/macOS
 
