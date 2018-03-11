@@ -58,7 +58,7 @@ If you've installed Doxygen, you can make the HTML docs via `make doc`.
 
 ### Example
 
-Example usage is provided. Edit the `draw.py` script to point to your local copy of Python 3, and then use `make example` to compile and run.
+Example usage is provided. Use `make example` to compile and run. Requires you have Python 3 installed in your path to generate an image.
 
 ### Unit tests
 
