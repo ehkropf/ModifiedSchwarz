@@ -27,6 +27,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
+# For ubuntu 18.04 build
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 find_package(Armadillo REQUIRED)
 include_directories(${ARMADILLO_INCLUDE_DIRS})
 

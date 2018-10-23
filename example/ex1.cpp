@@ -143,7 +143,7 @@ int main()
      */
     STDOUT("evaluating points " << z.n_elem << " points ...");
     cx_vec w = sol(z);
-    STDOUT("done"); //; OMG that's slow without FMM!");
+    STDOUT("done"); //; ZOMG that's slow without FMM!");
 
     auto&& data = cx_mat(join_rows(z, w));
     STDOUT("saving data to ex1.data");
