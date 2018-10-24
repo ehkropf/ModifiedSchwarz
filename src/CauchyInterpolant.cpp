@@ -36,6 +36,7 @@ CauchyInterpolant::CauchyInterpolant(ComplexBoundaryValues v)
     //   * h = h_jk * s
     // where k is in {0,..,N-1}.
 
+    SDEBUG("Prepare Cauchy interpolant coefficients");
     auto sigma = [](unsigned j)->double{ return j == 0 ? 1. : -1.; };
     const cx_mat& t_jk = _boundary_values.points().matrix();
     const cx_mat& h_jk = _boundary_values.values();
@@ -63,6 +64,7 @@ void CauchyInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
     //
     // where t_jk represents a row vector and z a column vector.
 
+    SDEBUG("Evaluating Cauchy interpolant");
     if (_boundary_values.points().vector().n_elem * z.n_elem < min_pts_for_FMM)
     {
         // Quicker for a small number of points.
