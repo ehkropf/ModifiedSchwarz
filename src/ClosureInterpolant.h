@@ -61,7 +61,7 @@ public:
     const CauchyInterpolant& interior() const { return _interior; }
 
     //! Provides function like behaviour.
-    void evalInto(const cx_vec&, cx_vec&) const;
+    void funcDefinition(const cx_vec&, cx_vec&) const;
 };
 
 }; // ModifiedSchwarz

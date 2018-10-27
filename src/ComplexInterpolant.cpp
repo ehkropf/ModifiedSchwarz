@@ -33,7 +33,7 @@ ComplexInterpolant::ComplexInterpolant(ComplexBoundaryValues values)
 {}
 
 //////////////////////////////////////////////////////////////////////////////////
-void ComplexInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
+void ComplexInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
 {
     w = cx_vec(_realPart(z), _imagPart(z));
 }

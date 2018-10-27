@@ -56,7 +56,7 @@ public:
     const RealInterpolant& imagPart() const { return _imagPart; }
 
     //! Provide function like behaviour.
-    void evalInto(const cx_vec&, cx_vec&) const;
+    void funcDefinition(const cx_vec&, cx_vec&) const;
 
     //! Domain of definition.
     UnitCircleDomain domain() const { return _realPart.domain(); }

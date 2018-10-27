@@ -76,7 +76,7 @@ public:
     cx_vec operator()(const cx_vec& z) const { return _interpolant(z); }
 
     //! Dummy definition to satisfy abstract requirement.
-    void evalInto(const cx_vec&, cx_vec&) const {}
+    void funcDefinition(const cx_vec&, cx_vec&) const {}
 };
 
 }; // namespace ModifiedSchwarz

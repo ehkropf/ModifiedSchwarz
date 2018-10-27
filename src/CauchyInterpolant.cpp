@@ -54,7 +54,7 @@ CauchyInterpolant::CauchyInterpolant(ComplexBoundaryValues v)
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-void CauchyInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
+void CauchyInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
 {
     // On evaluation, we need the matrix
     //

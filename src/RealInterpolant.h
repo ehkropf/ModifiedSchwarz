@@ -88,7 +88,7 @@ public:
     colvec evalOn(const cx_vec&, unsigned) const;
 
     //! Enable function like behaviour.
-    void evalInto(const cx_vec&, colvec&) const;
+    void funcDefinition(const cx_vec&, colvec&) const;
 
     //! Adjust polynomial constants by given vector c (add to stored constant vector).
     void adjustConstants(const colvec& c) { _constants += c; }

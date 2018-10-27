@@ -34,7 +34,7 @@ ClosureInterpolant::ClosureInterpolant(ComplexBoundaryValues values)
 
 ////////////////////////////////////////////////////////////////////////////////
 void
-ClosureInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
+ClosureInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
 {
     auto D = _boundary.domain();
     uvec onb = D.isOnBoundary(z);
