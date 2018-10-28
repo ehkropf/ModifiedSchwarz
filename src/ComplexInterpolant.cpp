@@ -18,6 +18,7 @@
  */
 
 #include "ComplexInterpolant.h"
+#include "Utility.hpp"
 
 namespace ModifiedSchwarz
 {
@@ -66,6 +67,21 @@ ComplexInterpolant::checkPartBoundaryValues()
     }
 
     return true;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+ComplexInterpolant
+ComplexInterpolant::derivative() const
+{
+    RealInterpolant rpart = _realPart.derivative();
+    RealInterpolant ipart = _imagPart.derivative();
+    return ComplexInterpolant(rpart, ipart);
+}
+
+ComplexInterpolant
+ComplexInterpolant::derivative(unsigned n) const
+{
+    return recursNthDeriv(*this, n);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

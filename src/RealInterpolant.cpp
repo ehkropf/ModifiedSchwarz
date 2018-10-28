@@ -25,13 +25,15 @@ namespace ModifiedSchwarz
 
 ////////////////////////////////////////////////////////////////////////
 RealInterpolant::RealInterpolant(RealBoundaryValues bvals)
-    : _domain(bvals.domain()), _boundary_values(bvals)
+    : _domain(bvals.domain())
+    , _boundary_values(bvals)
 {
     prepareInterpolant();
 }
 
 RealInterpolant::RealInterpolant(UnitCircleDomain domain, colvec constants, cx_mat coefficients)
-    : _domain(domain), _constants(constants)
+    : _domain(domain)
+    , _constants(constants)
 {
     // Add extra zero row; see comment in prepareInterpolant() below.
     _coefficients = join_vert(coefficients,
@@ -84,6 +86,26 @@ void RealInterpolant::funcDefinition(const cx_vec& z, colvec& w) const
 void RealInterpolant::generateBoundaryValues(BoundaryPoints pts)
 {
     _boundary_values = RealBoundaryValues(pts, *this);
+}
+
+////////////////////////////////////////////////////////////////////////
+RealInterpolant
+RealInterpolant::derivative() const
+{
+    colvec new_const = _constants;
+    cx_mat new_coeff = _coefficients;
+
+    // TODO: Modify new_const and new_coeff appropritely.
+
+    RealInterpolant&& deriv = RealInterpolant(_domain, new_const, new_coeff);
+    if (!_boundary_values.points().isEmpty()) deriv.generateBoundaryValues(_boundary_values.points());
+    return deriv;
+}
+
+RealInterpolant
+RealInterpolant::derivative(unsigned n) const
+{
+    return recursNthDeriv(*this, n);
 }
 
 ////////////////////////////////////////////////////////////////////////

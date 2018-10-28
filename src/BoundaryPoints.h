@@ -57,6 +57,9 @@ public:
 
     //! View of points as vector via arma::vectorise().
     cx_vec vector() const { return arma::vectorise(_points); }
+
+    //! Has the point matrix been initialized?
+    bool isEmpty() const { return _points.n_rows == 0; }
 };
 
 }; // namespace ModifiedSchwarz

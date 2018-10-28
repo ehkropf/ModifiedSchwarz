@@ -73,6 +73,12 @@ public:
      *  false if the values can't be created.
      */
     bool checkPartBoundaryValues();
+
+    //! DFT derivative of each part. Returns new interpolant based on current.
+    ComplexInterpolant derivative() const;
+
+    //! n-th DFT derivative.
+    ComplexInterpolant derivative(unsigned n) const;
 };
 
 //! Adjust imaginary part by a constant on each boundary.

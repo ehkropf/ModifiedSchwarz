@@ -66,6 +66,16 @@ TEST_FIXTURE(Fixture, RealInterp)
     TEST_DONE;
 }
 
+TEST_FIXTURE(Fixture, RealInterpD)
+{
+    TEST_LINE("Real interp derivatives");
+
+    // TODO: Write tests for 1st derivative, and nth derivative.
+
+    std::cout << "Test needs written.\n";
+    CHECK(0);
+}
+
 TEST_FIXTURE(Fixture, ComplexInterp)
 {
     TEST_LINE("Complex interpolation");
@@ -75,6 +85,16 @@ TEST_FIXTURE(Fixture, ComplexInterp)
     CHECK(approx_equal(gi(zb), g(zb), "absdiff", 10.*eps2pi));
 
     TEST_DONE;
+}
+
+TEST_FIXTURE(Fixture, ComplexInterpD)
+{
+    TEST_LINE("Complex interp derivatives");
+
+    // TODO: Write tests for 1st derivative, and nth derivative.
+
+    std::cout << "Test needs written.\n";
+    CHECK(0);
 }
 
 } // SUITE

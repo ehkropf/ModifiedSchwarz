@@ -67,6 +67,12 @@ public:
 
     //! Define funciton behaviour on closure of domain.
     void funcDefinition(const cx_vec&, cx_vec&) const;
+
+    //! DFT derivatvie of function on closure. Returns new interpolant given current.
+    ClosureInterpolant derivative() const;
+
+    //! n-th DFT derivative.
+    ClosureInterpolant derivative(unsigned n) const;
 };
 
 }; // ModifiedSchwarz

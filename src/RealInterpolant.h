@@ -68,26 +68,35 @@ protected:
 public:
     //! Empty (nonfunctional) interpolant.
     RealInterpolant() {}
+
     //! Use samples to construct interpolant.
     RealInterpolant(RealBoundaryValues);
-    //! Polynomial data given directly. Mainly used by Solver.
+
+    //! Polynomial data given directly.
+    /*! Note this constructor leaves the boundary values uninitialized!
+     *  Use `generateBoundaryValues()` after construction to rectify.
+     */
     RealInterpolant(UnitCircleDomain, colvec constants, cx_mat coefficients);
 
     //! Domain of definition.
     const UnitCircleDomain& domain() const { return _domain; }
+
     //! View of stored BoundaryValues.
     const RealBoundaryValues& boundaryValues() const { return _boundary_values; }
+
     //! Boundary data matrix.
     const mat& boundaryData() const { return _boundary_values.values(); }
+
     //! View of m+1 vector of real constants.
     const colvec& constants() const { return _constants; }
+
     //! View of polynomial coefficients.
     const cx_mat& coefficients() const { return _coefficients; }
 
     //! Eval given vector of points on specific boundary.
     colvec evalOn(const cx_vec&, unsigned) const;
 
-    //! Enable function like behaviour.
+    //! Define function behaviour for FunctionLike.
     void funcDefinition(const cx_vec&, colvec&) const;
 
     //! Adjust polynomial constants by given vector c (add to stored constant vector).
@@ -95,6 +104,16 @@ public:
 
     //! Use interpolant to generate values at given points.
     void generateBoundaryValues(BoundaryPoints);
+
+    //! DFT derivative. Returns new interpolant based on current.
+    /*! Recall it's possible to have an instance of the interpolant with no boundary
+     *  points/values defined. In this case, the derivative will also be missing
+     *  defined boundary points/values.
+     */
+    RealInterpolant derivative() const;
+
+    //! n-th DFT derivative.
+    RealInterpolant derivative(unsigned n) const;
 
     //! Self description.
     friend std::ostream& operator<<(std::ostream&, RealInterpolant&);

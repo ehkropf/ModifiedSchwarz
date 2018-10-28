@@ -45,6 +45,18 @@ ArmaMatLike polyval(const ArmaVecLike& a, const ArmaMatLike& x)
     return pn;
 }
 
+//! Recursively calculate the n-th derivative of a differentiable class.
+/*! The class must have the method `derivatvive()` defined, returning the
+ *  same class type. If n == 0, a copy of the class is returned.
+ */
+template <typename Differentiable>
+Differentiable recursNthDeriv(const Differentiable& C, unsigned n)
+{
+    if (n > 1) return recursNthDeriv(C, n-1).derivative();
+    if (n == 0) return Differentiable(C);
+    return C.derivative();
+}
+
 }; // namespace ModifiedSchwarz
 
 #endif // UTILITY_HPP

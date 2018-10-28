@@ -18,6 +18,7 @@
  */
 
 #include "ClosureInterpolant.h"
+#include "Utility.hpp"
 #include <stdexcept>
 
 namespace ModifiedSchwarz
@@ -69,6 +70,19 @@ ClosureInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
         SDEBUG("Interior points found");
         w(mask) = _interior(z(mask));
     }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+ClosureInterpolant
+ClosureInterpolant::derivative() const
+{
+    return ClosureInterpolant(_boundary.derivative());
+}
+
+ClosureInterpolant
+ClosureInterpolant::derivative(unsigned n) const
+{
+    return recursNthDeriv(*this, n);
 }
 
 }; // namespace ModifiedSchwarz
