@@ -66,7 +66,7 @@ RealInterpolant::evalOn(const cx_vec& z, unsigned j) const
 }
 
 ////////////////////////////////////////////////////////////////////////
-void RealInterpolant::evalInto(const cx_vec& z, colvec& w) const
+void RealInterpolant::funcDefinition(const cx_vec& z, colvec& w) const
 {
     unsigned m = _domain.m();
     // colvec w(size(z));

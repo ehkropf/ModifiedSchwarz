@@ -49,10 +49,15 @@ class ClosureInterpolant : public FunctionLike<cx_vec> {
 public:
     //! Empty interpolant -- nothing defined.
     ClosureInterpolant() {};
-    //! Build with given interpolants.
-    ClosureInterpolant(ComplexInterpolant, CauchyInterpolant);
-    //! Build with given boundary sample values.
+
+    //! Create from given boundary interpolant.
+    ClosureInterpolant(ComplexInterpolant);
+
+    //! Create from boundary sample values.
     ClosureInterpolant(ComplexBoundaryValues);
+
+    //! Put existing boundary and interior interpolants together.
+    ClosureInterpolant(ComplexInterpolant, CauchyInterpolant);
 
     //! View of stored boundary interpolant.
     const ComplexInterpolant& boundary() const { return _boundary; }
@@ -60,8 +65,8 @@ public:
     //! View of stored interior interpolant.
     const CauchyInterpolant& interior() const { return _interior; }
 
-    //! Provides function like behaviour.
-    void evalInto(const cx_vec&, cx_vec&) const;
+    //! Define funciton behaviour on closure of domain.
+    void funcDefinition(const cx_vec&, cx_vec&) const;
 };
 
 }; // ModifiedSchwarz

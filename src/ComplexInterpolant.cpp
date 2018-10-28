@@ -22,7 +22,7 @@
 namespace ModifiedSchwarz
 {
 //////////////////////////////////////////////////////////////////////////////////
-ComplexInterpolant::ComplexInterpolant(const RealInterpolant& rpart, const RealInterpolant& ipart)
+ComplexInterpolant::ComplexInterpolant(RealInterpolant rpart, RealInterpolant ipart)
     : _realPart(rpart),
       _imagPart(ipart)
 {}
@@ -33,9 +33,46 @@ ComplexInterpolant::ComplexInterpolant(ComplexBoundaryValues values)
 {}
 
 //////////////////////////////////////////////////////////////////////////////////
-void ComplexInterpolant::evalInto(const cx_vec& z, cx_vec& w) const
+void ComplexInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
 {
     w = cx_vec(_realPart(z), _imagPart(z));
+}
+
+bool
+ComplexInterpolant::checkPartBoundaryValues()
+{
+    if (_realPart.boundaryValues().isEmpty())
+    {
+        try
+        {
+            _realPart.generateBoundaryValues(_imagPart.boundaryValues().points());
+        }
+        catch (const std::exception&)
+        {
+            return false;
+        }
+    }
+
+    if (_imagPart.boundaryValues().isEmpty())
+    {
+        try
+        {
+            _imagPart.generateBoundaryValues(_realPart.boundaryValues().points());
+        }
+        catch (const std::exception&)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+ComplexInterpolant withAdjustedImagConst(RealInterpolant rpart, RealInterpolant ipart, colvec constvec)
+{
+    ipart.adjustConstants(constvec);
+    return ComplexInterpolant(rpart, ipart);
 }
 
 }; // namespace ModifiedSchwarz

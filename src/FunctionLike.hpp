@@ -27,7 +27,7 @@ namespace ModifiedSchwarz
 
 //! Abstract base class to provide function like behaviour.
 /*!
- * Derived classes only need to define the abstract evalInto() member
+ * Derived classes only need to define the abstract funcDefinition() member
  * function to provide behaviour such that given Amatrix type and
  * Bmatrix type a derived class instance f provides
  *     Bmatrix w = f(const Amatrix& z)
@@ -40,16 +40,18 @@ public:
     //! Virtual destructor required for abstract class.
     virtual ~FunctionLike() = default;
 
-    //! Provides function-like evaulation. Wrapper for eval()
-    inline virtual Bmatrix operator()(const Amatrix&) const;
-
-    //! Wrapper for evalInto(). Initializes target matrix with NaN values.
-    /*!  TODO: Add warning if w.has_nan()?
+    //! Provides function-like evaulation.
+    /*!  Initializes a target Bmatrix with NaN values, and then calls
+     *   funcDefinition to evaluate the funciton.
+     *   TODO: Add warning if w.has_nan()?
      */
-    inline virtual Bmatrix eval(const Amatrix&) const;
+    virtual Bmatrix operator()(const Amatrix&) const;
 
-    //! Override to provide functionality.
-    virtual void evalInto(const Amatrix&, Bmatrix&) const = 0;
+    //! Provides function definition for `operator()`.
+    /*! Amatrix is the function input, and function output is to be
+     *  stored in Bmatrix. All subclasses must override this.
+     */
+    virtual void funcDefinition(const Amatrix&, Bmatrix&) const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -58,17 +60,11 @@ public:
 template <typename Amatrix, typename Bmatrix>
 Bmatrix FunctionLike<Amatrix, Bmatrix>::operator()(const Amatrix& z) const
 {
-    return eval(z);
-}
-
-template <typename Amatrix, typename Bmatrix>
-Bmatrix FunctionLike<Amatrix, Bmatrix>::eval(const Amatrix& z) const
-{
     Bmatrix w(size(z));
     w.fill(nan);
-    evalInto(z, w);
+    funcDefinition(z, w);
 
-    return w;
+    return w; //eval(z);
 }
 
 }; //namespace ModifiedSchwarz

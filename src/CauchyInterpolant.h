@@ -53,7 +53,7 @@ public:
     CauchyInterpolant(ComplexBoundaryValues);
 
     //! Provides the function like behaviour.
-    virtual void evalInto(const cx_vec&, cx_vec&) const;
+    virtual void funcDefinition(const cx_vec&, cx_vec&) const;
 
     //! Domain of definition.
     UnitCircleDomain domain() const { return _boundary_values.domain(); }
