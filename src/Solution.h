@@ -59,26 +59,8 @@ public:
     //! Allows storage of solver data to accelerate subsequent solver runs.
     Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData);
 
-/*
-    //! View of solution real part.
-    const RealInterpolant& realPart()      const { return _interpolant.boundary().realPart(); }
-    //! View of solution constants.
-    const colvec&          constants()     const { return _constants; }
-    //! View of given imaginary part.
-    const RealInterpolant& imagPart()      const { return _interpolant.boundary().realPart(); }
-*/
     //! Read only pointer to solver data.
     const SolverData::Ptr  solverDataPtr() const { return _pSolverData; }
-
-    //! Provide function like behaviour.
-    /*!
-     *  Override FunctionLike::operator() because ClosureInterpolant already
-     *  uses this mechanism. No need to allocate return value twice.
-     */
-    // cx_vec operator()(const cx_vec& z) const { return _interpolant(z); }
-
-    //! Dummy definition to satisfy abstract requirement.
-    // void funcDefinition(const cx_vec&, cx_vec&) const {}
 };
 
 }; // namespace ModifiedSchwarz

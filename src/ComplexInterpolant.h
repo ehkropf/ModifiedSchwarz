@@ -45,9 +45,14 @@ class ComplexInterpolant : public FunctionLike<cx_vec>
 public:
     //! Empty interpolant -- nothing defined.
     ComplexInterpolant() {};
+
     //! Define given real and imaginary parts.
-    ComplexInterpolant(const RealInterpolant&, const RealInterpolant&);
+    ComplexInterpolant(RealInterpolant, RealInterpolant);
+
     //! Define given boundary samples.
+    /*! FIXME: Should take const reference? Only a copy of boundary points are
+     *  used in constructor.
+     */
     ComplexInterpolant(ComplexBoundaryValues);
 
     //! View of real part.
@@ -60,7 +65,21 @@ public:
 
     //! Domain of definition.
     UnitCircleDomain domain() const { return _realPart.domain(); }
+
+    //! Request check that boundary values are cached.
+    /*! It's possible to have constructed the complex interpolant with real or
+     *  imaginary interpolants that don't have initialized boundary value structures.
+     *  This method checks each and tries to create them. Returns true on success and
+     *  false if the values can't be created.
+     */
+    bool checkPartBoundaryValues();
 };
+
+//! Adjust imaginary part by a constant on each boundary.
+/*! Solutions to the modified Schwarz problem are determined up to an imaginary constant
+ *  on each boundary.
+ */
+ComplexInterpolant withAdjustedImagConst(RealInterpolant rpart, RealInterpolant ipart, colvec constvec);
 
 }; // namespace ModifiedSchwarz
 

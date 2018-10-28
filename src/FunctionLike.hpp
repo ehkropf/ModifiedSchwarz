@@ -47,9 +47,9 @@ public:
      */
     virtual Bmatrix operator()(const Amatrix&) const;
 
-    //! Override to provide functionality.
+    //! Provides function definition for `operator()`.
     /*! Amatrix is the function input, and function output is to be
-     *  stored in Bmatrix.
+     *  stored in Bmatrix. All subclasses must override this.
      */
     virtual void funcDefinition(const Amatrix&, Bmatrix&) const = 0;
 };

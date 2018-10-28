@@ -65,7 +65,7 @@ public:
     //! View of stored interior interpolant.
     const CauchyInterpolant& interior() const { return _interior; }
 
-    //! Provides function like behaviour.
+    //! Define funciton behaviour on closure of domain.
     void funcDefinition(const cx_vec&, cx_vec&) const;
 };
 

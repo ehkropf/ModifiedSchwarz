@@ -18,6 +18,7 @@
  */
 
 #include "ClosureInterpolant.h"
+#include <stdexcept>
 
 namespace ModifiedSchwarz
 {
@@ -26,6 +27,20 @@ ClosureInterpolant::ClosureInterpolant(ComplexInterpolant bfun, CauchyInterpolan
     : _boundary(bfun),
       _interior(ifun)
 {}
+
+ClosureInterpolant::ClosureInterpolant(ComplexInterpolant cfun)
+    : _boundary(cfun)
+{
+    if (!cfun.checkPartBoundaryValues())
+    {
+        throw std::runtime_error("Complex interpolant does not have valid boundary value state.");
+    }
+    ComplexBoundaryValues&& values = ComplexBoundaryValues(
+            cfun.realPart().boundaryValues().points(),
+            cx_mat(cfun.realPart().boundaryValues().values(), cfun.imagPart().boundaryValues().values())
+            );
+    _interior = CauchyInterpolant(values);
+}
 
 ClosureInterpolant::ClosureInterpolant(ComplexBoundaryValues values)
     : _boundary(ComplexInterpolant(values)),

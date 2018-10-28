@@ -24,34 +24,14 @@ namespace ModifiedSchwarz
 
 //////////////////////////////////////////////////////////////////////////////
 Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart)
-    : _constants(constants)
-{
-    imagPart.adjustConstants(_constants);
-    SDEBUG("create boundary interpolant");
-    ComplexInterpolant&& boundary = ComplexInterpolant(realPart, imagPart);
-
-    mat realValues;
-    if (realPart.boundaryValues().isEmpty())
-    {
-        realPart.generateBoundaryValues(imagPart.boundaryValues().points());
-    }
-
-    SDEBUG("create boundary values, real size=" << realPart.boundaryValues().values().n_rows
-            << "-by-" << realPart.boundaryValues().values().n_cols << " and imag size="
-            << imagPart.boundaryValues().values().n_rows << "-by-"
-            << imagPart.boundaryValues().values().n_cols);
-    ComplexBoundaryValues&& values = ComplexBoundaryValues(
-            realPart.boundaryValues().points(),
-            cx_mat(realPart.boundaryValues().values(), imagPart.boundaryValues().values())
-            );
-    SDEBUG("create closure interpolant");
-    _interpolant = ClosureInterpolant(boundary, CauchyInterpolant(values));
-}
+    : ClosureInterpolant(withAdjustedImagConst(realPart, imagPart, constants))
+    , _constants(constants)
+{}
 
 Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant imagPart, SolverData::Ptr pSolverData)
-{
-    *this = Solution(realPart, constants, imagPart);
-    _pSolverData = pSolverData;
-}
+    : ClosureInterpolant(withAdjustedImagConst(realPart, imagPart, constants))
+    , _constants(constants)
+    , _pSolverData(pSolverData)
+{}
 
 }; // namespace ModifiedSchwarz
