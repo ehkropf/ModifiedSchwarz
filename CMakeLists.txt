@@ -17,6 +17,11 @@
 
 cmake_minimum_required(VERSION 3.5)
 
+option(DEFINE_DEBUG
+    "Build with -DDEBUG in CXX_FLAGS."
+    OFF
+    )
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
     message(STATUS "Defaulting to CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
@@ -26,6 +31,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
 set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+if(DEFINE_DEBUG)
+    message(STATUS "Adding -DDEBUG to CXX_FLAGS")
+    ADD_DEFINITIONS(-DDEBUG)
+endif()
 
 # For ubuntu 18.04 build
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
