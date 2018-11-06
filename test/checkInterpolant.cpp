@@ -59,8 +59,10 @@ TEST_FIXTURE(Fixture, RealInterp)
 {
     TEST_LINE("Real interpolation");
 
+    SDEBUG(domain);
     RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
     auto&& zb = eval_points.vector();
+    SDEBUG(arma::abs(gi(zb) - h(zb)));
     CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
 
     TEST_DONE;

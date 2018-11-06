@@ -17,8 +17,7 @@
  * along with ModifiedSchwarz.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UNITCIRCLEDOMAIN_H
-#define UNITCIRCLEDOMAIN_H
+#pragma once
 
 #include "SchwarzTypes.h"
 
@@ -129,6 +128,9 @@ public:
     {
         return arma::all(a._centers == b._centers) && arma::all(a._radii && b._radii);
     }
+
+    //! Readable stream out.
+    friend std::ostream& operator<<(std::ostream&, const UnitCircleDomain);
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -145,5 +147,3 @@ public:
 UnitCircleDomain domainExample3();
 
 }; // namespace ModifiedSchwarz
-
-#endif // UNITCIRCLEDOMAIN_H

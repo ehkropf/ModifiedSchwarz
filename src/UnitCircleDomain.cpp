@@ -111,4 +111,12 @@ UnitCircleDomain domainExample3()
             colvec{ 0.2377, 0.1557 });
 }
 
+////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<(std::ostream& os, const UnitCircleDomain D)
+{
+    std::cout << "Domain:\n  centers:\n" << D._centers
+            << "  radii:\n" << D._radii;
+    return os;
+}
+
 }; // namespace ModifiedSchwarz
