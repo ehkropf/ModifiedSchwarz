@@ -61,8 +61,12 @@ TEST_FIXTURE(Fixture, RealInterp)
 
     SDEBUG(domain);
     RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
-    auto&& zb = eval_points.vector();
-    SDEBUG(arma::abs(gi(zb) - h(zb)));
+    const auto& zb = eval_points.vector();
+    //SDEBUG(arma::abs(gi(zb) - h(zb)));
+    SDEBUG("\n" <<
+            arma::join_rows(
+                jPointsFromPointsVector(0, domain, gi(zb)),
+                jPointsFromPointsVector(0, domain, h(zb)) ));
     CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
 
     TEST_DONE;
@@ -83,7 +87,7 @@ TEST_FIXTURE(Fixture, ComplexInterp)
     TEST_LINE("Complex interpolation");
 
     ComplexInterpolant gi(ComplexBoundaryValues(BoundaryPoints(domain), g));
-    auto&& zb = eval_points.vector();
+    const auto& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), g(zb), "absdiff", 10.*eps2pi));
 
     TEST_DONE;

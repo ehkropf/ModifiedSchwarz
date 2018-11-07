@@ -97,8 +97,9 @@ RealInterpolant::derivative() const
 
     // TODO: Modify new_const and new_coeff appropritely.
 
-    RealInterpolant&& deriv = RealInterpolant(_domain, new_const, new_coeff);
-    if (!_boundary_values.points().isEmpty()) deriv.generateBoundaryValues(_boundary_values.points());
+    RealInterpolant deriv(_domain, new_const, new_coeff);
+    if (!_boundary_values.points().isEmpty())
+        deriv.generateBoundaryValues(_boundary_values.points());
     return deriv;
 }
 

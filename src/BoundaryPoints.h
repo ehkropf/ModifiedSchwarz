@@ -62,6 +62,24 @@ public:
     bool isEmpty() const { return _points.n_rows == 0; }
 };
 
+//! Pick points on circle j from vector of points on all circles.
+/*! With 0 <= j < m, and a vector with an equal number of points on
+ *  all circles in the domain, returns a copy of only the points on
+ *  circle j.
+ */
+template<typename Vec>
+Vec jPointsFromPointsVector(unsigned j, const UnitCircleDomain& D, const Vec& v)
+{
+    unsigned m = D.connectivity();
+    unsigned n = v.n_elem / m;
+
+    if (n*m != v.n_elem)
+        throw(std::runtime_error("Vector does not represent an equal number of points on"
+                    "all boundary circles."));
+
+    return v.rows(j*n, (j+1)*n);
+}
+
 }; // namespace ModifiedSchwarz
 
 #endif // BOUNDARY_POINTS_H
