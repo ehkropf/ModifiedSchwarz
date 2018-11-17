@@ -26,7 +26,7 @@ using namespace ModifiedSchwarz;
 
 TEST(UnitCircLabel)
 {
-    TEST_LINE("Unit Circle Domain check");
+    TEST_FILE("Unit Circle Domain check");
 }
 
 class TestFixture
