@@ -55,18 +55,22 @@ struct Fixture
     }
 };
 
+TEST_FIXTURE(Fixture, FFT)
+{
+    TEST_LINE("FFT");
+
+    BoundaryPoints zp(domain, 16);
+    RealBoundaryValues zv(zp, h);
+    cx_mat c = arma::fft(zv.values());
+    SDEBUG("DFT:\n" << c);
+}
+
 TEST_FIXTURE(Fixture, RealInterp)
 {
     TEST_LINE("Real interpolation");
 
-    SDEBUG(domain);
     RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
     const auto& zb = eval_points.vector();
-    //SDEBUG(arma::abs(gi(zb) - h(zb)));
-    SDEBUG("\n" <<
-            arma::join_rows(
-                jPointsFromPointsVector(0, domain, gi(zb)),
-                jPointsFromPointsVector(0, domain, h(zb)) ));
     CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
 
     TEST_DONE;
