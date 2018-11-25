@@ -27,19 +27,33 @@
 
 using namespace ModifiedSchwarz;
 
-SUITE(InterpolantSuite)
+////////////////////////////////////////////////////////////////////////////////
+// It's assumed that c.n_elem is even.
+void coeffOut(const cx_vec& c)
+{
+    unsigned N = c.n_elem;
+
+    std::cout << "Coeff (1,5) and (-1,-5):\n"
+            << arma::join_horiz(c.rows(1, 5), flipud(c.rows(N-5, N-1)))
+            <<"... (" << N/2-5 << ", " << N/2-1 << ") and ("
+            << -int(N/2-5) << ", " << -int(N/2-1) << "): \n"
+            << arma::join_horiz(c.rows(N/2-5, N/2-1), arma::flipud(c.rows(N/2+1, N/2+5)));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+SUITE(FFTSuite)
 {
 
-TEST(InterpLabel)
+TEST(FFTLabel)
 {
-    TEST_FILE("Real Interpolant");
+    TEST_FILE("FFT");
 }
 
 struct Fixture
 {
     using Function = std::function<mat(cx_mat&)>;
 
-    static constexpr unsigned N = 100;
+    static constexpr unsigned N = 256;
 
     UnitCircleDomain domain;
     BoundaryPoints eval_points;
@@ -55,46 +69,14 @@ struct Fixture
     }
 };
 
-TEST_FIXTURE(Fixture, RealInterp)
+TEST_FIXTURE(Fixture, FFT)
 {
-    TEST_LINE("Real interpolation");
+    TEST_LINE("FFT interp");
 
-    RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
-    const auto& zb = eval_points.vector();
-    CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
+    
 
-    TEST_DONE;
-}
-
-TEST_FIXTURE(Fixture, RealInterpD)
-{
-    TEST_LINE("Real interp derivatives");
-
-    // TODO: Write tests for 1st derivative, and nth derivative.
-
-    std::cout << "Test needs written.\n";
-    CHECK(0);
-}
-
-TEST_FIXTURE(Fixture, ComplexInterp)
-{
-    TEST_LINE("Complex interpolation");
-
-    ComplexInterpolant gi(ComplexBoundaryValues(BoundaryPoints(domain), g));
-    const auto& zb = eval_points.vector();
-    CHECK(approx_equal(gi(zb), g(zb), "absdiff", 10.*eps2pi));
-
-    TEST_DONE;
-}
-
-TEST_FIXTURE(Fixture, ComplexInterpD)
-{
-    TEST_LINE("Complex interp derivatives");
-
-    // TODO: Write tests for 1st derivative, and nth derivative.
-
-    std::cout << "Test needs written.\n";
-    CHECK(0);
+    SDEBUG("Output results.");
+    coeffOut(c);
 }
 
 } // SUITE

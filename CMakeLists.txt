@@ -118,6 +118,7 @@ if(UNITTEST_FOUND)
         test/checkPolynomial.cpp
         test/checkUnitDomain.cpp
         test/checkBoundaryValues.cpp
+        test/checkFFT.cpp
         test/checkInterpolant.cpp
         test/checkFMM.cpp
         test/checkCauchyInterpolant.cpp
