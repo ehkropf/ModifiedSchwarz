@@ -65,12 +65,12 @@ public:
     //! Inner circle center by index {0,...,m-2}.
     const cx_double dv(unsigned j) const { return _centers(j); }
     //! Inner circle radius by index {0,...,m-2}.
-    const double qv(unsigned j) const { return _radii(j); }
+    double qv(unsigned j) const { return _radii(j); }
 
     //! Domain circle center by index {0,...,m-1}.
     const cx_double dv0(unsigned j) const { return j > 0 ? _centers(j-1) : 0.; }
     //! Domain circle radius by index {0,...,m-1}.
-    const double qv0(unsigned j) const { return j > 0 ? _radii(j-1) : 1.; }
+    double qv0(unsigned j) const { return j > 0 ? _radii(j-1) : 1.; }
 
     //! Total number of boundaries in the domain.
     unsigned connectivity() const { return unsigned(_centers.n_elem) + 1; }
