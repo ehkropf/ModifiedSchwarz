@@ -91,4 +91,4 @@ ComplexInterpolant withAdjustedImagConst(RealInterpolant rpart, RealInterpolant 
     return ComplexInterpolant(rpart, ipart);
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

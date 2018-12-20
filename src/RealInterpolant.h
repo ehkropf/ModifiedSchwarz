@@ -119,6 +119,6 @@ public:
     friend std::ostream& operator<<(std::ostream&, RealInterpolant&);
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // REALINTERPOLANT_H

@@ -87,6 +87,6 @@ public:
     };
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // SPECTRALDATA_H

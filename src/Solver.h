@@ -59,6 +59,6 @@ struct Solver
     Solution solve(const Problem&, const Solution&);
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // SOLVER_H

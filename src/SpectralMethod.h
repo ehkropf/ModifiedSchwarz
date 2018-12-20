@@ -68,6 +68,6 @@ public:
     cx_vec computeRHS(unsigned numSamplePoints);
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // SPECTRALSOLVER_H

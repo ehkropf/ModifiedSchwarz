@@ -35,4 +35,4 @@ BoundaryPoints::BoundaryPoints(UnitCircleDomain domain, unsigned numPoints)
     _points = _domain.boundaryPoints(numPoints);
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

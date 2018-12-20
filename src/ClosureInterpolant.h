@@ -75,6 +75,6 @@ public:
     ClosureInterpolant derivative(unsigned n) const;
 };
 
-}; // ModifiedSchwarz
+} // ModifiedSchwarz
 
 #endif // CLOSURE_INTERPOLANT_H

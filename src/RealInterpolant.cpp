@@ -126,4 +126,4 @@ std::ostream& operator<<(std::ostream& os, RealInterpolant& I)
         << "}\n";
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

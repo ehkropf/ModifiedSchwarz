@@ -177,4 +177,4 @@ SpectralData::constructMatrix()
     return L;
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

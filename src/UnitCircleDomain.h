@@ -146,4 +146,4 @@ public:
  */
 UnitCircleDomain domainExample3();
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

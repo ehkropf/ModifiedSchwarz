@@ -63,6 +63,6 @@ public:
     const SolverData::Ptr  solverDataPtr() const { return _pSolverData; }
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // SOLUTION_H

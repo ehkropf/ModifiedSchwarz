@@ -59,6 +59,6 @@ public:
     UnitCircleDomain domain() const { return _boundary_values.domain(); }
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // CAUCHY_H

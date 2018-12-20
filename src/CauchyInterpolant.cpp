@@ -86,4 +86,4 @@ void CauchyInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
     }
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

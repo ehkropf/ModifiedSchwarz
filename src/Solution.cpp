@@ -34,4 +34,4 @@ Solution::Solution(RealInterpolant realPart, colvec constants, RealInterpolant i
     , _pSolverData(pSolverData)
 {}
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

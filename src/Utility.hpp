@@ -57,6 +57,6 @@ Differentiable recursNthDeriv(const Differentiable& C, unsigned n)
     return C.derivative();
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // UTILITY_HPP

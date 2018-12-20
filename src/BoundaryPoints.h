@@ -80,6 +80,6 @@ Vec jPointsFromPointsVector(unsigned j, const UnitCircleDomain& D, const Vec& v)
     return v.rows(j*n, (j+1)*n);
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // BOUNDARY_POINTS_H

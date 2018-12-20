@@ -60,4 +60,4 @@ ZFMM2d::ZFMM2d(const cx_vec& source, const cx_vec& dipstr, const cx_vec& target,
             );
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

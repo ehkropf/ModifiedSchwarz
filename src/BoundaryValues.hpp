@@ -82,6 +82,6 @@ BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, ArmaMat vals
     : _points(pts), _values(vals)
 {}
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // BOUNDARY_VALUES_HPP

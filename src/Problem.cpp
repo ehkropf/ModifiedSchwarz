@@ -59,4 +59,4 @@ std::ostream& operator<<(std::ostream& os, Problem& P)
     return os << "Problem is defined by\n" << P._imaginaryPart;
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

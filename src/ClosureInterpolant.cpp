@@ -85,4 +85,4 @@ ClosureInterpolant::derivative(unsigned n) const
     return recursNthDeriv(*this, n);
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

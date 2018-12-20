@@ -119,4 +119,4 @@ std::ostream& operator<<(std::ostream& os, const UnitCircleDomain D)
     return os;
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

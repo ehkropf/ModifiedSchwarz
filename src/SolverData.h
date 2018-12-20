@@ -45,6 +45,6 @@ public:
     using ConstPtr = std::shared_ptr<const SolverData>;
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // SOLVERDATA_H

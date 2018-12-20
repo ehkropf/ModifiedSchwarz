@@ -61,4 +61,4 @@ Solution Solver::solve(const Problem& p, const Solution& prev)
     }
 }
 
-}; // ModifiedSchwarz
+} // ModifiedSchwarz

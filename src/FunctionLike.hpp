@@ -67,6 +67,6 @@ Bmatrix FunctionLike<Amatrix, Bmatrix>::operator()(const Amatrix& z) const
     return w; //eval(z);
 }
 
-}; //namespace ModifiedSchwarz
+} //namespace ModifiedSchwarz
 
 #endif // FUNCLIKE_HPP

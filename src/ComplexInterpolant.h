@@ -87,6 +87,6 @@ public:
  */
 ComplexInterpolant withAdjustedImagConst(RealInterpolant rpart, RealInterpolant ipart, colvec constvec);
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // COMPLEXINTERP_H

@@ -64,4 +64,4 @@ SpectralConstants::setTruncation(const unsigned truncationLevel)
     _truncSet = true;
 }
 
-}; // ModifiedSchwarz
+} // ModifiedSchwarz

@@ -74,6 +74,6 @@ const double nan = arma::datum::nan;
 //! Point threshold to use FMM.
 const unsigned min_pts_for_FMM = 1e4;
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // SCHWARZTYPES_H

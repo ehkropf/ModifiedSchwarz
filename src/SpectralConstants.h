@@ -78,6 +78,6 @@ public:
     static void setTruncation(const unsigned truncationLevel);
 };
 
-}; // ModifiedSchwarz
+} // ModifiedSchwarz
 
 #endif // SPECRALCONST_H

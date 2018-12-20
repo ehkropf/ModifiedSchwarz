@@ -120,4 +120,4 @@ SpectralMethod::computeRHS(unsigned M)
     return join_vert(b, conj(b));
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz

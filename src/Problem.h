@@ -71,6 +71,6 @@ public:
     friend std::ostream& operator<<(std::ostream&, Problem&);
 };
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // SCHWARZPROBLEM_H
