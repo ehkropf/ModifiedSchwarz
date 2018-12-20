@@ -57,10 +57,10 @@ RealInterpolant::prepareInterpolant()
     _coefficients = join_vert(flipud(c.rows(1, N)),
                               cx_mat(1, bvals.n_cols, arma::fill::zeros));
 
-//    SDEBUG("M=" << M << " point DFT with N=" << N << " coefficients.\n"
-//            << "constants:\n" << _constants
-//            << "first 6 coefficient rows:\n" <<
-//            arma::flipud(_coefficients.rows(N-5,N)));
+    SDEBUG("M=" << M << " point DFT with N=" << N << " coefficients.\n"
+            << "constants:\n" << _constants
+            << "first 6 coefficient rows:\n" <<
+            arma::flipud(_coefficients.rows(N-5,N)));
 }
 
 ////////////////////////////////////////////////////////////////////////
