@@ -45,9 +45,8 @@ public:
     //! Define problem with real valued function on the boundary.
     Problem(RealInterpolant imaginaryPart);
 
-    // FIXME: BoundaryValues contians domain; domain arg not needed.
     //! Define problem with evenly spaced real samples on the boundary.
-    Problem(UnitCircleDomain domain, RealBoundaryValues imaginaryPart);
+    Problem(RealBoundaryValues imaginaryPart);
 
     //! View of imaginary part interpolant.
     const RealInterpolant& interpolant() const { return _imaginaryPart; }

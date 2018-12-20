@@ -35,6 +35,6 @@ ArmaMatLike polesInHoles(const ArmaMatLike& z, const UnitCircleDomain& D)
     return w;
 }
 
-}; // namespace ModifiedSchwarz
+} // namespace ModifiedSchwarz
 
 #endif // TESTSHARED_HPP

@@ -60,7 +60,7 @@ SUITE(SpectralMethodTest)
         TEST_LINE("Right hand side");
 
         SpectralConstants::setTruncation(64);
-        SpectralMethod method(Problem(domain, imaginary_part));
+        SpectralMethod method((Problem(imaginary_part)));
         cx_vec rhs = method.computeRHS(100);
 
         cx_vec refRHS;
@@ -75,7 +75,7 @@ SUITE(SpectralMethodTest)
     {
         TEST_LINE("Residual");
 
-        SpectralMethod method(Problem(domain, imaginary_part));
+        SpectralMethod method((Problem(imaginary_part)));
 
         cx_vec rhs = method.computeRHS();
         const cx_mat& A = method.matrix();
@@ -91,7 +91,7 @@ SUITE(SpectralMethodTest)
     {
         TEST_LINE("Solution");
 
-        SpectralMethod method(Problem(domain, imaginary_part));
+        SpectralMethod method((Problem( imaginary_part)));
         Solution sol = method.solve();
 
         SpectralData& data = *std::dynamic_pointer_cast<SpectralData>(sol.solverDataPtr());
