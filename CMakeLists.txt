@@ -29,7 +29,7 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
-set(CMAKE_CXX_FLAGS "-Wall -std=c++14")
+set(CMAKE_CXX_FLAGS "-Wall -Wpedantic -Wextra -std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 if(DEFINE_DEBUG)
