@@ -66,6 +66,7 @@ TEST_FIXTURE(Fixture, RealInterp)
     try
     {
         gi.boundaryValues().values().save("bvalues.arma", arma::arma_ascii);
+        gi.boundaryValues().points().matrix().save("bpoints.arma", arma::arma_ascii);
         gi.constants().save("constants.arma", arma::arma_ascii);
         gi.coefficients().save("coefficients.arma", arma::arma_ascii);
     }
