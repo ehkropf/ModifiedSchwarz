@@ -18,7 +18,7 @@
  */
 
 #include "UnitTest.h"
-#include "TestFunctions.hpp"
+// #include "TestFunctions.hpp"
 
 #include "SchwarzTypes.h"
 #include "BoundaryValues.hpp"
@@ -26,6 +26,15 @@
 #include "ComplexInterpolant.h"
 
 using namespace ModifiedSchwarz;
+
+template<typename ArmaMatLike>
+ArmaMatLike polesInHoles(const ArmaMatLike& z, const UnitCircleDomain& D)
+{
+    ArmaMatLike w(size(z), arma::fill::zeros);
+    for (auto & d : D.centers()) w += 1./(z - d);
+
+    return w;
+}
 
 SUITE(InterpolantSuite)
 {
