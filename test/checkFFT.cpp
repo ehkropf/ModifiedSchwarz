@@ -47,7 +47,7 @@ ArmaCxMat testFun(const ArmaCxMat& zv)
  */
 arma::cx_vec trigInterp(const arma::cx_vec& c, const arma::cx_vec& z)
 {
-    unsigned N = c.n_elem;
+    const unsigned N = c.n_elem;
 
     const arma::cx_vec& pos_coeff(arma::flipud(c.rows(0, N/2)));
     arma::cx_vec pos_part(polyval(pos_coeff, z));
@@ -64,7 +64,7 @@ arma::cx_vec trigInterp(const arma::cx_vec& c, const arma::cx_vec& z)
  */
 arma::colvec realTrigInterp(const arma::cx_vec& c, const arma::cx_vec& z)
 {
-    unsigned N = c.n_elem;
+    const unsigned N = c.n_elem;
 
     const arma::cx_vec& coeff(arma::join_vert(arma::flipud(c.rows(1, N/2-1)),
                 arma::cx_vec{ 0. }));
@@ -73,17 +73,23 @@ arma::colvec realTrigInterp(const arma::cx_vec& c, const arma::cx_vec& z)
 
 ////////////////////////////////////////////////////////////////////////////////
 // It's assumed that c.n_elem is even.
+
+// TODO: This is pretty bloody clunky.
+#ifdef DEBUG
 void coeffOut(const cx_vec& c)
 {
-    unsigned N = c.n_elem;
+    const unsigned N = c.n_elem;
 
     SDEBUG("Coeff (1,5) and (-1,-5):\n"
             << arma::join_horiz(c.rows(1, 5), flipud(c.rows(N-5, N-1)))
-            <<"... (" << N/2-5 << ", " << N/2-1 << ") and ("
+            << "... (" << N/2-5 << ", " << N/2-1 << ") and ("
             << -int(N/2-5) << ", " << -int(N/2-1) << "): \n"
             << arma::join_horiz(c.rows(N/2-5, N/2-1), arma::flipud(c.rows(N/2+1, N/2+5)))
           );
 }
+#else
+void coeffOut(const cx_vec&) {}
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 SUITE(FFTSuite)
@@ -100,16 +106,11 @@ struct Fixture
 
     UnitCircleDomain domain;
     BoundaryPoints eval_points;
-//    ComplexBoundaryValues::Function g;
-//    RealBoundaryValues::Function h;
 
     Fixture()
         : domain(domainExample3()),
           eval_points(BoundaryPoints(domain, N))
-    {
-//        g = [this](const cx_mat& z) { return polesInHoles(z, domain); };
-//        h = [this](const cx_mat& z) { return real(polesInHoles(z, domain)); };
-    }
+    {}
 };
 
 TEST_FIXTURE(Fixture, FFT)
