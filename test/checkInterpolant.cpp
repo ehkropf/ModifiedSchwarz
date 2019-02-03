@@ -18,7 +18,7 @@
  */
 
 #include "UnitTest.h"
-// #include "TestFunctions.hpp"
+#include "TestFunctions.hpp"
 
 #include "SchwarzTypes.h"
 #include "BoundaryValues.hpp"
@@ -27,14 +27,14 @@
 
 using namespace ModifiedSchwarz;
 
-template<typename ArmaMatLike>
-ArmaMatLike polesInHoles(const ArmaMatLike& z, const UnitCircleDomain& D)
-{
-    ArmaMatLike w(size(z), arma::fill::zeros);
-    for (auto & d : D.centers()) w += 1./(z - d);
-
-    return w;
-}
+//template<typename ArmaMatLike>
+//ArmaMatLike polesInHoles(const ArmaMatLike& z, const UnitCircleDomain& D)
+//{
+//    ArmaMatLike w(size(z), arma::fill::zeros);
+//    for (auto & d : D.centers()) w += 1./(z - d);
+//
+//    return w;
+//}
 
 SUITE(InterpolantSuite)
 {
@@ -67,6 +67,14 @@ struct Fixture
 TEST_FIXTURE(Fixture, RealInterp)
 {
     TEST_LINE("Real interpolation");
+
+    cx_mat pts = BoundaryPoints(domain).matrix();
+    // auto vv{h(pts.col(0).rows(0, 1))};
+    cx_double p1{pts(0, 0)}, p2{pts(1, 0)};
+    cx_double v1{1./(p1 - domain.dv(0)) + 1./(p1 - domain.dv(1))};
+    cx_double v2{1./(p2 - domain.dv(0)) + 1./(p2 - domain.dv(1))};
+    SDEBUG("  Centers: " << domain.centers() << "\n"
+            << "  Value 1: " << v1 << "\n  Value 2: " << v2 << "\n");
 
     RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
     const auto& zb = eval_points.vector();
