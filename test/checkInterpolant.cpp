@@ -63,6 +63,15 @@ TEST_FIXTURE(Fixture, RealInterp)
     const auto& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
 
+    try
+    {
+        gi.boundaryValues().values().save("bvalues.arma", arma::arma_ascii);
+        gi.constants().save("constants.arma", arma::arma_ascii);
+        gi.coefficients().save("coefficients.arma", arma::arma_ascii);
+    }
+    catch (...)
+    {}
+
     TEST_DONE;
 }
 
