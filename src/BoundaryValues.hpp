@@ -72,7 +72,7 @@ using ComplexBoundaryValues = BoundaryValues<cx_mat,cx_vec>;
 //******************************************************************************
 template <typename ArmaMat,typename ArmaVec>
 BoundaryValues<ArmaMat,ArmaVec>::BoundaryValues(BoundaryPoints pts, BoundaryValues<ArmaMat,ArmaVec>::Function f)
-    : _points(pts), _values(f(_points.vector()))
+    : _points(pts), _values(f(pts.vector()))
 {
     _values.reshape(_points.matrix().n_rows, _points.matrix().n_cols);
 }

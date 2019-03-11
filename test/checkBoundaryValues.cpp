@@ -24,6 +24,9 @@
 
 using namespace ModifiedSchwarz;
 
+SUITE(BoundaryValueSuite)
+{
+
 TEST(BoundaryValueLabel)
 {
     TEST_FILE("BoundaryValue check");
@@ -32,21 +35,17 @@ TEST(BoundaryValueLabel)
 class TestFixture
 {
 public:
-    using CompFunction = ComplexBoundaryValues::Function;
-    using RealFunction = RealBoundaryValues::Function;
-
     UnitCircleDomain domain;
-    CompFunction g;
+    ComplexBoundaryValues::Function g;
     ComplexBoundaryValues cbvals;
-    RealFunction h;
+    RealBoundaryValues::Function h;
     RealBoundaryValues rbvals;
 
     TestFixture() : domain(domainExample3())
     {
-        const UnitCircleDomain& D = domain;
-        g = [&D](const cx_vec& z){return polesInHoles(z, D); };
+        g = [this](const cx_vec& z) {return polesInHoles(z, domain); };
         cbvals = ComplexBoundaryValues(BoundaryPoints(domain), g);
-        h = [&D](const cx_vec& z){return real(polesInHoles(z, D)); };
+        h = [this](const cx_vec& z) {return real(polesInHoles(z, domain)); };
         rbvals = RealBoundaryValues(BoundaryPoints(domain), h);
     }
 };
@@ -73,5 +72,13 @@ TEST_FIXTURE(TestFixture, BValValueCheck)
     CHECK(approx_equal(vectorise(cbvals.values()), g(cbvals.points().vector()), "absdiff", 1e-10));
     CHECK(approx_equal(vectorise(rbvals.values()), h(rbvals.points().vector()), "absdiff", 1e-10));
 
+    const colvec firsttwo{ 1.70211113721082, 1.68234033981218 };
+    REQUIRE CHECK(approx_equal(h(rbvals.points().vector().rows(0, 1)), firsttwo, "absdiff", 1e-10));
+    CHECK(approx_equal(rbvals.values()(arma::span(0, 1), 0), firsttwo, "absdiff", 1e-10));
+
     TEST_DONE;
+
+    exit(0);
 }
+
+} // SUITE

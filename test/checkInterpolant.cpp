@@ -68,27 +68,31 @@ TEST_FIXTURE(Fixture, RealInterp)
 {
     TEST_LINE("Real interpolation");
 
-    cx_mat pts = BoundaryPoints(domain).matrix();
-    // auto vv{h(pts.col(0).rows(0, 1))};
-    cx_double p1{pts(0, 0)}, p2{pts(1, 0)};
-    cx_double v1{1./(p1 - domain.dv(0)) + 1./(p1 - domain.dv(1))};
-    cx_double v2{1./(p2 - domain.dv(0)) + 1./(p2 - domain.dv(1))};
-    SDEBUG("  Centers: " << domain.centers() << "\n"
-            << "  Value 1: " << v1 << "\n  Value 2: " << v2 << "\n");
+//#ifdef DEBUG
+//    cx_mat pts = BoundaryPoints(domain).matrix();
+//    // auto vv{h(pts.col(0).rows(0, 1))};
+//    cx_double p1{pts(0, 0)}, p2{pts(1, 0)};
+//    cx_double v1{1./(p1 - domain.dv(0)) + 1./(p1 - domain.dv(1))};
+//    cx_double v2{1./(p2 - domain.dv(0)) + 1./(p2 - domain.dv(1))};
+//    SDEBUG("  Centers: " << domain.centers() << "\n"
+//            << "  Value 1: " << v1 << "\n  Value 2: " << v2 << "\n");
+//#endif // DEBUG
 
     RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
     const auto& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
 
-    try
-    {
-        gi.boundaryValues().values().save("bvalues.arma", arma::arma_ascii);
-        gi.boundaryValues().points().matrix().save("bpoints.arma", arma::arma_ascii);
-        gi.constants().save("constants.arma", arma::arma_ascii);
-        gi.coefficients().save("coefficients.arma", arma::arma_ascii);
-    }
-    catch (...)
-    {}
+//#ifdef DEBUG
+//    try
+//    {
+//        gi.boundaryValues().values().save("bvalues.arma", arma::arma_ascii);
+//        gi.boundaryValues().points().matrix().save("bpoints.arma", arma::arma_ascii);
+//        gi.constants().save("constants.arma", arma::arma_ascii);
+//        gi.coefficients().save("coefficients.arma", arma::arma_ascii);
+//    }
+//    catch (...)
+//    {}
+//#endif // DEBUG
 
     TEST_DONE;
 }
