@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <iomanip>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "Problem.h"
 
@@ -149,13 +149,19 @@ int main()
     STDOUT("saving data to ex1.data");
     data.save("ex1.data", arma::raw_binary);
 
+#ifdef __GNUC__
+#ifndef __clang__
+#pragma GCC diagnostic ignored "-Wunused-result"
+#endif
+#endif
+
     std::string cmd("../example/drawex.py " DFNAME " " MFNAME " ex1.png");
     STDOUT("Creating image: " << cmd);
-    system(cmd.c_str());
+    std::system(cmd.c_str());
 
     cmd = std::string("open ex1.png");
     STDOUT("Showing image: " << cmd);
-    system(cmd.c_str());
+    std::system(cmd.c_str());
 
     return 0;
 }
