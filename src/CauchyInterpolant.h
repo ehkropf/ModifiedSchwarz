@@ -57,6 +57,9 @@ public:
 
     //! Domain of definition.
     UnitCircleDomain domain() const { return _boundary_values.domain(); }
+
+    //! Boundary values view.
+    const ComplexBoundaryValues& boundary() const { return _boundary_values; }
 };
 
 } // namespace ModifiedSchwarz

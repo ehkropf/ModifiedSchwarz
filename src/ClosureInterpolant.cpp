@@ -55,19 +55,21 @@ ClosureInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
     auto D = _boundary.domain();
     uvec onb = D.isOnBoundary(z);
 
+    SDEBUG("Have " << z.n_elem << " points to evaulate");
+
     // Evaluate boundary points.
     uvec mask = arma::find(onb == 1);
+    SDEBUG("Number of boundary points found: " << mask.n_elem);
     if (mask.n_elem > 0)
     {
         w(mask) = _boundary(z(mask));
     }
 
-//    SDEBUG("Checking for interior points");
     // Evaluate interior points.
     mask = arma::find(onb == 0);
+    SDEBUG("Number of interior points found: " << mask.n_elem);
     if (mask.n_elem > 0)
     {
-//        SDEBUG("Interior points found");
         w(mask) = _interior(z(mask));
     }
 }

@@ -36,16 +36,15 @@ TEST(CauchyInterpLabel)
 
 struct Fixture
 {
-    // using Function = std::function<tbd(tbd)>;
     UnitCircleDomain domain;
     cx_vec test_point_inside;
     ComplexBoundaryValues::Function g;
 
     Fixture()
         : domain(domainExample3()),
-          test_point_inside{cx_double(0.66822, 0.11895), cx_double(0.667, 0.117)}
+          test_point_inside{cx_double{0.66822, 0.11895}, cx_double{0.667, 0.117}}
     {
-        g = [this](const cx_vec& z){ return polesInHoles(z, domain); };
+        g = [this] (const cx_vec& z) -> cx_vec { return polesInHoles(z, domain); };
     }
 };
 

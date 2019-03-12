@@ -45,7 +45,7 @@ struct Fixture
     Fixture()
         : domain(domainExample3()),
           boundary_pts(BoundaryPoints(domain, N)),
-          interior_points{cx_double(0.66822, 0.11895), cx_double(0.667, 0.117)}
+          interior_points{cx_double{0.66822, 0.11895}, cx_double{0.667, 0.117}}
     {
         g = [this](const cx_vec& z) -> cx_vec { return polesInHoles(z, domain); };
         f = ClosureInterpolant(ComplexBoundaryValues(BoundaryPoints(domain), g));
@@ -66,6 +66,17 @@ TEST_FIXTURE(Fixture, InteriorInterp)
 {
     TEST_LINE("Points in the interior");
 
+    CHECK(arma::approx_equal(
+                f.boundary().realPart().boundaryValues().values(),
+                arma::real(f.interior().boundary().values()),
+                "absdiff", 1e-14)
+         );
+    CHECK(arma::approx_equal(
+                f.boundary().imagPart().boundaryValues().values(),
+                arma::imag(f.interior().boundary().values()),
+                "absdiff", 1e-14)
+         );
+
     const cx_vec refv{g(interior_points)};
     const cx_vec iv{f(interior_points)};
 
@@ -75,11 +86,17 @@ TEST_FIXTURE(Fixture, InteriorInterp)
     SDEBUG("Have " << big.n_elem << " values away from expected. Max abs diff seen: " << arma::max(absdiff));
     if (refv.has_inf() || refv.has_nan())
     {
-        SDEBUG("Reference vector has infinite or nan values.");
+        SDEBUG("Reference vector has infinite or nan values.\n" << refv);
     }
     if (iv.has_inf() || iv.has_nan())
     {
-        SDEBUG("Interpolated vector has infinite or nan values.");
+        SDEBUG("Interpolated vector has infinite or nan values.\n" << iv);
+    }
+
+    const uvec onb = domain.isOnBoundary(interior_points);
+    if (onb.n_elem == 0)
+    {
+        SDEBUG("Interior points do not register as interior points.\n" << onb);
     }
 #endif
 
