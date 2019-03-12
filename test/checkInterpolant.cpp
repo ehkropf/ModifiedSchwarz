@@ -70,7 +70,7 @@ TEST_FIXTURE(Fixture, RealInterp)
 //#endif // DEBUG
 
     RealInterpolant gi(RealBoundaryValues(BoundaryPoints(domain), h));
-    const auto& zb = eval_points.vector();
+    const cx_vec& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), h(zb), "absdiff", 10.*eps2pi));
 
 //#ifdef DEBUG

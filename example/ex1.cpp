@@ -96,7 +96,7 @@ cx_vec polesInHoles(const cx_vec& z, const UnitCircleDomain& D)
 ////////////////////////////////////////////////////////////////////////
 int main()
 {
-    UnitCircleDomain domain = domainExample3();
+    UnitCircleDomain domain{domainExample3()};
 
     /*
      *  Imaginary part to define the problem.
@@ -115,23 +115,23 @@ int main()
      */
     Problem problem(hv);
 
-    Solution sol = problem.solve();
+    Solution sol{problem.solve()};
     STDOUT("Solver run.");
 
     /*
      *  Grid points in domain for evaluation.
      */
     unsigned res = 1000;
-    cx_vec z = vectorise(domain.ngrid(res));
-    auto mask = domain.inDomain(z);
+    cx_vec z{vectorise(domain.ngrid(res))};
+    umat mask{domain.inDomain(z)};
     z = z(find(mask));
 
     /*
      * Output grid metadata.
      */
-    auto gmeta = GridInformation(domain, res);
+    GridInformation gmeta{domain, res};
     STDOUT("\nWriting metadata");
-    std::ofstream ofs(MFNAME, std::ios::out);
+    std::ofstream ofs{MFNAME, std::ios::out};
     ofs << gmeta;
     ofs.close();
 
@@ -142,10 +142,10 @@ int main()
      *  Solution can be evaulated like a function.
      */
     STDOUT("evaluating points " << z.n_elem << " points ...");
-    cx_vec w = sol(z);
+    cx_vec w{sol(z)};
     STDOUT("done"); //; ZOMG that's slow without FMM!");
 
-    auto&& data = cx_mat(join_rows(z, w));
+    cx_mat&& data{join_rows(z, w)};
     STDOUT("saving data to ex1.data");
     data.save("ex1.data", arma::raw_binary);
 
