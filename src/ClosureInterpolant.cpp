@@ -62,12 +62,12 @@ ClosureInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
         w(mask) = _boundary(z(mask));
     }
 
-    SDEBUG("Checking for interior points");
+//    SDEBUG("Checking for interior points");
     // Evaluate interior points.
     mask = arma::find(onb == 0);
     if (mask.n_elem > 0)
     {
-        SDEBUG("Interior points found");
+//        SDEBUG("Interior points found");
         w(mask) = _interior(z(mask));
     }
 }

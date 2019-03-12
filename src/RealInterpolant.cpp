@@ -56,11 +56,6 @@ RealInterpolant::prepareInterpolant()
     // conjugate.)
     _coefficients = join_vert(flipud(c.rows(1, N)),
                               cx_mat(1, bvals.n_cols, arma::fill::zeros));
-
-    SDEBUG("M=" << M << " point DFT with N=" << N << " coefficients.\n"
-            << "constants:\n" << _constants
-            << "first 6 coefficient rows:\n" <<
-            arma::flipud(_coefficients.rows(N-5,N)));
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -73,7 +68,8 @@ RealInterpolant::evalOn(const cx_vec& z, unsigned j) const
 }
 
 ////////////////////////////////////////////////////////////////////////
-void RealInterpolant::funcDefinition(const cx_vec& z, colvec& w) const
+void
+RealInterpolant::funcDefinition(const cx_vec& z, colvec& w) const
 {
     unsigned m = _domain.m();
     // colvec w(size(z));
@@ -88,7 +84,8 @@ void RealInterpolant::funcDefinition(const cx_vec& z, colvec& w) const
 }
 
 ////////////////////////////////////////////////////////////////////////
-void RealInterpolant::generateBoundaryValues(BoundaryPoints pts)
+void
+RealInterpolant::generateBoundaryValues(BoundaryPoints pts)
 {
     _boundary_values = RealBoundaryValues(pts, *this);
 }
@@ -119,11 +116,22 @@ std::ostream& operator<<(std::ostream& os, RealInterpolant& I)
 {
     unsigned m = I._domain.connectivity();
 
-    return os << "class:RealInterpolant\n{\n"
+    os << "class:RealInterpolant\n{\n"
         << "\tconnectivity: " << m << "\n"
         << "\tsamplePointsPerBoundary: " << I._boundary_values.points().vector().n_elem/m << "\n"
         << "\tcoefficientsPerBoundary: " << I._coefficients.n_elem/m << "\n"
         << "}\n";
+
+#ifdef DEBUG
+    const unsigned M = I._boundary_values.values().n_rows;
+    const unsigned N = (unsigned)std::ceil((M - 1)/2.);
+    os << M << " point DFT with " << N << " coefficients.\n"
+        << "constants:\n" << I._constants
+        << "first 6 coefficient rows:\n"
+        << arma::flipud(I._coefficients.rows(N-5,N));
+#endif
+
+    return os;
 }
 
 } // namespace ModifiedSchwarz

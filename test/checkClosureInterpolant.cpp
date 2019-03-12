@@ -66,7 +66,24 @@ TEST_FIXTURE(Fixture, InteriorInterp)
 {
     TEST_LINE("Points in the interior");
 
-    CHECK(arma::approx_equal(f(interior_points), g(interior_points), "absdiff", 1e-10));
+    const cx_vec refv{g(interior_points)};
+    const cx_vec iv{f(interior_points)};
+
+#ifdef DEBUG
+    const colvec absdiff{arma::abs(refv - iv)};
+    const uvec big{arma::find(absdiff > 1e-10)};
+    SDEBUG("Have " << big.n_elem << " values away from expected. Max abs diff seen: " << arma::max(absdiff));
+    if (refv.has_inf() || refv.has_nan())
+    {
+        SDEBUG("Reference vector has infinite or nan values.");
+    }
+    if (iv.has_inf() || iv.has_nan())
+    {
+        SDEBUG("Interpolated vector has infinite or nan values.");
+    }
+#endif
+
+    CHECK(arma::approx_equal(iv, refv, "absdiff", 1e-10));
 
     TEST_DONE;
 }
@@ -82,6 +99,8 @@ TEST_FIXTURE(Fixture, CombinedInterp)
     CHECK(arma::approx_equal(f(zz), g(zz), "absdiff", 1e-10));
 
     TEST_DONE;
+
+    exit(0);
 }
 
 } // SUITE
