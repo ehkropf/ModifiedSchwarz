@@ -58,7 +58,7 @@ ClosureInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
     SDEBUG("Have " << z.n_elem << " points to evaulate");
 
     // Evaluate boundary points.
-    uvec mask = arma::find(onb == 1);
+    uvec mask{arma::find(onb == 1)};
     SDEBUG("Number of boundary points found: " << mask.n_elem);
     if (mask.n_elem > 0)
     {
@@ -66,7 +66,7 @@ ClosureInterpolant::funcDefinition(const cx_vec& z, cx_vec& w) const
     }
 
     // Evaluate interior points.
-    mask = arma::find(onb == 0);
+    mask = uvec{arma::find(onb == 0)};
     SDEBUG("Number of interior points found: " << mask.n_elem);
     if (mask.n_elem > 0)
     {

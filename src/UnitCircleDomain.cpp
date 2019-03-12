@@ -51,7 +51,7 @@ UnitCircleDomain::isOnBoundary(const cx_mat& z) const
     for (unsigned i = 0; i < z.n_elem; ++i)
     {
         for (unsigned j = 0; j < connectivity(); ++j)
-            if (abs(abs(z(i) - dv0(j)) - qv0(j)) < eps2pi)
+            if (std::abs(std::abs(z(i) - dv0(j)) - qv0(j)) < eps2pi)
             {
                 mask(i) = 1;
                 break;

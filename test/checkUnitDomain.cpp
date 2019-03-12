@@ -33,8 +33,12 @@ class TestFixture
 {
 public:
     UnitCircleDomain domain;
+    cx_vec interior_points;
 
-    TestFixture() : domain(domainExample3()) {}
+    TestFixture()
+        : domain(domainExample3()),
+          interior_points{cx_double{0.66822, 0.11895}, cx_double{0.667, 0.117}}
+    {}
 };
 
 TEST_FIXTURE(TestFixture, Points)
@@ -84,11 +88,11 @@ TEST_FIXTURE(TestFixture, OnBoundary)
 {
     TEST_LINE("On boundary");
 
-    auto points = domain.boundaryPoints(257);
+    const cx_mat points{domain.boundaryPoints(257)};
     for (unsigned j = 0; j <= domain.m(); ++j)
     {
-        auto mask = domain.isOnBoundary(points.col(j));
-        auto notOn = 257 - sum(vectorise(mask));
+        const uvec mask = domain.isOnBoundary(points.col(j));
+        const unsigned notOn = 257 - sum(vectorise(mask));
         if (notOn)
         {
             TEST_OUT("missed " << notOn << " points on boundary " << j);
@@ -97,6 +101,10 @@ TEST_FIXTURE(TestFixture, OnBoundary)
         else
             CHECK(true);
     }
+
+    const uvec onb{domain.isOnBoundary(interior_points)};
+    SDEBUG("Expected 0 boundary points, found " << sum(onb));
+    CHECK(sum(onb) == 0);
 
     TEST_DONE;
 }

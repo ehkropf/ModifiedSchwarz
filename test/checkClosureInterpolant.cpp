@@ -116,8 +116,6 @@ TEST_FIXTURE(Fixture, CombinedInterp)
     CHECK(arma::approx_equal(f(zz), g(zz), "absdiff", 1e-10));
 
     TEST_DONE;
-
-    exit(0);
 }
 
 } // SUITE
