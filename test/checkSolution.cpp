@@ -47,9 +47,9 @@ class TestFixture
 
         const auto& D = domain;
         realPart = RealInterpolant(RealBoundaryValues(BoundaryPoints(domain, npts),
-                    [&D](const cx_vec& z){ return real(polesInHoles(z, D)); }));
+                    [&D] (const cx_vec& z) -> colvec { return real(polesInHoles(z, D)); }));
         imagPart = RealInterpolant(RealBoundaryValues(BoundaryPoints(domain, npts),
-                    [&D](const cx_vec& z){ return imag(polesInHoles(z, D)); }));
+                    [&D] (const cx_vec& z) -> colvec { return imag(polesInHoles(z, D)); }));
     }
 };
 

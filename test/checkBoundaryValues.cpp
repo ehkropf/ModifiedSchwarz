@@ -43,10 +43,17 @@ public:
 
     TestFixture() : domain(domainExample3())
     {
-        g = [this](const cx_vec& z) {return polesInHoles(z, domain); };
+        g = [this](const cx_vec& z) -> cx_vec {return polesInHoles(z, domain); };
         cbvals = ComplexBoundaryValues(BoundaryPoints(domain), g);
-        h = [this](const cx_vec& z) {return real(polesInHoles(z, domain)); };
+        h = [this](const cx_vec& z) -> colvec {return real(polesInHoles(z, domain)); };
         rbvals = RealBoundaryValues(BoundaryPoints(domain), h);
+    }
+
+    cx_vec tmpfun(const cx_vec& z)
+    {
+        cx_vec w(size(z), arma::fill::zeros);
+        for (auto & d : domain.centers()) w += 1./(z - d);
+        return w;
     }
 };
 
@@ -71,9 +78,6 @@ TEST_FIXTURE(TestFixture, BValValueCheck)
 
     CHECK(approx_equal(vectorise(cbvals.values()), g(cbvals.points().vector()), "absdiff", 1e-10));
     CHECK(approx_equal(vectorise(rbvals.values()), h(rbvals.points().vector()), "absdiff", 1e-10));
-
-    SDEBUG("\nOnly eval 1st 2 elements:\n" << h(rbvals.points().vector().rows(0, 1)));
-    SDEBUG("\nFirst 2 elements after vector eval:\n" << h(rbvals.points().vector()).rows(0, 1));
 
     const colvec firsttwo{ 1.70211113721082, 1.68234033981218 };
     REQUIRE CHECK(approx_equal(h(rbvals.points().vector()).rows(0, 1), firsttwo, "absdiff", 1e-10));

@@ -27,15 +27,6 @@
 
 using namespace ModifiedSchwarz;
 
-//template<typename ArmaMatLike>
-//ArmaMatLike polesInHoles(const ArmaMatLike& z, const UnitCircleDomain& D)
-//{
-//    ArmaMatLike w(size(z), arma::fill::zeros);
-//    for (auto & d : D.centers()) w += 1./(z - d);
-//
-//    return w;
-//}
-
 SUITE(InterpolantSuite)
 {
 
@@ -59,8 +50,8 @@ struct Fixture
         : domain(domainExample3()),
           eval_points(BoundaryPoints(domain, N))
     {
-        g = [this](const cx_mat& z) { return polesInHoles(z, domain); };
-        h = [this](const cx_mat& z) { return real(polesInHoles(z, domain)); };
+        g = [this](const cx_mat& z) -> cx_vec { return polesInHoles(z, domain); };
+        h = [this](const cx_mat& z) -> colvec { return real(polesInHoles(z, domain)); };
     }
 };
 
@@ -112,7 +103,7 @@ TEST_FIXTURE(Fixture, ComplexInterp)
     TEST_LINE("Complex interpolation");
 
     ComplexInterpolant gi(ComplexBoundaryValues(BoundaryPoints(domain), g));
-    const auto& zb = eval_points.vector();
+    const cx_vec& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), g(zb), "absdiff", 10.*eps2pi));
 
     TEST_DONE;

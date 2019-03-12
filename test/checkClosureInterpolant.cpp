@@ -47,7 +47,7 @@ struct Fixture
           boundary_pts(BoundaryPoints(domain, N)),
           interior_points{cx_double(0.66822, 0.11895), cx_double(0.667, 0.117)}
     {
-        g = [this](const cx_vec& z) { return polesInHoles(z, domain); };
+        g = [this](const cx_vec& z) -> cx_vec { return polesInHoles(z, domain); };
         f = ClosureInterpolant(ComplexBoundaryValues(BoundaryPoints(domain), g));
     }
 };
@@ -56,7 +56,7 @@ TEST_FIXTURE(Fixture, BoundaryInterp)
 {
     TEST_LINE("Points on the boundary");
 
-    auto&& zb = boundary_pts.vector();
+    cx_vec&& zb = boundary_pts.vector();
     CHECK(arma::approx_equal(f(zb), g(zb), "absidff", 1e-10));
 
     TEST_DONE;
@@ -76,9 +76,9 @@ TEST_FIXTURE(Fixture, CombinedInterp)
     TEST_LINE("Points on boundary and interior");
 
     uvec m = arma::regspace<uvec>(0, 20, 299);
-    auto zb = boundary_pts.vector();
+    cx_vec zb = boundary_pts.vector();
     zb = zb(m);
-    auto zz = arma::join_cols(zb, interior_points);
+    cx_vec zz = arma::join_cols(zb, interior_points);
     CHECK(arma::approx_equal(f(zz), g(zz), "absdiff", 1e-10));
 
     TEST_DONE;

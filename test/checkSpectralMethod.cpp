@@ -49,9 +49,9 @@ SUITE(SpectralMethodTest)
                 : domain(domainExample3())//,
             {
                 const UnitCircleDomain& D = domain;
-                test_function = [&D](const cx_vec& z){ return polesInHoles(z, D); };
+                test_function = [&D] (const cx_vec& z) -> cx_vec { return polesInHoles(z, D); };
                 imaginary_part = RealBoundaryValues(BoundaryPoints(domain, npts),
-                        [this](const cx_vec& z){ return imag(test_function(z)); });
+                        [this] (const cx_vec& z) -> colvec { return imag(test_function(z)); });
             }
     };
 
