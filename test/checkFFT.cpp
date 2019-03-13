@@ -157,6 +157,8 @@ TEST_FIXTURE(Fixture, FFT)
     SDEBUG("Value diff in real interpolant:\n"
             << arma::abs(arma::real(sample_vals) - realTrigInterp(rc, sample_pts)));
     CHECK(arma::approx_equal(arma::real(sample_vals), realTrigInterp(rc, sample_pts), "absdiff", 10.*eps2pi));
+
+    TEST_DONE;
 }
 
 } // SUITE

@@ -97,6 +97,8 @@ TEST_FIXTURE(Fixture, RealInterpD)
 
     CHECK(!wv.has_nan());
     CHECK(!wv.has_inf());
+
+    TEST_DONE;
 }
 
 TEST_FIXTURE(Fixture, ComplexInterp)
@@ -119,6 +121,8 @@ TEST_FIXTURE(Fixture, ComplexInterpD)
 
     CHECK(!wv.has_nan());
     CHECK(!wv.has_inf());
+
+    TEST_DONE;
 }
 
 } // SUITE
