@@ -95,7 +95,7 @@ RealInterpolant
 RealInterpolant::derivative() const
 {
     // Modify new_const and new_coeff appropritely.
-    colvec&& new_const{real(_coefficients.row(_coefficients.n_rows - 2))};
+    colvec&& new_const{real(_coefficients.row(_coefficients.n_rows - 2)).st()};
     cx_mat&& new_coeff{_coefficients.rows(0, _coefficients.n_rows - 3)};
 
     // Create temporary derivative RealInterpolant with new coefficients.

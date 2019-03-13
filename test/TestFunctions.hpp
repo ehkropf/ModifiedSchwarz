@@ -35,6 +35,15 @@ ArmaMatLike polesInHoles(const ArmaMatLike& z, const UnitCircleDomain& D)
     return w;
 }
 
+template<typename ArmaMatLike>
+ArmaMatLike polesInHolesDz(const ArmaMatLike& z, const UnitCircleDomain& D)
+{
+    ArmaMatLike w(size(z), arma::fill::zeros);
+    for (auto & d : D.centers()) w -= 1./square(z - d);
+
+    return w;
+}
+
 } // namespace ModifiedSchwarz
 
 #endif // TESTSHARED_HPP

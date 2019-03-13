@@ -93,10 +93,15 @@ TEST_FIXTURE(Fixture, RealInterpD)
     TEST_LINE("Real interp derivatives");
 
     RealInterpolant gi{RealBoundaryValues(BoundaryPoints(domain), h)};
-    const colvec wv{gi(eval_points.vector())};
+    SDEBUG("Take derivative");
+    RealInterpolant dgi{gi.derivative()};
+    const colvec wv{dgi(eval_points.vector())};
 
     CHECK(!wv.has_nan());
     CHECK(!wv.has_inf());
+
+    const colvec refv{real(polesInHolesDz(eval_points.vector(), domain))};
+    CHECK(arma::approx_equal(wv, refv, "absdiff", 1e-6));
 
     TEST_DONE;
 }
@@ -117,10 +122,20 @@ TEST_FIXTURE(Fixture, ComplexInterpD)
     TEST_LINE("Complex interp derivatives");
 
     ComplexInterpolant gi{ComplexBoundaryValues(BoundaryPoints(domain), g)};
-    const cx_vec wv{gi(eval_points.vector())};
+    SDEBUG("Take derivative");
+    ComplexInterpolant dgi{gi.derivative()};
+    const cx_vec wv{dgi(eval_points.vector())};
 
     CHECK(!wv.has_nan());
     CHECK(!wv.has_inf());
+
+    const cx_vec refv{polesInHolesDz(eval_points.vector(), domain)};
+    CHECK(arma::approx_equal(wv, refv, "absdiff", 1e-6));
+
+    SDEBUG("Sample reference values:\n"
+            << cx_mat{arma::reshape(refv, size(eval_points.matrix()))}.rows(0, 4));
+    SDEBUG("Evaluated values:\n"
+            << cx_mat{arma::reshape(wv, size(eval_points.matrix()))}.rows(0, 4));
 
     TEST_DONE;
 }
