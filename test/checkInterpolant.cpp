@@ -92,17 +92,18 @@ TEST_FIXTURE(Fixture, RealInterpD)
 {
     TEST_LINE("Real interp derivatives");
 
-    // TODO: Write tests for 1st derivative, and nth derivative.
+    RealInterpolant gi{RealBoundaryValues(BoundaryPoints(domain), h)};
+    const colvec wv{gi(eval_points.vector())};
 
-    std::cout << "Test needs written.\n";
-    CHECK(0);
+    CHECK(!wv.has_nan());
+    CHECK(!wv.has_inf());
 }
 
 TEST_FIXTURE(Fixture, ComplexInterp)
 {
     TEST_LINE("Complex interpolation");
 
-    ComplexInterpolant gi(ComplexBoundaryValues(BoundaryPoints(domain), g));
+    ComplexInterpolant gi{ComplexBoundaryValues(BoundaryPoints(domain), g)};
     const cx_vec& zb = eval_points.vector();
     CHECK(approx_equal(gi(zb), g(zb), "absdiff", 10.*eps2pi));
 
@@ -113,10 +114,11 @@ TEST_FIXTURE(Fixture, ComplexInterpD)
 {
     TEST_LINE("Complex interp derivatives");
 
-    // TODO: Write tests for 1st derivative, and nth derivative.
+    ComplexInterpolant gi{ComplexBoundaryValues(BoundaryPoints(domain), g)};
+    const cx_vec wv{gi(eval_points.vector())};
 
-    std::cout << "Test needs written.\n";
-    CHECK(0);
+    CHECK(!wv.has_nan());
+    CHECK(!wv.has_inf());
 }
 
 } // SUITE

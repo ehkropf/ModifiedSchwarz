@@ -47,7 +47,7 @@ RealInterpolant::prepareInterpolant()
     const mat& bvals = _boundary_values.values();
     unsigned M = bvals.n_rows;
     unsigned N = (unsigned)std::ceil((M - 1)/2.);
-    cx_mat c(fft(bvals)/M);
+    cx_mat c{fft(bvals)/M};
     _constants = real(c.row(0).st());
 
     // Store coeffients with extra zero row for use in polyval. This
@@ -94,15 +94,23 @@ RealInterpolant::generateBoundaryValues(BoundaryPoints pts)
 RealInterpolant
 RealInterpolant::derivative() const
 {
-    colvec new_const = _constants;
-    cx_mat new_coeff = _coefficients;
+    // Modify new_const and new_coeff appropritely.
+    colvec&& new_const{real(_coefficients.row(_coefficients.n_rows - 2))};
+    cx_mat&& new_coeff{_coefficients.rows(0, _coefficients.n_rows - 3)};
 
-    // TODO: Modify new_const and new_coeff appropritely.
+    // Create temporary derivative RealInterpolant with new coefficients.
+    RealInterpolant tmp{_domain, new_const, new_coeff};
 
-    RealInterpolant deriv(_domain, new_const, new_coeff);
-    if (!_boundary_values.points().isEmpty())
-        deriv.generateBoundaryValues(_boundary_values.points());
-    return deriv;
+    // If there are no boundary points, all we can do is return an interpolant
+    // based on the coefficients.
+    if(_boundary_values.points().isEmpty())
+    {
+        return tmp;
+    }
+
+    // Then create derivative with temporary interpolant; will have a full
+    // set of coefficients.
+    return RealInterpolant{RealBoundaryValues(_boundary_values.points(), tmp)};
 }
 
 RealInterpolant
